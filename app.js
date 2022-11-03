@@ -1,10 +1,12 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const { Pool } = require('pg');
+const path = require('path');
+const express = require('express');
 
+const logger = require('morgan');
+const session = require('express-session')
+const createError = require('http-errors');
+const cookieParser = require('cookie-parser');
+
+const { Pool } = require('pg');
 const pool = new Pool({
   user: 'afiizza',
   host: 'localhost',
@@ -16,7 +18,7 @@ const pool = new Pool({
 const indexRouter = require('./routes/index')(pool);
 const usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +29,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'afiizza',
+  resave: false,
+  saveUninitialized: true
+}))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
