@@ -1,0 +1,90 @@
+<%- include('../partials/header.ejs') %>
+
+    <body class="bg-white">
+        <div class="relative">
+            <div class="mx-auto">
+                <nav class="bg-gradient-to-tr from-blue-600 to-blue-500 py-10 max-w-xs overflow-hidden shadow-lg card">
+                    <h1 class="text-white text-2xl font-semibold text-center px-14"><i
+                            class="fa-regular fa-face-laugh-squint"></i> POS</h1>
+                    <div class=" px-6">
+                        <hr class="mt-6 mb-4 opacity-50">
+
+                        <a href="#" class="text-white"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+
+                        <hr class="my-4 opacity-50">
+                    </div>
+
+                    <div class=" px-6">
+                        <div class="mb-8">
+                            <h1 class="text-white font-bold opacity-60">MASTER</h1>
+                        </div>
+
+                        <div class="mt-6 grid grid-rows-4 gap-12">
+                            <div>
+                                <a href="#" class="transition text-white opacity-100 hover:opacity-70"><i
+                                        class="fa-solid fa-wrench"></i> Goods
+                                    Utilites</a>
+                            </div>
+                            <div>
+                                <a href="#" class="transition text-white opacity-100 hover:opacity-70"><i
+                                        class="fa-solid fa-link"></i>
+                                    Suppliers</a>
+                            </div>
+                            <div>
+
+                                <a href="#" class="transition text-white opacity-100 hover:opacity-70"><i
+                                        class="fa-solid fa-people-group"></i> Customers</a>
+                            </div>
+                            <div>
+                                <a href="#" class="transition text-white opacity-100 hover:opacity-70"><i
+                                        class="fa-solid fa-user"></i> Users</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-6">
+                        <div class="mb-8">
+                            <hr class="my-4 opacity-50">
+
+                            <h1 class="text-white font-bold opacity-60">TRANSACTIONS</h1>
+                        </div>
+
+                        <div class="mt-6 grid grid-rows-4 gap-12">
+                            <div>
+                                <a href="#" class="transition text-white opacity-100 hover:opacity-70"><i
+                                        class="fa-solid fa-cart-shopping"></i> Purchases</a>
+                            </div>
+                            <div>
+                                <a href="#" class="transition text-white opacity-100 hover:opacity-70"><i
+                                        class="fa-solid fa-chart-area"></i> Sales</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pb-15 text-center">
+                        <a href="#" class="text-white text-xl font-bold bg-slate-200/30 px-3 py-2 rounded-full"><i
+                                class="fa-solid fa-chevron-left"></i></a>
+                    </div>
+                </nav>
+            </div>
+
+            <div class="absolute top-0 right-0 text-center">
+                <form action="" method="get">
+                    <div class="flex justify-between bg-white pl-8 pr-96 py-6 shadow-lg">
+                        <div class="flex space-x-4">
+                            <input type="text" placeholder="Search"
+                                class="px-8 py-1.5 rounded-l-xl border-black/20 border-2">
+
+                            <button type="submit" class="text-white bg-sky-500 hover:bg-sky-700 px-4 rounded-r-xl"><i
+                                    class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+
+                        <div class="flex">
+                            <a href=""><i class="fa-solid fa-bell"></i></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <%- include('../partials/footer.ejs') %>
