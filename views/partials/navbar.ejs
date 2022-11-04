@@ -1,9 +1,20 @@
 <form action="" method="get">
-    <div class="flex bg-zinc-300/25 py-3 px-5">
-        <input type="text" placeholder="Search for..."
-            class="bg-transparent px-4 py-1 mx-3 rounded-l-md w-64 border-black/20 border-2">
-        <button type="submit" class="transition bg-blue-500 px-3 rounded-r-md text-white hover:bg-blue-700"><i
-                class="fa-solid fa-magnifying-glass"></i></button>
+    <div class="flex bg-white py-3 px-5 justify-between items-center relative">
+        <div class="flex">
+            <input type="text" placeholder="Search for..."
+                class="bg-transparent px-4 py-1 mx-3 rounded-l-lg w-64 border-black/20 border-2">
+            <button type="submit" class="transition bg-blue-500 px-3 rounded-r-lg text-white hover:bg-blue-700"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn"><h1></h1></button>
+            <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>
     </div>
 </form>
 <br>

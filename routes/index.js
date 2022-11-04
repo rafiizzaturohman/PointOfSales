@@ -1,13 +1,7 @@
 var express = require('express');
 const bcrypt = require('bcrypt');
+const { isLoggedIn } = require('../helpers/util')
 
-const isLoggedIn = (req, res, next) => {
-  if (req.session.user) {
-    next()
-  } else {
-    res.redirect('/')
-  }
-}
 
 const saltRounds = 10;
 var router = express.Router();
@@ -15,7 +9,10 @@ var router = express.Router();
 module.exports = (db) => {
   // LOGIN
   router.get('/', (req, res, next) => {
-    res.render('login');
+    res.render('login', {
+      success: req.flash('success'),
+      error: req.flash('error')
+    });
   });
 
   router.post('/', async (req, res) => {
@@ -23,9 +20,9 @@ module.exports = (db) => {
       const { email, password } = req.body
       const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
 
-      if (emails.length == 0) return res.send(`Email does'nt exist`)
+      if (emails.length == 0) throw `Email does'nt exist`
 
-      if (!bcrypt.compareSync(password, emails[0].password)) return res.send("Password does'nt match")
+      if (!bcrypt.compareSync(password, emails[0].password)) throw "Password does'nt match"
 
       // Create a session
       const user = emails[0]
@@ -35,8 +32,8 @@ module.exports = (db) => {
 
       res.redirect('/home')
     } catch (error) {
-      console.log(error)
-      res.send(error)
+      req.flash(error, '>err<')
+      res.redirect('/')
     }
   })
 
@@ -72,8 +69,13 @@ module.exports = (db) => {
     });
   });
 
-  router.get('/users', (req, res, next) => {
-    res.render('page/users');
+  router.get('/users', isLoggedIn, (req, res, next) => {
+    res.render('page/users', { user: req.session.user });
   });
+
+  router.get('/nav', (req, res, next) => {
+    res.render('partials/side', { user: req.session.user });
+  });
+
   return router;
 }

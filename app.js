@@ -5,6 +5,7 @@ const logger = require('morgan');
 const session = require('express-session')
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
+const flash = require('connect-flash')
 
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -16,7 +17,7 @@ const pool = new Pool({
 })
 
 const indexRouter = require('./routes/index')(pool);
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users')(pool);
 
 const app = express();
 
@@ -29,11 +30,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
 app.use(session({
   secret: 'afiizza',
   resave: false,
   saveUninitialized: true
-}))
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
