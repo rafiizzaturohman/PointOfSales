@@ -20,9 +20,15 @@ module.exports = (db) => {
       const { email, password } = req.body
       const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
 
-      if (emails.length == 0) throw `Email does'nt exist`
+      if (emails.length == 0) {
+        req.flash('error', `User doesn't exist`)
+        return res.redirect('/')
+      }
 
-      if (!bcrypt.compareSync(password, emails[0].password)) throw "Password does'nt match"
+      if (!bcrypt.compareSync(password, emails[0].password)) {
+        req.flash('error', 'Wrong Password')
+        return res.redirect('/')
+      }
 
       // Create a session
       const user = emails[0]

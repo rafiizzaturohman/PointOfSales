@@ -21,9 +21,10 @@
                                 <input type="password" name="password" placeholder="password"
                                     class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                     required>
-
-                                <h1 class="opacity-60"><input type="checkbox" name="remember" id="remember"> Remember Me
-                                </h1>
+                                <%- include('partials/alert.ejs') %>
+                                    <h1 class="opacity-60"><input type="checkbox" name="remember" id="remember">
+                                        Remember Me
+                                    </h1>
                             </div>
 
                             <div class=" my-4">
@@ -33,6 +34,8 @@
                                 <!-- <h1 class="my-4">Does'nt have an account? Sign up <a href="/register"
                                         class="transition text-blue-600 hover:text-blue-400">here</a>
                                 </h1> -->
+                                <div class="my-1">
+                                </div>
                             </div>
                             <div class=" text-center">
                                 <a href="#" class="transition text-blue-600 hover:text-blue-400">Forgot
