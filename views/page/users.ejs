@@ -33,6 +33,7 @@
                                         <th>User ID</th>
                                         <th>Email</th>
                                         <th>Name</th>
+                                        <th>Password</th>
                                         <th>Role</th>
                                         <th>Action</th>
                                     </tr>
@@ -50,13 +51,18 @@
                                                 <%= item.name %>
                                             </td>
                                             <td>
+                                                <%= item.password %>
+                                            </td>
+                                            <td>
                                                 <%= item.role %>
                                             </td>
                                             <td class="text-white">
                                                 <a href="#"
                                                     class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500"><i
                                                         class="fa-solid fa-pen-to-square"></i></a>
-                                                <a href="#"
+
+                                                <a href="/users/delete/<%= item.userid %> "
+                                                    onclick="return confirm('Are you sure want to delete this user accout?')"
                                                     class="transition bg-red-600 px-2 py-1 rounded-full hover:bg-red-500"><i
                                                         class="fa-solid fa-trash"></i></a>
                                             </td>
@@ -64,9 +70,9 @@
                                         <% }) %>
                                 </tbody>
                             </table>
-                            <div class="flex justify-between mt-8">
-                                <div>
-                                    <h1></h1>
+                            <div class="flex justify-between mt-8 items-center">
+                                <div class="text-gray-500">
+                                    <h1>Showing 1 to 3 of 4 entries</h1>
                                 </div>
                                 <div id="pagination">
                                     <nav aria-label="Page navigation example">

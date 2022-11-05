@@ -85,6 +85,11 @@
     list-style: none;
 }
 
+.sidebar:active {
+    background-color: #fff;
+    color: #000;
+}
+
 .sidebar li .tooltip {
     position: absolute;
     top: -20px;

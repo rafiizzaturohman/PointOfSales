@@ -51,7 +51,9 @@ module.exports = (db) => {
     try {
       const { email, name, password, role } = req.body
       const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
-      if (emails.length > 0) return res.send(`Email already exist`)
+      if (emails.length > 0) {
+        req.flash('error', `Email already exist`)
+      }
 
       const hash = bcrypt.hashSync(password, saltRounds)
       await db.query('INSERT INTO public."usersAccount" (email, name, password, role) VALUES ($1, $2, $3, $4)', [email, name, hash, role])
@@ -66,17 +68,6 @@ module.exports = (db) => {
   // HOME
   router.get('/home', isLoggedIn, async (req, res, next) => {
     res.render('page/home', { user: req.session.user });
-  });
-
-  router.get('/users', isLoggedIn, async (req, res, next) => {
-    try {
-      const data = await db.query('SELECT * FROM public."usersAccount"')
-      res.render('page/users', { user: req.session.user, data: data.rows });
-
-    } catch (err) {
-      console.log(err)
-      res.send(err)
-    }
   });
 
   // router.get('/nav', (req, res, next) => {
