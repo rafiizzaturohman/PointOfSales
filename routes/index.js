@@ -71,9 +71,9 @@ module.exports = (db) => {
     res.render('page/home', { user: req.session.user });
   });
 
-  // router.get('/nav', (req, res, next) => {
-  //   res.render('partials/side', { user: req.session.user });
-  // });
+  router.get('/nav', (req, res, next) => {
+    res.render('partials/side', { user: req.session.user });
+  });
 
   router.get('/logout', (req, res, next) => {
     req.session.destroy(function (err) {

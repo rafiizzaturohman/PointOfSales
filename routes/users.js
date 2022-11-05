@@ -10,25 +10,14 @@ module.exports = (db) => {
   router.get('/', isLoggedIn, async (req, res, next) => {
     try {
       const data = await db.query('SELECT * FROM public."usersAccount"')
+
       res.render('userPages/users', { user: req.session.user, data: data.rows });
-
     } catch (err) {
       console.log(err)
       res.send(err)
     }
   });
 
-  // DELETE DATA
-  router.get('/delete/:userid', isLoggedIn, async (req, res, next) => {
-    try {
-      await db.query('DELETE FROM public."usersAccount" WHERE userid = $1', [req.params.userid])
-
-      res.redirect('/users');
-    } catch (err) {
-      console.log(err)
-      res.send(err)
-    }
-  });
 
   // ADD DATA
   router.get('/add', isLoggedIn, async (req, res, next) => {
@@ -57,6 +46,44 @@ module.exports = (db) => {
   })
 
   // EDIT DATA
+  router.get('/edit/:userid', isLoggedIn, async (req, res, next) => {
+    const { userid } = req.params
 
+    const data = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
+
+    res.render('userPages/edit', { user: req.session.user, data: data.rows });
+  });
+
+  router.post('/edit/:userid', isLoggedIn, async (req, res, next) => {
+    try {
+      const { userid } = req.params
+      const { email, name, role } = req.body
+
+      const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
+      if (emails.length > 0) {
+        req.flash('error', `Email already exist`)
+        return res.redirect('/edit')
+      }
+
+      await db.query('UPDATE public."usersAccount" SET email = $1, name = $2, role = $3 WHERE userid = $4', [email, name, role, userid])
+
+      res.redirect('/users')
+    } catch (error) {
+      console.log(error)
+      res.send(error)
+    }
+  })
+
+  // DELETE DATA
+  router.get('/delete/:userid', isLoggedIn, async (req, res, next) => {
+    try {
+      await db.query('DELETE FROM public."usersAccount" WHERE userid = $1', [req.params.userid])
+
+      res.redirect('/users');
+    } catch (err) {
+      console.log(err)
+      res.send(err)
+    }
+  });
   return router;
 }

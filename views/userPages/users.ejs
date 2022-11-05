@@ -61,11 +61,11 @@
                                                 <%= item.role %>
                                             </td>
                                             <td class="text-white">
-                                                <a href="#"
+                                                <a href="/users/edit/<%= item.userid %>"
                                                     class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500"><i
                                                         class="fa-solid fa-pen-to-square"></i></a>
 
-                                                <a href="/users/delete/<%= item.userid %> "
+                                                <a href="/users/delete/<%= item.userid %>"
                                                     onclick="return confirm('Are you sure want to delete this user accout?')"
                                                     class="transition bg-red-600 px-2 py-1 rounded-full hover:bg-red-500"><i
                                                         class="fa-solid fa-trash"></i></a>

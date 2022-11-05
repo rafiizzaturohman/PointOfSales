@@ -15,6 +15,11 @@ module.exports = {
         '76': '19rem',
         '82': '20.1rem',
         'full': '100%',
+        'min-2': '-1rem',
+        'min-0.5': '-0.5rem',
+      },
+      rotate: {
+        '25': '25deg',
       }
     },
     variants: {
