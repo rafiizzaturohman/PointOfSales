@@ -2,7 +2,6 @@ var express = require('express');
 const bcrypt = require('bcrypt');
 const { isLoggedIn } = require('../helpers/util')
 
-
 const saltRounds = 10;
 var router = express.Router();
 
@@ -65,22 +64,29 @@ module.exports = (db) => {
   })
 
   // HOME
-  router.get('/home', isLoggedIn, (req, res, next) => {
+  router.get('/home', isLoggedIn, async (req, res, next) => {
     res.render('page/home', { user: req.session.user });
   });
+
+  router.get('/users', isLoggedIn, async (req, res, next) => {
+    try {
+      const data = await db.query('SELECT * FROM public."usersAccount"')
+      res.render('page/users', { user: req.session.user, data: data.rows });
+
+    } catch (err) {
+      console.log(err)
+      res.send(err)
+    }
+  });
+
+  // router.get('/nav', (req, res, next) => {
+  //   res.render('partials/side', { user: req.session.user });
+  // });
 
   router.get('/logout', (req, res, next) => {
     req.session.destroy(function (err) {
       res.redirect('/')
     });
-  });
-
-  router.get('/users', isLoggedIn, (req, res, next) => {
-    res.render('page/users', { user: req.session.user });
-  });
-
-  router.get('/nav', (req, res, next) => {
-    res.render('partials/side', { user: req.session.user });
   });
 
   return router;

@@ -7,28 +7,33 @@
                     class="fa-solid fa-magnifying-glass"></i></button>
         </div>
 
-        <div class="dropdown px-8">
-            <button class="dropbtn py-1">
-                <div class="flex items-center">
-                    <div class="text-right text-sm px-4">
-                        <h1>
-                            <%= user.name%>
-                        </h1>
-                        <h1>
-                            <%= user.role%>
-                        </h1>
+        <div class="items-cente text-centerr">
+            <a href="#" class="border-r-2 px-8 pt-2 pb-5"><i class="fa-solid fa-bell"></i></a>
+
+            <div class="dropdown px-8">
+                <button class="dropbtn py-1">
+                    <div class="flex items-center">
+                        <div class="text-right text-sm px-4">
+                            <h1>
+                                <%= user.name%>
+                            </h1>
+                            <h1>
+                                <%= user.role%>
+                            </h1>
+                        </div>
+                        <div class="bg-gray-300/60 px-2 py-1 rounded-full">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
                     </div>
-                    <div class="bg-gray-300/60 px-2 py-1 rounded-full">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
+                </button>
+                <div class="dropdown-content rounded-lg">
+                    <a href="#" class="hover:rounded-lg"><i class="fa-solid fa-user"></i> Profile</a>
+                    <a href="#" class="hover:rounded-lg"><i class="fa-solid fa-gears"></i> Settings</a>
+                    <a href="#" class="hover:rounded-lg"><i class="fa-solid fa-bars-staggered"></i> Activity Log</a>
+                    <hr>
+                    <a href="/logout" class="hover:rounded-lg"><i class="fa-solid fa-right-from-bracket"></i> Log
+                        Out</a>
                 </div>
-            </button>
-            <div class="dropdown-content rounded-lg">
-                <a href="#" class="hover:rounded-lg"><i class="fa-solid fa-user"></i> Profile</a>
-                <a href="#" class="hover:rounded-lg"><i class="fa-solid fa-gears"></i> Settings</a>
-                <a href="#" class="hover:rounded-lg"><i class="fa-solid fa-bars-staggered"></i> Activity Log</a>
-                <hr>
-                <a href="/logout" class="hover:rounded-lg"><i class="fa-solid fa-right-from-bracket"></i> Log Out</a>
             </div>
         </div>
     </div>
