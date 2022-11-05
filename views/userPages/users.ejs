@@ -30,21 +30,16 @@
                             <table class="w-full table-users">
                                 <thead class="bg-transparent shadow-md">
                                     <tr class="text-left text-black">
-                                        <th>No</th>
                                         <th>User ID</th>
                                         <th>Email</th>
                                         <th>Name</th>
-                                        <th>Password</th>
                                         <th>Role</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody class="">
+                                <tbody>
                                     <% data.forEach((item, index)=> { %>
-                                        <tr>
-                                            <td>
-                                                <%= index + 1 %>
-                                            </td>
+                                        <tr id="loop">
                                             <td>
                                                 <%= item.userid %>
                                             </td>
@@ -53,9 +48,6 @@
                                             </td>
                                             <td>
                                                 <%= item.name %>
-                                            </td>
-                                            <td>
-                                                <%= item.password %>
                                             </td>
                                             <td>
                                                 <%= item.role %>
@@ -72,6 +64,13 @@
                                             </td>
                                         </tr>
                                         <% }) %>
+                                            <tr class="text-left hover:bg-white text-black">
+                                                <td>User ID</td>
+                                                <td>Email</td>
+                                                <td>Name</td>
+                                                <td>Role</td>
+                                                <td>Action</td>
+                                            </tr>
                                 </tbody>
                             </table>
                             <div class="flex justify-between mt-8 items-center">
