@@ -1,9 +1,9 @@
-var express = require('express');
+const express = require('express');
 const bcrypt = require('bcrypt');
-const { isLoggedIn } = require('../helpers/util')
+const router = express.Router();
 
 const saltRounds = 10;
-var router = express.Router();
+const { isLoggedIn } = require('../helpers/util')
 
 module.exports = (db) => {
   // LOGIN
@@ -53,6 +53,7 @@ module.exports = (db) => {
       const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
       if (emails.length > 0) {
         req.flash('error', `Email already exist`)
+        return res.redirect('/')
       }
 
       const hash = bcrypt.hashSync(password, saltRounds)
