@@ -81,5 +81,9 @@ module.exports = (db) => {
     });
   });
 
+  router.get('/modals', (req, res, next) => {
+    res.render('userPages/modals');
+  });
+
   return router;
 }

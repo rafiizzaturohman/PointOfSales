@@ -1,43 +1,42 @@
-<form action="" method="get">
-    <div class="flex bg-white py-3 px-5 justify-between items-center relative">
-        <div class="flex -space-x-3">
-            <input type="text" placeholder="Search for..."
-                class="bg-transparent px-4 py-1 mx-3 rounded-l-lg w-64 border-black/20 border-2">
-            <button type="submit" class="transition bg-blue-500 px-3 rounded-r-lg text-white hover:bg-blue-700"><i
-                    class="fa-solid fa-magnifying-glass"></i></button>
+<div class="flex bg-white py-3 px-5 justify-between items-center relative">
+    <div class="flex -space-x-3">
+        <input type="text" placeholder="Search for..."
+            class="bg-transparent px-4 py-1 mx-3 rounded-l-lg w-64 border-black/20 border-2">
+        <button type="submit" class="transition bg-blue-500 px-3 rounded-r-lg text-white hover:bg-blue-700"><i
+                class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <div class="flex items-center">
+        <div class="mt-min-0.5 border-r-2 px-4">
+            <a href="#"><i class="fa-solid fa-bell"></i></a>
         </div>
 
-        <div class="flex items-center">
-            <div class="mt-min-0.5 border-r-2 px-4">
-                <a href="#"><i class="fa-solid fa-bell"></i></a>
-            </div>
-
-            <div class="dropdown mr-4 px-4">
-                <button class="dropbtn py-1">
-                    <div class="flex items-center">
-                        <div class="text-right text-sm px-4">
-                            <h1>
-                                <%= user.name%>
-                            </h1>
-                            <h1>
-                                <%= user.role%>
-                            </h1>
-                        </div>
-                        <div class="bg-gray-300/60 px-2 py-1 rounded-full">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
+        <div class="dropdown mr-4 px-4">
+            <button class="dropbtn py-1">
+                <div class="flex items-center">
+                    <div class="text-right text-sm px-4">
+                        <h1>
+                            <%= user.name%>
+                        </h1>
+                        <h1>
+                            <%= user.role%>
+                        </h1>
                     </div>
-                </button>
-                <div class="dropdown-content rounded-lg">
-                    <a href="#" class="hover:rounded-t-lg"><i class="fa-solid fa-user"></i> Profile</a>
-                    <a href="#"><i class="fa-solid fa-gears"></i> Settings</a>
-                    <a href="#"><i class="fa-solid fa-bars-staggered"></i> Activity Log</a>
-                    <hr>
-                    <a href="/logout" class="hover:rounded-b-lg"><i class="fa-solid fa-right-from-bracket"></i> Log
-                        Out</a>
+                    <div class="bg-gray-300/60 px-2 py-1 rounded-full">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
                 </div>
+            </button>
+            <div class="dropdown-content rounded-lg">
+                <a href="#" class="hover:rounded-t-lg"><i class="fa-solid fa-user"></i> Profile</a>
+                <a href="#"><i class="fa-solid fa-gears"></i> Settings</a>
+                <a href="#"><i class="fa-solid fa-bars-staggered"></i> Activity Log</a>
+                <hr>
+                <a href="/logout" class="hover:rounded-b-lg"><i class="fa-solid fa-right-from-bracket"></i> Log
+                    Out</a>
             </div>
         </div>
     </div>
-</form>
+</div>
+
 <br>

@@ -9,9 +9,27 @@ module.exports = (db) => {
   // GET & VIEW DATA
   router.get('/', isLoggedIn, async (req, res, next) => {
     try {
-      const data = await db.query('SELECT * FROM public."usersAccount"')
+      const url = req.url == '/' ? '/?page=1' : req.url
+      const page = req.query.page || 1
+      const limit = 3
+      const offset = (page - 1) * limit
+      let count = 1
 
-      res.render('userPages/users', { user: req.session.user, data: data.rows });
+      let sql = 'SELECT COUNT(*) AS total FROM public."usersAccount"'
+
+      const data = await db.query(sql)
+      console.log(data.rows, 'DATA')
+
+      const pages = Math.ceil(data.rows[0].total / limit)
+      console.log(pages, 'PAGES')
+
+      sql = 'SELECT * FROM public."usersAccount"'
+      sql += ` LIMIT $${count++} OFFSET $${count++}`
+
+      const result = await db.query(sql, [limit, offset])
+      console.log(result.rows, 'RESULT')
+
+      res.render('userPages/users', { user: req.session.user, data: result.rows, query: req.query, pages, page, limit, offset, url });
     } catch (err) {
       console.log(err)
       res.send(err)
@@ -58,12 +76,6 @@ module.exports = (db) => {
     try {
       const { userid } = req.params
       const { email, name, role } = req.body
-
-      const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
-      if (emails.length > 0) {
-        req.flash('error', `Email already exist`)
-        return res.redirect('/edit')
-      }
 
       await db.query('UPDATE public."usersAccount" SET email = $1, name = $2, role = $3 WHERE userid = $4', [email, name, role, userid])
 
