@@ -9,25 +9,26 @@ module.exports = (db) => {
   // GET & VIEW DATA
   router.get('/', isLoggedIn, async (req, res, next) => {
     try {
-      const url = req.url == '/' ? '/?page=1' : req.url
+      console.log(req.url)
+      const url = req.url == '/' ? '/users/?page=1' : `/users${req.url}`
       const page = req.query.page || 1
-      const limit = 3
+      const limit = req.body.limit || 3
       const offset = (page - 1) * limit
       let count = 1
 
       let sql = 'SELECT COUNT(*) AS total FROM public."usersAccount"'
 
       const data = await db.query(sql)
-      console.log(data.rows, 'DATA')
+      // console.log(data.rows, 'DATA')
 
       const pages = Math.ceil(data.rows[0].total / limit)
-      console.log(pages, 'PAGES')
+      // console.log(pages, 'PAGES')
 
       sql = 'SELECT * FROM public."usersAccount"'
       sql += ` LIMIT $${count++} OFFSET $${count++}`
 
       const result = await db.query(sql, [limit, offset])
-      console.log(result.rows, 'RESULT')
+      // console.log(result.rows, 'RESULT')
 
       res.render('userPages/users', { user: req.session.user, data: result.rows, query: req.query, pages, page, limit, offset, url });
     } catch (err) {

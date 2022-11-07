@@ -47,13 +47,18 @@ module.exports = (db) => {
     res.render('register');
   });
 
+  router.get('/modal', (req, res, next) => {
+    res.render('partials/deleteModals');
+  });
+
   router.post('/register', async (req, res) => {
     try {
       const { email, name, password, role } = req.body
       const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
+      console.log(emails)
       if (emails.length > 0) {
         req.flash('error', `Email already exist`)
-        return res.redirect('/')
+        return res.redirect('/register')
       }
 
       const hash = bcrypt.hashSync(password, saltRounds)

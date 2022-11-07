@@ -23,15 +23,22 @@
                         </a>
                     </div>
 
-                    <div class="flex space-x-2 px-10 items-center">
-                        <h1>Show</h1>
-                        <input type="number" name="limit" class="border border-black/50 rounded-md pl-2.5 py-1">
-                        <h1>entries</h1>
+                    <div class="grid grid-flow-col items-center px-10 justify-between">
+                        <div class="flex items-center space-x-4">
+                            <h1>Show</h1>
+                            <input type="number" step="1" name="limit">
+                            <h1>entries</h1>
+                        </div>
+
+                        <div class=" flex space-x-2 items-center">
+                            <h1>Search</h1>
+                            <input type="text" name="search" class="border border-black/50 rounded-md py-1 px-2 w-auto">
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto relative px-4 pt-2 pb-6 rounded-md">
                         <div class="px-4 -py-2">
-                            <table class="w-full table-users">
+                            <table id="users-table" class="w-full table-users">
                                 <thead class="bg-transparent shadow-md">
                                     <tr class="text-left text-black">
                                         <th>User ID</th>
@@ -56,14 +63,17 @@
                                             <td>
                                                 <%= item.role %>
                                             </td>
-                                            <td class="text-white">
+                                            <td class="text-white flex space-x-2">
                                                 <a href="/users/edit/<%= item.userid %>"
                                                     class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500"><i
                                                         class="fa-solid fa-circle-info"></i></a>
 
-                                                <a href="/users/delete/<%= item.userid %>"
-                                                    class="transition modal-open bg-red-600 px-2 py-1 rounded-full hover:bg-red-500"><i
-                                                        class="fa-solid fa-trash"></i></a>
+                                                <button dataid="<%= item.userid %>"
+                                                    class="transition block modal-open text-white bg-red-600 hover:bg-red-700 font-medium rounded-full text-sm px-2.5 py-1 text-center"
+                                                    type="button" data-modal-toggle="popup-modal">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                                <%- include('../partials/deleteModals') %>
                                             </td>
                                         </tr>
                                         <% }) %>
@@ -78,14 +88,14 @@
                             </table>
                             <div class="flex justify-between mt-8 items-center">
                                 <div class="text-gray-500">
-                                    <h1>Showing 1 to 3 of 4 entries</h1>
+                                    <h1>Showing <%= page %> to <%= pages %> of <%= pages %> entries</h1>
                                 </div>
                                 <div id="pagination">
                                     <nav aria-label="Page navigation example">
                                         <ul class="inline-flex -space-x-px">
                                             <li>
                                                 <%if (page !=1 ) { %>
-                                                    <a href="<%=url.replace(`page${page}`, `page=${parseInt(page)-1}`) %>"
+                                                    <a href="<%=url.replace(`page=${page}`, `page=${parseInt(page)-1}`) %>"
                                                         class="py-1 px-3 ml-0 leading-tight text-gray-500 bg-white
                                                         rounded-l-lg border border-gray-300 hover:bg-gray-100
                                                         hover:text-gray-700">Previous</a>
@@ -102,7 +112,7 @@
                                                 <% } %>
                                                     <li>
                                                         <%if (page <=pages && page !=pages ) { %>
-                                                            <a href="<%=url.replace(`page${page}`, `page=${parseInt(page)+1}`) %>"
+                                                            <a href="<%=url.replace(`page=${page}`, `page=${parseInt(page)+1}`) %>"
                                                                 class="py-1 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Next</a>
                                                             <% } %>
                                                     </li>
@@ -116,4 +126,5 @@
                 </div>
         </section>
 
-        <%- include('../partials/footer.ejs') %>
+        <%- include('../partials/deleteModals.ejs') %>
+            <%- include('../partials/footer.ejs') %>

@@ -344,3 +344,10 @@ input[type=number] {
     padding-bottom: 12px;
     text-align: left;
 }
+
+input[type=number] {
+    width: 10%;
+    padding: 4px 0px 4px 10px;
+    border: 1px #000 solid;
+    border-radius: 6px;
+}

@@ -13,7 +13,7 @@ const pool = new Pool({
   host: 'localhost',
   database: 'posdb',
   password: '12345',
-  port: 5432,
+  port: 5432
 })
 
 const indexRouter = require('./routes/index')(pool);
