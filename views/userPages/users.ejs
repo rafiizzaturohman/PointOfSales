@@ -3,16 +3,16 @@
         <section class="home-section">
             <%- include('../partials/navbar.ejs') %>
 
-                <div class="mx-10">
+                <div class="mx-6 my-min-2">
                     <div class="text">
                         <h1>Users</h1>
 
-                        <p class="text-sm opacity-50">This is data of Users</p>
+                        <!-- <h1 class="text-sm opacity-50">This is data of Users</h1> -->
                     </div>
 
                 </div>
 
-                <div class="overflow-x-auto relative mx-10 my-4 space-y-6 bg-white rounded-lg drop-shadow-md">
+                <div class="overflow-x-auto relative mx-10 mt-4 space-y-6 bg-white rounded-lg drop-shadow-md">
                     <div class="bg-slate-400/10 px-6 py-4 border-b-2 border-black/10">
                         <a href="/users/add"
                             class="flex transition bg-blue-500 hover:bg-blue-600 w-24 text-white pr-3 rounded-md items-center font-semibold space-x-2">
@@ -21,19 +21,6 @@
                             </div>
                             <p>Add</p>
                         </a>
-                    </div>
-
-                    <div class="grid grid-flow-col items-center px-10 justify-between">
-                        <div class="flex items-center space-x-4">
-                            <h1>Show</h1>
-                            <input type="number" step="1" name="limit">
-                            <h1>entries</h1>
-                        </div>
-
-                        <div class=" flex space-x-2 items-center">
-                            <h1>Search</h1>
-                            <input type="text" name="search" class="border border-black/50 rounded-md py-1 px-2 w-auto">
-                        </div>
                     </div>
 
                     <div class="overflow-x-auto relative px-4 pt-2 pb-6 rounded-md">
@@ -71,57 +58,57 @@
                                                 <a href="/users/delete/<%= item.userid %>"
                                                     onclick="return confirm('Are you sure want to delete this data?')"
                                                     dataid="<%= item.userid %>"
-                                                    class="transition block modal-open text-white bg-red-600 hover:bg-red-700 font-medium rounded-full text-sm px-2.5 py-1 text-center"
+                                                    class="transition block modal-open text-white bg-red-600 hover:bg-red-700 font-medium rounded-full text-sm px-2.5 py-1 text-center items-center"
                                                     type="button" data-modal-toggle="popup-modal">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </a>
-                                                <%- include('../partials/deleteModals') %>
+                                                <%#- include('../partials/deleteModals') %>
                                             </td>
                                         </tr>
                                         <% }) %>
-                                            <tr class="text-left hover:bg-white text-black">
+                                            <!-- <tr class="text-left hover:bg-white text-black">
                                                 <td>User ID</td>
                                                 <td>Email</td>
                                                 <td>Name</td>
                                                 <td>Role</td>
                                                 <td>Action</td>
-                                            </tr>
+                                            </tr> -->
                                 </tbody>
                             </table>
-                            <div class="flex justify-between mt-8 items-center">
+                            <!-- <div class="flex justify-between mt-8 items-center">
                                 <div class="text-gray-500">
-                                    <h1>Showing <%= page %> to <%= pages %> of <%= pages %> entries</h1>
+                                    <h1>Showing <%#= page %> to <%#= pages %> of <%#= pages %> entries</h1>
                                 </div>
                                 <div id="pagination">
                                     <nav aria-label="Page navigation example">
                                         <ul class="inline-flex -space-x-px">
                                             <li>
-                                                <%if (page !=1 ) { %>
-                                                    <a href="<%=url.replace(`page=${page}`, `page=${parseInt(page)-1}`) %>"
+                                                <%#if (page !=1 ) { %>
+                                                    <a href="<%#=url.replace(`page=${page}`,`page=${parseInt(page)-1}`)%>"
                                                         class="py-1 px-3 ml-0 leading-tight text-gray-500 bg-white
                                                         rounded-l-lg border border-gray-300 hover:bg-gray-100
                                                         hover:text-gray-700">Previous</a>
-                                                    <% } %>
+                                                    <%# } %>
 
                                             </li>
-                                            <% for( let i=1; i <=pages; i++ ) { %>
-                                                <li class="<%= i == page ? 'active' : '' %> ">
-                                                    <a href="<%= url.replace(`page=${page}`, `page=${i}`) %> "
+                                            <%# for( let i=1; i <=pages; i++ ) { %>
+                                                <li class="<%#= i == page ? 'active' : '' %> ">
+                                                    <a href="<%#=url.replace(`page=${page}`,`page=${i}`) %>"
                                                         class="py-1 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-                                                        <%= i %>
+                                                        <%#= i %>
                                                     </a>
                                                 </li>
-                                                <% } %>
+                                                <%# } %>
                                                     <li>
-                                                        <%if (page <=pages && page !=pages ) { %>
-                                                            <a href="<%=url.replace(`page=${page}`, `page=${parseInt(page)+1}`) %>"
+                                                        <%#if (page <=pages && page !=pages ) { %>
+                                                            <a href="<%#=url.replace(`page=${page}`,`page=${parseInt(page)+1}`)%>"
                                                                 class="py-1 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Next</a>
-                                                            <% } %>
+                                                            <%# } %>
                                                     </li>
                                         </ul>
                                     </nav>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 

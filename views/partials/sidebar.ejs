@@ -1,5 +1,5 @@
 <body>
-    <div class="sidebar bg-gradient-to-tr from-blue-800 to-blue-500">
+    <div class="sidebar close bg-gradient-to-tr from-blue-800 to-blue-500">
         <div class="logo-details">
             <div class="text-sm -rotate-12">
                 <i class="fa-solid fa-face-laugh-squint icon"></i>
@@ -17,12 +17,25 @@
                 <span class="tooltip">Dashboard</span>
             </li>
             <hr>
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-wrench"></i>
-                    <span class="links_name">Goods Utilities</span>
-                </a>
-                <span class="tooltip">Goods Utilities</span>
+            <li class="iocn-link">
+                <div class="flex">
+                    <a href="#">
+                        <i class="fa-solid fa-wrench"></i>
+                        <span class="links_name">Goods Utilities</span>
+                    </a>
+                    <span class="tooltip">
+                        <ul class="sub-menu">
+                            <div>
+                                <li
+                                    class="links_name whitespace-nowrap text-white bg-blue-500 font-semibold px-2 py-1 rounded-lg">
+                                    GOOD UTILITIES
+                                </li>
+                                <li><a href="#">Goods</a></li>
+                                <li><a href="/units">Units</a></li>
+                            </div>
+                        </ul>
+                    </span>
+                </div>
             </li>
 
             <li>

@@ -9,28 +9,39 @@ module.exports = (db) => {
   // GET & VIEW DATA
   router.get('/', isLoggedIn, async (req, res, next) => {
     try {
-      console.log(req.url)
-      const url = req.url == '/' ? '/users/?page=1' : `/users${req.url}`
+      const sortBy = req.query.sortBy == undefined ? `userid` : req.query.sortBy;
+      const sortMode = req.query.sortMode == undefined ? `asc` : req.query.sortMode;
+
+      const url = req.url == '/' ? '/users/?page=1&sortBy=userid&sortMode=asc' : `/users${req.url}`
       const page = req.query.page || 1
       const limit = req.body.limit || 3
       const offset = (page - 1) * limit
+
+      const position = []
+      const values = []
+
+      if (req.query.search) {
+        position.push(`unit = $${count++}`)
+        values.push(req.query.search)
+      }
+
+      if (req.query.search) {
+        position.push(`name ilike '%' || $${count++} || '%' `)
+        values.push(req.query.search)
+      }
+
+      if (req.query.search) {
+        position.push(`role = $${count++}`)
+        values.push(req.query.search)
+      }
+
       let count = 1
 
-      let sql = 'SELECT COUNT(*) AS total FROM public."usersAccount"'
+      let sql = 'SELECT * FROM public."usersAccount"'
 
-      const data = await db.query(sql)
-      // console.log(data.rows, 'DATA')
+      const result = await db.query(sql)
 
-      const pages = Math.ceil(data.rows[0].total / limit)
-      // console.log(pages, 'PAGES')
-
-      sql = 'SELECT * FROM public."usersAccount"'
-      sql += ` LIMIT $${count++} OFFSET $${count++}`
-
-      const result = await db.query(sql, [limit, offset])
-      // console.log(result.rows, 'RESULT')
-
-      res.render('userPages/users', { user: req.session.user, data: result.rows, query: req.query, pages, page, limit, offset, url });
+      res.render('userPages/users', { user: req.session.user, data: result.rows, query: req.query, url });
     } catch (err) {
       console.log(err)
       res.send(err)

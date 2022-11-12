@@ -107,6 +107,24 @@
     transition: 0s;
 }
 
+.sidebar li .tooltip {
+    position: absolute;
+    top: -20px;
+    left: calc(100% + 15px);
+    z-index: 3;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 400;
+    opacity: 0;
+    left: 50px;
+    white-space: nowrap;
+    pointer-events: none;
+    transition: 0s;
+}
+
 .sidebar li:hover .tooltip {
     opacity: 1;
     pointer-events: auto;
@@ -169,7 +187,6 @@
     align-items: center;
     text-decoration: none;
     transition: all 0.4s ease;
-    /* background: #11101D; */
 }
 
 .sidebar li button .links_name {
@@ -190,7 +207,6 @@
     align-items: center;
     text-decoration: none;
     transition: all 0.4s ease;
-    /* background: #11101D; */
 }
 
 .sidebar li a:hover {
@@ -285,12 +301,13 @@
     background: none;
 }
 
+
 .home-section {
     position: relative;
     background: #e4e9f7;
     min-height: 100vh;
     top: 0;
-    left: 78px;
+    left: 76px;
     width: calc(100% - 78px);
     transition: all 0.5s ease;
     z-index: 2;
@@ -313,10 +330,6 @@
     .sidebar li .tooltip {
         display: none;
     }
-}
-
-input[type=number] {
-    width: 3%;
 }
 
 .table-users {

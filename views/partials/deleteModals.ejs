@@ -1,6 +1,12 @@
 <%- include('header') %>
 
     <body>
+        <button onclick="hideModal()"
+            class="transition block modal-open text-white bg-red-600 hover:bg-red-700 font-medium rounded-full text-sm px-2.5 py-1 text-center btn-delete"
+            type="button" data-modal-toggle="popup-modal">
+            <i class="fa-solid fa-trash"></i>
+        </button>
+
         <div id="popup-modal" tabindex="-1"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
             <div class="relative p-4 w-full max-w-md h-full md:h-auto">

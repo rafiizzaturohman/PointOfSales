@@ -33,17 +33,19 @@
                                         <br />
                                     </div>
 
-                                    <div class="flex space-x-32 px-10">
+                                    <div class="flex space-x-32 px-10 items-center">
                                         <label class="text-lg font-semibold">Role</label>
 
                                         <div class="space-y-2">
                                             <div class="flex items-center space-x-2">
-                                                <input type="radio" name="role" value=Operator id="Operator">
+                                                <input type="radio" name="role" value=Operator<%=item.role=='Operator'
+                                                    ? 'selected' : '' %> id="Operator">
                                                 <label for="Operator">Operator</label>
                                             </div>
 
                                             <div class="flex items-center space-x-2">
-                                                <input type="radio" name="role" value=Admin id="Admin">
+                                                <input type="radio" name="role" value=Admin<%=item.role=='Admin'
+                                                    ? 'selected' : '' %> id="Admin">
                                                 <label for="Admin">Admin</label>
                                             </div>
                                         </div>
