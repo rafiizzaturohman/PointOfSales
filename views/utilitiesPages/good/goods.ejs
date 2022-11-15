@@ -1,20 +1,20 @@
-<%- include('../partials/header.ejs') %>
-    <%- include('../partials/sidebar.ejs') %>
+<%- include('../../partials/header.ejs') %>
+    <%- include('../../partials/sidebar.ejs') %>
         <section class="home-section">
-            <%- include('../partials/navbar.ejs') %>
+            <%- include('../../partials/navbar.ejs') %>
 
                 <div class="mx-10">
                     <div class="text">
-                        <h1>Units</h1>
+                        <h1>Goods</h1>
 
-                        <p class="text-sm opacity-50">This is data of units</p>
+                        <p class="text-sm opacity-50">This is data of goods</p>
                     </div>
 
                 </div>
 
                 <div class="overflow-x-auto relative mx-10 my-4 space-y-6 bg-white rounded-lg drop-shadow-md">
                     <div class="bg-slate-400/10 px-6 py-4 border-b-2 border-black/10">
-                        <a href="/units/add"
+                        <a href="/goods/add"
                             class="flex transition bg-blue-500 hover:bg-blue-600 w-24 text-white pr-3 rounded-md items-center font-semibold space-x-2">
                             <div class="bg-blue-600 py-2 px-3 rounded-l-md">
                                 <i class="fa-solid fa-plus"></i>
@@ -28,41 +28,69 @@
                             <table id="units-table" class="w-full table-users">
                                 <thead class="bg-transparent shadow-md">
                                     <tr class="text-left text-black">
-                                        <th>Unit</th>
+                                        <th>Barcode</th>
                                         <th>Name</th>
-                                        <th>Note</th>
-                                        <th>Action</th>
+                                        <th>Stock</th>
+                                        <th>Purchase Price</th>
+                                        <th>Selling Price</th>
+                                        <th>Unit</th>
+                                        <th>Picture</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% data.forEach((item, index)=> { %>
                                         <tr id="loop">
                                             <td>
-                                                <%= item.unit %>
+                                                <%= item.barcode %>
                                             </td>
                                             <td>
                                                 <%= item.name %>
                                             </td>
                                             <td>
-                                                <%= item.note %>
+                                                <%= item.stock %>
+                                            </td>
+                                            <td>
+                                                Rp. <%= item.purchaseprice %>
+                                            </td>
+                                            <td>
+                                                Rp. <%= item.sellingprice %>
+                                            </td>
+                                            <td>
+                                                <%= item.unit %>
+                                            </td>
+                                            <td>
+                                                <%= item.picture %>
                                             </td>
                                             <td class="text-white flex space-x-2">
-                                                <a href="/units/edit/<%= item.unitid %>"
+                                                <a href="/goods/edit/<%= item.barcode %>"
                                                     class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500"><i
                                                         class="fa-solid fa-circle-info"></i></a>
 
-                                                <a href="/units/delete/<%= item.unitid %>"
+                                                <a href="/goods/delete/<%= item.barcode %>"
                                                     onclick="return confirm('Are you sure want to delete this data?')"
                                                     dataid="<%= item.userid %>"
                                                     class="transition block modal-open text-white bg-red-600 hover:bg-red-700 font-medium rounded-full text-sm px-2.5 py-1 text-center items-center"
                                                     type="button" data-modal-toggle="popup-modal">
                                                     <i class="fa-solid fa-trash"></i>
                                                 </a>
-                                                <%#- include('../partials/deleteModals') %>
+                                                <%#- include('../../partials/modal') %>
                                             </td>
                                         </tr>
                                         <% }) %>
                                 </tbody>
+                                <tfoot>
+                                    <tr class="text-left text-black">
+                                        <td>Barcode</td>
+                                        <td>Name</td>
+                                        <td>Stock</td>
+                                        <td>Purchase Price</td>
+                                        <td>Selling Price</td>
+                                        <td>Unit</td>
+                                        <td>Picture</td>
+                                        <td>Actions</td>
+                                    </tr>
+                                </tfoot>
                             </table>
                             <div class="flex justify-between mt-8 items-center">
                                 <div class="text-gray-500">
@@ -100,9 +128,6 @@
                             </div>
                         </div>
                     </div>
-
-                </div>
         </section>
-
-        <%- include('../partials/deleteModals.ejs') %>
-            <%- include('../partials/footer.ejs') %>
+        </div>
+        <%- include('../../partials/footer.ejs') %>

@@ -80,6 +80,10 @@ module.exports = (db) => {
     res.render('partials/side', { user: req.session.user });
   });
 
+  router.get('/modal', (req, res, next) => {
+    res.render('partials/deleteModals', { user: req.session.user });
+  });
+
   router.get('/logout', (req, res, next) => {
     req.session.destroy(function (err) {
       res.redirect('/')

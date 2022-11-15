@@ -9,39 +9,11 @@ module.exports = (db) => {
   // GET & VIEW DATA
   router.get('/', isLoggedIn, async (req, res, next) => {
     try {
-      const sortBy = req.query.sortBy == undefined ? `userid` : req.query.sortBy;
-      const sortMode = req.query.sortMode == undefined ? `asc` : req.query.sortMode;
-
-      const url = req.url == '/' ? '/users/?page=1&sortBy=userid&sortMode=asc' : `/users${req.url}`
-      const page = req.query.page || 1
-      const limit = req.body.limit || 3
-      const offset = (page - 1) * limit
-
-      const position = []
-      const values = []
-
-      if (req.query.search) {
-        position.push(`unit = $${count++}`)
-        values.push(req.query.search)
-      }
-
-      if (req.query.search) {
-        position.push(`name ilike '%' || $${count++} || '%' `)
-        values.push(req.query.search)
-      }
-
-      if (req.query.search) {
-        position.push(`role = $${count++}`)
-        values.push(req.query.search)
-      }
-
-      let count = 1
-
       let sql = 'SELECT * FROM public."usersAccount"'
 
       const result = await db.query(sql)
 
-      res.render('userPages/users', { user: req.session.user, data: result.rows, query: req.query, url });
+      res.render('userPages/users', { user: req.session.user, data: result.rows, query: req.query });
     } catch (err) {
       console.log(err)
       res.send(err)

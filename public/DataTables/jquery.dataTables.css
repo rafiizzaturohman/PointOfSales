@@ -563,9 +563,8 @@ table.dataTable td {
 .dataTables_wrapper .dataTables_filter input {
   border: 1px solid #aaa;
   border-radius: 0.5rem;
-  padding: 5px;
-  background-color: transparent;
-  margin-left: 3px;
+  padding: 5px 8px;
+  margin-left: 10px;
   margin-bottom: 1rem;
 }
 

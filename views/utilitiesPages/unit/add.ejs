@@ -1,11 +1,11 @@
-<%- include('../partials/header.ejs') %>
-    <%- include('../partials/sidebar.ejs') %>
+<%- include('../../partials/header.ejs') %>
+    <%- include('../../partials/sidebar.ejs') %>
         <section class="home-section">
-            <%- include('../partials/navbar.ejs') %>
+            <%- include('../../partials/navbar.ejs') %>
 
                 <div class="mx-10">
                     <div class="text">
-                        <h1>Users</h1>
+                        <h1 class="mx-6">Units</h1>
                     </div>
 
                     <div class="overflow-x-auto relative mx-10 my-0.5 space-y-6 bg-white rounded-lg drop-shadow-md">
@@ -14,7 +14,7 @@
                         </div>
 
                         <div>
-                            <form action="/utilities/add" method="post">
+                            <form action="/units/add" method="post">
                                 <div>
                                     <div class="flex space-x-29 px-10 items-center">
                                         <label for="unit" class="text-lg font-semibold">Unit</label>
@@ -66,4 +66,4 @@
                     </div>
         </section>
 
-        <%- include('../partials/footer.ejs') %>
+        <%- include('../../partials/footer.ejs') %>
