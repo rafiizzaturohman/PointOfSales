@@ -82,17 +82,12 @@ module.exports = (db) => {
             uploadPath = path.join(__dirname, '..', 'public', 'images', 'upload', imagefiles);
 
             // Use the mv() method to place the file somewhere on your server
-            picture.mv(uploadPath, function (err) {
-                if (err)
-                    return res.status(500).send(err);
-
-                req.flash('success', 'File Uploaded');
-            })
+            picture.mv(uploadPath)
 
             const { barcode, name, stock, purchaseprice, sellingprice, unit } = req.body
             const { rows: goods } = await db.query('SELECT * FROM public."goods" WHERE barcode = $1', [barcode])
             if (goods.length > 0) {
-                req.flash(error, 'Product already exist!')
+                req.flash('error', 'Product already exist!')
                 return res.redirect('/add')
             }
 
@@ -114,37 +109,32 @@ module.exports = (db) => {
     });
 
     router.post('/edit/:barcode', isLoggedIn, async (req, res, next) => {
-        try {
-            let picture;
-            let uploadPath;
+        let picture;
+        let uploadPath;
 
-            if (!req.files || Object.keys(req.files).length === 0) {
-                return res.status(400).send('No files were uploaded.');
-            }
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).send('No files were uploaded.');
+        }
 
-            // The name of the input field (i.e. "picture") is used to retrieve the uploaded file
-            picture = req.files.picture;
-            const imagefiles = `${Date.now()}-${picture.name}`
-            uploadPath = path.join(__dirname, '..', 'public', 'images', 'upload', imagefiles);
+        // The name of the input field (i.e. "picture") is used to retrieve the uploaded file
+        picture = req.files.picture;
+        const imagesfiles = `${Date.now()}-${picture.name}`
+        uploadPath = path.join(__dirname, '..', 'public', 'images', 'upload', imagesfiles);
 
-            // Use the mv() method to place the file somewhere on your server
-            picture.mv(uploadPath, function (err) {
-                if (err)
-                    return res.status(500).send(err);
-
-                req.flash('success', 'File Uploaded');
-            })
+        // Use the mv() method to place the file somewhere on your server
+        picture.mv(uploadPath, function (err) {
+            if (err)
+                return res.status(500).send(err);
 
             const { barcode } = req.params
             const { name, stock, purchaseprice, sellingprice, unit } = req.body
-
-            await db.query('UPDATE public."goods" SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [name, stock, purchaseprice, sellingprice, unit, imagefiles, barcode])
-
+            db.query('UPDATE goods SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [name, stock, purchaseprice, sellingprice, unit, imagesfiles, barcode])
+            if (err) {
+                console.log(err)
+                return console.error(err.message);
+            }
             res.redirect('/goods')
-        } catch (error) {
-            console.log(error)
-            res.send(error)
-        }
+        })
     })
 
     // DELETE DATA
