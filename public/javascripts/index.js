@@ -85,7 +85,7 @@ $(document).ready(function () {
                 render: function (data) {
                     return `
                     <div class="flex space-x-2">
-                        <a href="/units /edit/${data}" class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500 text-white"><i class="fa-solid fa-circle-info"></i></a>
+                        <a href="/units/edit/${data}" class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500 text-white"><i class="fa-solid fa-circle-info"></i></a>
 
                         <button class="transition block modal-open text-white bg-red-600 hover:bg-red-700 font-medium rounded-full text-sm px-2.5 py-1 text-center items-center" type="button" onclick="toggleModal('modal-delete${data}')"><i class="fa-solid fa-trash"></i></button>
 
