@@ -48,7 +48,7 @@ module.exports = (db) => {
   });
 
   router.get('/modal', (req, res, next) => {
-    res.render('partials/deleteModals');
+    res.render('partials/modal');
   });
 
   router.post('/register', async (req, res) => {

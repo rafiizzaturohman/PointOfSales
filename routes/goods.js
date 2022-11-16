@@ -55,10 +55,10 @@ module.exports = (db) => {
 
     router.post('/edit/:barcode', isLoggedIn, async (req, res, next) => {
         try {
-            const { barcode } = req.params
-            const { name, stock, purchaseprice, sellingprice, unit, picture } = req.body
+            const barKode = req.params.barcode
+            const { barcode, name, stock, purchaseprice, sellingprice, unit, picture } = req.body
 
-            await db.query('UPDATE public."goods" SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [barcode, name, stock, purchaseprice, sellingprice, unit, picture])
+            await db.query('UPDATE public."goods" SET barcode = $1, name = $2, stock = $3, purchaseprice = $4, sellingprice = $5, unit = $6, picture = $7 WHERE barcode = $8', [barcode, name, stock, purchaseprice, sellingprice, unit, picture, barKode])
 
             res.redirect('/goods')
         } catch (error) {

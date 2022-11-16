@@ -47,11 +47,11 @@
                                                 <%= item.note %>
                                             </td>
                                             <td class="text-white flex space-x-2">
-                                                <a href="/units/edit/<%= item.unitid %>"
+                                                <a href="/units/edit/<%= item.unit %>"
                                                     class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500"><i
                                                         class="fa-solid fa-circle-info"></i></a>
 
-                                                <a href="/units/delete/<%= item.unitid %>"
+                                                <a href="/units/delete/<%= item.unit %>"
                                                     onclick="return confirm('Are you sure want to delete this data?')"
                                                     dataid="<%= item.userid %>"
                                                     class="transition block modal-open text-white bg-red-600 hover:bg-red-700 font-medium rounded-full text-sm px-2.5 py-1 text-center items-center"

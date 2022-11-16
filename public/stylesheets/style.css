@@ -371,3 +371,7 @@ input[type=number] {
     border: 1px #000 solid;
     border-radius: 6px;
 }
+
+#logout {
+    cursor: pointer;
+}

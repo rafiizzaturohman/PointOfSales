@@ -30,9 +30,8 @@ module.exports = (db) => {
 
     router.post('/add', isLoggedIn, async (req, res, next) => {
         try {
-            const { unitid } = req.params
             const { unit, name, note } = req.body
-            const { rows: units } = await db.query('SELECT * FROM public."units" WHERE unitid = $1', [unitid])
+            const { rows: units } = await db.query('SELECT * FROM public."units" WHERE unit = $1', [unit])
             if (units.length > 0) {
                 req.flash('error', `Unit already exist`)
                 return res.redirect('/add')
@@ -48,20 +47,19 @@ module.exports = (db) => {
     })
 
     // EDIT DATA
-    router.get('/edit/:unitid', isLoggedIn, async (req, res, next) => {
-        const { unitid } = req.params
+    router.get('/edit/:unit', isLoggedIn, async (req, res, next) => {
+        const { unit } = req.params
 
-        const { rows: data } = await db.query('SELECT * FROM public."units" WHERE unitid = $1', [unitid])
+        const { rows: data } = await db.query('SELECT * FROM public."units" WHERE unit = $1', [unit])
 
         res.render('utilitiesPages/unit/edit', { user: req.session.user, item: data[0] });
     });
 
-    router.post('/edit/:unitid', isLoggedIn, async (req, res, next) => {
+    router.post('/edit/:unit', isLoggedIn, async (req, res, next) => {
         try {
-            const { unitid } = req.params
             const { unit, name, note } = req.body
 
-            await db.query('UPDATE public."units" SET unit = $1, name = $2, note = $3 WHERE unitid = $4', [unit, name, note, unitid])
+            await db.query('UPDATE public."units" SET unit = $1, name = $2, note = $3 WHERE unit = $4', [unit, name, note])
 
             res.redirect('/units')
         } catch (error) {
@@ -71,9 +69,9 @@ module.exports = (db) => {
     })
 
     // DELETE DATA
-    router.get('/delete/:unitid', isLoggedIn, async (req, res, next) => {
+    router.get('/delete/:unit', isLoggedIn, async (req, res, next) => {
         try {
-            await db.query('DELETE FROM public."units" WHERE unitid = $1', [req.params.unitid])
+            await db.query('DELETE FROM public."units" WHERE unit = $1', [req.params.unit])
 
             res.redirect('/units');
         } catch (err) {
