@@ -20,7 +20,6 @@ module.exports = (db) => {
     }
   });
 
-
   // ADD DATA
   router.get('/add', isLoggedIn, async (req, res, next) => {
     const data = await db.query('SELECT * FROM public."usersAccount"')

@@ -15,7 +15,7 @@
             <button class="dropbtn py-1">
                 <div class="flex items-center">
                     <div class="text-right text-sm px-4">
-                        <h1>
+                        <h1 class="font-semibold">
                             <%= user.name %>
                         </h1>
                         <h1>
@@ -33,11 +33,11 @@
                 <a href="#"><i class="fa-solid fa-bars-staggered"></i> Activity Log</a>
                 <hr>
 
-                <a id="logout" class="hover:rounded-b-lg p-4" type="button" onclick="toggleModal('modal-delete')"><i
+                <a id="logout" class="hover:rounded-b-lg p-4" type="button" onclick="toggleModal('modal-id')"><i
                         class="fa-solid fa-right-from-bracket"></i> Logout</a>
 
                 <div class="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center"
-                    id="modal-delete">
+                    id="modal-id">
                     <div class="relative w-auto my-6 mx-auto max-w-3xl">
                         <!--content-->
                         <div
@@ -50,7 +50,7 @@
                                 </h3>
                                 <button
                                     class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                    onclick="toggleModal('modal-delete')">
+                                    onclick="toggleModal('modal-id')">
                                     <span
                                         class="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
                                         ×
@@ -68,19 +68,19 @@
                                 class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                                 <button
                                     class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                    type="button" onclick="toggleModal('modal-delete')">
+                                    type="button" onclick="toggleModal('modal-id')">
                                     Close
                                 </button>
                                 <a href="/logout"
                                     class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                    onclick="toggleModal('modal-delete')">
+                                    onclick="toggleModal('modal-id')">
                                     Logout
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-delete-backdrop"></div>
+                <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-id-backdrop"></div>
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ const session = require('express-session')
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash')
+const fileUpload = require('express-fileupload')
 
 const { Pool } = require('pg');
 const pool = new Pool({
@@ -38,6 +39,7 @@ app.use(session({
   saveUninitialized: true
 }));
 app.use(flash());
+app.use(fileUpload());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

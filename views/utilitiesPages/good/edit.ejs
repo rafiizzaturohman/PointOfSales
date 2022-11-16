@@ -62,23 +62,22 @@
                                         <select name="unit" id="unit" class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2
                                             bg-transparent">
                                             <option value="" selected disabled>Choose Unit</option>
-                                            <option value="pcs<%=item.unit=='pcs' ? 'selected' : '' %>">Pieces
-                                            </option>
-                                            <option value="ltr<%=item.unit=='ltr' ? 'selected' : '' %>">Liter</option>
+                                            <option value="pcs" <%=item.unit=='pcs' ? 'selected' : '' %>>Pieces</option>
+                                            <option value="ltr" <%=item.unit=='ltr' ? 'selected' : '' %>>Liter</option>
                                         </select>
                                         <br />
                                     </div>
 
                                     <div class="flex space-x-24 px-10 items-center">
                                         <label for="picture" class="text-lg font-semibold">Picture</label>
-                                        <input type="file" accept="image/*" onchange="loadFile(event)"
+                                        <input type="file" name="picture" accept="image/*" onchange="loadFile(event)"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2">
                                         <br />
                                     </div>
 
                                     <div class="flex space-x-24 px-10 mt-6">
                                         <label for="picture" class="text-lg font-semibold">Preview</label>
-                                        <img id="output" class="w-auto border rounded-sm border-black" />
+                                        <img id="output" class="w-auto border rounded-sm border-black/25" />
                                     </div>
                                     <%#- include('../partials/alert.ejs') %>
                                 </div>

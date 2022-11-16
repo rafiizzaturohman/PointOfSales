@@ -47,10 +47,6 @@ module.exports = (db) => {
     res.render('register');
   });
 
-  router.get('/modal', (req, res, next) => {
-    res.render('partials/modal');
-  });
-
   router.post('/register', async (req, res) => {
     try {
       const { email, name, password, role } = req.body
@@ -73,25 +69,13 @@ module.exports = (db) => {
 
   // HOME
   router.get('/home', isLoggedIn, async (req, res, next) => {
-    res.render('page/home', { user: req.session.user });
-  });
-
-  router.get('/nav', (req, res, next) => {
-    res.render('partials/side', { user: req.session.user });
-  });
-
-  router.get('/modal', (req, res, next) => {
-    res.render('partials/deleteModals', { user: req.session.user });
+    res.render('dashboard/home', { user: req.session.user });
   });
 
   router.get('/logout', (req, res, next) => {
     req.session.destroy(function (err) {
       res.redirect('/')
     });
-  });
-
-  router.get('/modals', (req, res, next) => {
-    res.render('userPages/modals');
   });
 
   return router;

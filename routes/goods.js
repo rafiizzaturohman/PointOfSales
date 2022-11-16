@@ -18,6 +18,46 @@ module.exports = (db) => {
         }
     });
 
+    router.get('/datatable', async (req, res) => {
+        let params = []
+
+        if (req.query.search.value) {
+            params.push(`barcode ilike '%${req.query.search.value}%'`)
+        }
+        if (req.query.search.value) {
+            params.push(`name ilike '%${req.query.search.value}%'`)
+        }
+        if (req.query.search.value) {
+            params.push(`stock = '${req.query.search.value}'`)
+        }
+        if (req.query.search.value) {
+            params.push(`purchaseprice = '${req.query.search.value}'`)
+        }
+        if (req.query.search.value) {
+            params.push(`sellingprice = '${req.query.search.value}'`)
+        }
+        if (req.query.search.value) {
+            params.push(`unit ilike '%${req.query.search.value}%'`)
+        }
+        if (req.query.search.value) {
+            params.push(`picture ilike '%${req.query.search.value}%'`)
+        }
+
+        const limit = req.query.length
+        const offset = req.query.start
+        const sortBy = req.query.columns[req.query.order[0].column].data
+        const sortMode = req.query.order[0].dir
+
+        const total = await db.query(`select count(*) as total from goods${params.length > 0 ? ` where ${params.join(' or ')}` : ''}`)
+        const data = await db.query(`select * from goods${params.length > 0 ? ` where ${params.join(' or ')}` : ''} order by ${sortBy} ${sortMode} limit ${limit} offset ${offset} `)
+        const response = {
+            "draw": Number(req.query.draw),
+            "recordsTotal": total.rows[0].total,
+            "recordsFiltered": total.rows[0].total,
+            "data": data.rows
+        }
+        res.json(response)
+    })
 
     // ADD DATA
     router.get('/add', isLoggedIn, async (req, res, next) => {
@@ -31,7 +71,7 @@ module.exports = (db) => {
             const { barcode, name, stock, purchaseprice, sellingprice, unit, picture } = req.body
             const { rows: goods } = await db.query('SELECT * FROM public."goods" WHERE barcode = $1', [barcode])
             if (goods.length > 0) {
-                req.flash('error', 'Product already exist!')
+                req.flash(error, 'Product already exist!')
                 return res.redirect('/add')
             }
 
@@ -58,7 +98,7 @@ module.exports = (db) => {
             const barKode = req.params.barcode
             const { barcode, name, stock, purchaseprice, sellingprice, unit, picture } = req.body
 
-            await db.query('UPDATE public."goods" SET barcode = $1, name = $2, stock = $3, purchaseprice = $4, sellingprice = $5, unit = $6, picture = $7 WHERE barcode = $8', [barcode, name, stock, purchaseprice, sellingprice, unit, picture, barKode])
+            await db.query('UPDATE public."goods" SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [name, stock, purchaseprice, sellingprice, unit, picture, barKode])
 
             res.redirect('/goods')
         } catch (error) {
