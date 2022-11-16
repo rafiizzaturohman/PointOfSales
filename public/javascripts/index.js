@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('#users-table').DataTable({
-        "lengthMenu": [[3, 5, 10, -1], [3, 5, 10, 'All']],
+        "lengthMenu": [[3, 5, 10, 20], [3, 5, 10, 20]],
         "processing": true,
         "serverSide": true,
         "ajax": "/users/datatable",
@@ -229,7 +229,7 @@ $(document).ready(function () {
             }
         ]
     });
-})
+});
 
 var loadFile = function (event) {
     var reader = new FileReader();

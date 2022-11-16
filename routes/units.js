@@ -85,9 +85,10 @@ module.exports = (db) => {
 
     router.post('/edit/:unit', isLoggedIn, async (req, res, next) => {
         try {
+            const units = req.params.unit
             const { unit, name, note } = req.body
 
-            await db.query('UPDATE public."units" SET unit = $1, name = $2, note = $3 WHERE unit = $4', [unit, name, note])
+            await db.query('UPDATE public."units" SET unit = $1, name = $2, note = $3 WHERE unit = $4', [unit, name, note, units])
 
             res.redirect('/units')
         } catch (error) {
