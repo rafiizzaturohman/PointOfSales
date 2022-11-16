@@ -20,10 +20,25 @@ $(document).ready(function () {
             { "data": "barcode" },
             { "data": "name" },
             { "data": "stock" },
-            { "data": "purchaseprice" },
-            { "data": "sellingprice" },
+            {
+                "data": "purchaseprice",
+                render: function (data) {
+                    return `Rp. ${data}`
+                }
+            },
+            {
+                "data": "sellingprice",
+                render: function (data) {
+                    return `Rp. ${data}`
+                }
+            },
             { "data": "unit" },
-            { "data": "picture" },
+            {
+                "data": "picture",
+                render: function (data) {
+                    return `<img src="/images/upload/${data}" class="w-auto"></img>`
+                }
+            },
             {
                 "data": "barcode",
                 render: function (data) {

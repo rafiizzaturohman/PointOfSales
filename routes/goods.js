@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path')
 
 const { isLoggedIn } = require('../helpers/util')
 
@@ -68,18 +69,37 @@ module.exports = (db) => {
 
     router.post('/add', isLoggedIn, async (req, res, next) => {
         try {
-            const { barcode, name, stock, purchaseprice, sellingprice, unit, picture } = req.body
+            let picture;
+            let uploadPath;
+
+            if (!req.files || Object.keys(req.files).length === 0) {
+                return res.status(400).send('No files were uploaded.');
+            }
+
+            // The name of the input field (i.e. "picture") is used to retrieve the uploaded file
+            picture = req.files.picture;
+            const imagefiles = `${Date.now()}-${picture.name}`
+            uploadPath = path.join(__dirname, '..', 'public', 'images', 'upload', imagefiles);
+
+            // Use the mv() method to place the file somewhere on your server
+            picture.mv(uploadPath, function (err) {
+                if (err)
+                    return res.status(500).send(err);
+
+                req.flash('success', 'File Uploaded');
+            })
+
+            const { barcode, name, stock, purchaseprice, sellingprice, unit } = req.body
             const { rows: goods } = await db.query('SELECT * FROM public."goods" WHERE barcode = $1', [barcode])
             if (goods.length > 0) {
                 req.flash(error, 'Product already exist!')
                 return res.redirect('/add')
             }
 
-            await db.query('INSERT INTO public."goods" (barcode, name, stock, purchaseprice, sellingprice, unit, picture) VALUES ($1, $2, $3, $4, $5, $6, $7)', [barcode, name, stock, purchaseprice, sellingprice, unit, picture])
+            await db.query('INSERT INTO public."goods" (barcode, name, stock, purchaseprice, sellingprice, unit, picture) VALUES ($1, $2, $3, $4, $5, $6, $7)', [barcode, name, stock, purchaseprice, sellingprice, unit, imagefiles])
 
             res.redirect('/goods')
         } catch (error) {
-            req.flash('error', 'Product already exist!')
             res.send(error)
         }
     })
@@ -95,10 +115,30 @@ module.exports = (db) => {
 
     router.post('/edit/:barcode', isLoggedIn, async (req, res, next) => {
         try {
-            const barKode = req.params.barcode
-            const { barcode, name, stock, purchaseprice, sellingprice, unit, picture } = req.body
+            let picture;
+            let uploadPath;
 
-            await db.query('UPDATE public."goods" SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [name, stock, purchaseprice, sellingprice, unit, picture, barKode])
+            if (!req.files || Object.keys(req.files).length === 0) {
+                return res.status(400).send('No files were uploaded.');
+            }
+
+            // The name of the input field (i.e. "picture") is used to retrieve the uploaded file
+            picture = req.files.picture;
+            const imagefiles = `${Date.now()}-${picture.name}`
+            uploadPath = path.join(__dirname, '..', 'public', 'images', 'upload', imagefiles);
+
+            // Use the mv() method to place the file somewhere on your server
+            picture.mv(uploadPath, function (err) {
+                if (err)
+                    return res.status(500).send(err);
+
+                req.flash('success', 'File Uploaded');
+            })
+
+            const { barcode } = req.params
+            const { name, stock, purchaseprice, sellingprice, unit } = req.body
+
+            await db.query('UPDATE public."goods" SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [name, stock, purchaseprice, sellingprice, unit, imagefiles, barcode])
 
             res.redirect('/goods')
         } catch (error) {
