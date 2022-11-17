@@ -12,7 +12,7 @@ module.exports = (db) => {
 
             const result = await db.query(sql)
 
-            res.render('utilitiesPages/good/goods', { user: req.session.user, data: result.rows, query: req.query });
+            res.render('utilitiesPages/good/list', { user: req.session.user, data: result.rows, query: req.query });
         } catch (err) {
             console.log(err)
             res.send(err)
