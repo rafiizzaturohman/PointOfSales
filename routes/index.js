@@ -10,7 +10,8 @@ module.exports = (db) => {
   router.get('/', (req, res, next) => {
     res.render('login', {
       success: req.flash('success'),
-      error: req.flash('error')
+      error: req.flash('error'),
+      currentPage: 'Point Of Sales'
     });
   });
 
@@ -44,7 +45,7 @@ module.exports = (db) => {
 
   // REGISTER
   router.get('/register', (req, res, next) => {
-    res.render('register');
+    res.render('register', { currentPage: 'Point Of Sales' });
   });
 
   router.post('/register', async (req, res) => {
@@ -69,7 +70,7 @@ module.exports = (db) => {
 
   // HOME
   router.get('/home', isLoggedIn, async (req, res, next) => {
-    res.render('dashboard/home', { user: req.session.user });
+    res.render('dashboard/home', { user: req.session.user, currentPage: 'POS - Dashboard' });
   });
 
   router.get('/logout', (req, res, next) => {

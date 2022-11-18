@@ -12,7 +12,7 @@ module.exports = (db) => {
 
             const result = await db.query(sql)
 
-            res.render('utilitiesPages/good/list', { user: req.session.user, data: result.rows, query: req.query });
+            res.render('utilitiesPages/good/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Goods' });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -52,7 +52,7 @@ module.exports = (db) => {
     router.get('/add', isLoggedIn, async (req, res, next) => {
         const data = await db.query('SELECT * FROM public."goods"')
 
-        res.render('utilitiesPages/good/add', { user: req.session.user, data: data.rows });
+        res.render('utilitiesPages/good/add', { user: req.session.user, data: data.rows, currentPage: 'POS - Goods' });
     });
 
     router.post('/add', isLoggedIn, async (req, res, next) => {
@@ -93,7 +93,7 @@ module.exports = (db) => {
 
         const { rows: data } = await db.query('SELECT * FROM public."goods" WHERE barcode = $1', [barcode])
 
-        res.render('utilitiesPages/good/edit', { user: req.session.user, item: data[0] });
+        res.render('utilitiesPages/good/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Goods' });
     });
 
     router.post('/edit/:barcode', isLoggedIn, async (req, res, next) => {
@@ -117,6 +117,7 @@ module.exports = (db) => {
 
                 const { barcode } = req.params
                 const { name, stock, purchaseprice, sellingprice, unit } = req.body
+
                 db.query('UPDATE goods SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [name, stock, purchaseprice, sellingprice, unit, imagesfiles, barcode])
                 if (err) {
                     console.log(err)

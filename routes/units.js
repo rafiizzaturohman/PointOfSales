@@ -13,7 +13,7 @@ module.exports = (db) => {
 
             const result = await db.query(sql)
 
-            res.render('utilitiesPages/unit/list', { user: req.session.user, data: result.rows, query: req.query });
+            res.render('utilitiesPages/unit/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Units' });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -53,7 +53,7 @@ module.exports = (db) => {
     router.get('/add', isLoggedIn, async (req, res, next) => {
         const data = await db.query('SELECT * FROM public."units"')
 
-        res.render('utilitiesPages/unit/add', { user: req.session.user, data: data.rows });
+        res.render('utilitiesPages/unit/add', { user: req.session.user, data: data.rows, currentPage: 'POS - Units' });
     });
 
     router.post('/add', isLoggedIn, async (req, res, next) => {
@@ -80,7 +80,7 @@ module.exports = (db) => {
 
         const { rows: data } = await db.query('SELECT * FROM public."units" WHERE unit = $1', [unit])
 
-        res.render('utilitiesPages/unit/edit', { user: req.session.user, item: data[0] });
+        res.render('utilitiesPages/unit/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Units' });
     });
 
     router.post('/edit/:unit', isLoggedIn, async (req, res, next) => {

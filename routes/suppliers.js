@@ -13,7 +13,7 @@ module.exports = (db) => {
 
             const result = await db.query(sql)
 
-            res.render('suppliersPages/list', { user: req.session.user, data: result.rows, query: req.query });
+            res.render('suppliersPages/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Suppliers' });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -53,7 +53,7 @@ module.exports = (db) => {
     router.get('/add', isLoggedIn, async (req, res, next) => {
         const data = await db.query('SELECT * FROM public."suppliers"')
 
-        res.render('suppliersPages/add', { user: req.session.user, data: data.rows });
+        res.render('suppliersPages/add', { user: req.session.user, data: data.rows, currentPage: 'POS - Suppliers' });
     });
 
     router.post('/add', isLoggedIn, async (req, res, next) => {
@@ -75,7 +75,7 @@ module.exports = (db) => {
 
         const { rows: data } = await db.query('SELECT * FROM public."suppliers" WHERE supplierid = $1', [supplierid])
 
-        res.render('suppliersPages/edit', { user: req.session.user, item: data[0] });
+        res.render('suppliersPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Suppliers' });
     });
 
     router.post('/edit/:supplierid', isLoggedIn, async (req, res, next) => {

@@ -13,7 +13,7 @@ module.exports = (db) => {
 
       const result = await db.query(sql)
 
-      res.render('userPages/list', { user: req.session.user, data: result.rows, query: req.query });
+      res.render('userPages/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Users' });
     } catch (err) {
       console.log(err)
       res.send(err)
@@ -50,7 +50,7 @@ module.exports = (db) => {
   router.get('/add', isLoggedIn, async (req, res, next) => {
     const data = await db.query('SELECT * FROM public."usersAccount"')
 
-    res.render('userPages/add', { user: req.session.user, data: data.rows });
+    res.render('userPages/add', { user: req.session.user, data: data.rows, currentPage: 'POS - Users' });
   });
 
   router.post('/add', isLoggedIn, async (req, res, next) => {
