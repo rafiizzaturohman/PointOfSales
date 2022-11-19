@@ -309,7 +309,12 @@ $(document).ready(function () {
         "ajax": "/purchases/datatable",
         "columns": [
             { "data": "invoice" },
-            { "data": "time" },
+            {
+                "data": "time",
+                render: function (data) {
+                    return `${moment(data).format('DD MMM YYYY h:mm:ss')}`
+                }
+            },
             {
                 "data": "totalsum",
                 render: function (data) {

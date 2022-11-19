@@ -19,7 +19,7 @@
                                     <div class="grid grid-cols-3 space-x-4 px-10 items-center">
                                         <div>
                                             <label for="invoice" class="text-lg font-semibold">Invoice</label>
-                                            <input type="text" name="invoice" placeholder="Invoice" 
+                                            <input type="text" name="invoice" placeholder="Invoice"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                                 readonly>
                                         </div>
@@ -67,7 +67,7 @@
                                             <label for="" class="text-lg font-semibold">Purchase Price</label>
                                             <input type="text" name="operator"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                                required>
+                                                readonly>
                                         </div>
                                         <div>
                                             <label for="name" class="text-lg font-semibold">Qty</label>
@@ -97,7 +97,7 @@
 
                             <div class="space-y-6">
                                 <hr>
-                                <table class="w-full table-users">
+                                <table id="tableOfItems" class="w-full table-users">
                                     <thead>
                                         <tr>
                                             <th>No.</th>

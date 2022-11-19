@@ -41,13 +41,36 @@ module.exports = (db) => {
             "data": data.rows
         }
         res.json(response)
-    })
+    });
 
     // ADD DATA
     router.get('/add', isLoggedIn, async (req, res, next) => {
-        const data = await db.query('SELECT * FROM public."purchases"')
+        const data = await db.query('SELECT * FROM public."purchaseitems"')
 
         res.render('purchasesPages/add', { user: req.session.user, data: data.rows, item: data[0], currentPage: 'POS - Purchases' });
+    });
+
+    router.get('/datatables', async (req, res) => {
+        let params = []
+
+        if (req.query.search.value) {
+            params.push(`invoice ilike '%${req.query.search.value}%'`)
+        }
+
+        const limit = req.query.length
+        const offset = req.query.start
+        const sortBy = req.query.columns[req.query.order[0].column].data
+        const sortMode = req.query.order[0].dir
+
+        const total = await db.query(`SELECT COUNT(*) AS total FROM public."purchaseitems"${params.length > 0 ? ` where ${params.join(' or ')}` : ''}`)
+        const data = await db.query(`SELECT * FROM public."purchaseitems"${params.length > 0 ? ` where ${params.join(' or ')}` : ''} order by ${sortBy} ${sortMode} limit ${limit} offset ${offset} `)
+        const response = {
+            "draw": Number(req.query.draw),
+            "recordsTotal": total.rows[0].total,
+            "recordsFiltered": total.rows[0].total,
+            "data": data.rows
+        }
+        res.json(response)
     });
 
     router.post('/add', isLoggedIn, async (req, res, next) => {

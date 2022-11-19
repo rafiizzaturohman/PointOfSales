@@ -98,33 +98,26 @@ module.exports = (db) => {
 
     router.post('/edit/:barcode', isLoggedIn, async (req, res, next) => {
         try {
+            const { barcode } = req.params
+            const { name, stock, purchaseprice, sellingprice, unit } = req.body
+
             let picture;
             let uploadPath;
 
             if (!req.files || Object.keys(req.files).length === 0) {
-                return res.status(400).send('No files were uploaded.');
+                await db.query('UPDATE goods SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5 WHERE barcode = $6', [name, stock, purchaseprice, sellingprice, unit, barcode])
+            } else {
+                // The name of the input field (i.e. "picture") is used to retrieve the uploaded file
+                picture = req.files.picture;
+                const imagesfiles = `${Date.now()}-${picture.name}`
+                uploadPath = path.join(__dirname, '..', 'public', 'images', 'upload', imagesfiles);
+
+                // Use the mv() method to place the file somewhere on your server
+                picture.mv(uploadPath)
+
+                await db.query('UPDATE goods SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [name, stock, purchaseprice, sellingprice, unit, imagesfiles, barcode])
             }
-
-            // The name of the input field (i.e. "picture") is used to retrieve the uploaded file
-            picture = req.files.picture;
-            const imagesfiles = `${Date.now()}-${picture.name}`
-            uploadPath = path.join(__dirname, '..', 'public', 'images', 'upload', imagesfiles);
-
-            // Use the mv() method to place the file somewhere on your server
-            picture.mv(uploadPath, function (err) {
-                if (err)
-                    return res.status(500).send(err);
-
-                const { barcode } = req.params
-                const { name, stock, purchaseprice, sellingprice, unit } = req.body
-
-                db.query('UPDATE goods SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [name, stock, purchaseprice, sellingprice, unit, imagesfiles, barcode])
-                if (err) {
-                    console.log(err)
-                    return console.error(err.message);
-                }
-                res.redirect('/goods')
-            })
+            res.redirect('/goods')
         } catch (err) {
             console.log(err)
         }
