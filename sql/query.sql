@@ -1,7 +1,7 @@
 -- INVOICE FORMAT
 CREATE OR REPLACE FUNCTION increment(i integer) RETURNS integer AS $$
     BEGIN
-    	return 'INV-' || to_char(current_date, 'YYYYMMDD') || - nextval('invoice_seq');
+    	return 'INV-' || to_char(current_timestamp, 'YYYYMMDD') || - nextval('invoice_seq');
     END;
 $$ LANGUAGE plpgsql;
 
@@ -54,18 +54,18 @@ AFTER INSERT OR UPDATE OR DELETE ON purchaseitems
 
 
 -- PRICE UPDATE
-    CREATE OR REPLACE FUNCTION price_update() RETURNS TRIGGER AS $set_totalprice$
-        DECLARE
-        itempurchaseprices NUMERIC;
-        BEGIN
-            SELECT purchaseprice INTO itempurchaseprices FROM goods WHERE barcode = NEW.itemcode;
-            NEW.purchaseprice := itempurchaseprices;
-            NEW.totalprice := NEW.quantity * itempurchaseprices;
-                
-            RETURN NEW;
-        END;
-    $set_totalprice$ LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION price_update() RETURNS TRIGGER AS $set_totalprice$
+    DECLARE
+    itempurchaseprices NUMERIC;
+    BEGIN
+        SELECT purchaseprice INTO itempurchaseprices FROM goods WHERE barcode = NEW.itemcode;
+        NEW.purchaseprice := itempurchaseprices;
+        NEW.totalprice := NEW.quantity * itempurchaseprices;
+            
+        RETURN NEW;
+    END;
+$set_totalprice$ LANGUAGE plpgsql;
 
-    CREATE TRIGGER set_purchases
-    BEFORE INSERT OR UPDATE ON purchaseitems
-        FOR EACH ROW EXECUTE FUNCTION price_update();
+CREATE TRIGGER set_purchases
+BEFORE INSERT OR UPDATE ON purchaseitems
+    FOR EACH ROW EXECUTE FUNCTION price_update();

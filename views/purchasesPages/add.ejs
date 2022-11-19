@@ -108,6 +108,30 @@
                                             <th>Total Price</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        <% data.forEach((item, index)=> { %>
+                                            <tr>
+                                                <td>
+                                                    <%= index + 1 %>
+                                                </td>
+                                                <td>
+                                                    <%= item.itemcode %>
+                                                </td>
+                                                <td>
+                                                    <%= item.name %>
+                                                </td>
+                                                <td>
+                                                    <%= item.quantity %>
+                                                </td>
+                                                <td>
+                                                    <%= item.purchaseprice %>
+                                                </td>
+                                                <td>
+                                                    <%= item.totalprice %>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                    </tbody>
                                 </table>
                             </div>
 
