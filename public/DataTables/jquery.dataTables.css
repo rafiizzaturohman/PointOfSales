@@ -577,7 +577,6 @@ table.dataTable td {
 .dataTables_wrapper .dataTables_paginate {
   float: right;
   text-align: right;
-  padding: 0.25em 0;
   border: 1px solid #000;
   border-radius: 0.5rem;
   margin-top: 1rem;
@@ -588,19 +587,17 @@ table.dataTable td {
   display: inline-block;
   min-width: 1.5em;
   padding: 4px 12px;
-  margin-left: 1px;
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;
   color: inherit !important;
-  border: 1px solid transparent;
-  border-radius: 0.5rem;
+  border-left: 1px solid #000;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
   color: inherit !important;
-  background-color: #93c5fd;
+  background-color: #58a6fe;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
