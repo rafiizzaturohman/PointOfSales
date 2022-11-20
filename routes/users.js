@@ -78,7 +78,7 @@ module.exports = (db) => {
 
     const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
 
-    res.render('userPages/edit', { user: req.session.user, item: data[0] });
+    res.render('userPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Users' });
   });
 
   router.post('/edit/:userid', isLoggedIn, async (req, res, next) => {
