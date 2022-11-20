@@ -21,19 +21,19 @@
                                             <label for="invoice" class="text-lg font-semibold">Invoice</label>
                                             <input type="text" name="invoice" placeholder="Invoice"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                                readonly>
+                                                value="<%= item.invoice %>" readonly>
                                         </div>
                                         <div>
                                             <label for="time" class="text-lg font-semibold">Time</label>
                                             <input type="text" name="time" placeholder="Time"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                                readonly>
+                                                value="<%= item.time %>" readonly>
                                         </div>
                                         <div>
                                             <label for="operator" class="text-lg font-semibold">Operator</label>
                                             <input type="text" name="operator" placeholder="Operator Name"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                                readonly>
+                                                value="<%= item.operator %>" readonly>
                                         </div>
                                         <br />
                                     </div>
@@ -108,6 +108,10 @@
                                             <th>Total Price</th>
                                         </tr>
                                     </thead>
+
+                                    <tbody>
+
+                                    </tbody>
                                 </table>
                             </div>
 

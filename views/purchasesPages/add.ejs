@@ -14,49 +14,54 @@
                         </div>
 
                         <div>
-                            <form action="" method="post">
+                            <form id="detail-form" action="" method="post">
                                 <div>
                                     <div class="grid grid-cols-3 space-x-4 px-10 items-center">
                                         <div>
                                             <label for="invoice" class="text-lg font-semibold">Invoice</label>
                                             <input type="text" name="invoice" placeholder="Invoice"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                                readonly>
+                                                value="<%= purchases.invoice %>" readonly>
                                         </div>
                                         <div>
                                             <label for="time" class="text-lg font-semibold">Time</label>
                                             <input type="text" name="time" placeholder="Time"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
+                                                value="<%= moment(purchases.time).format('DD MMM YYYY HH:mm:ss') %>"
                                                 readonly>
                                         </div>
                                         <div>
                                             <label for="operator" class="text-lg font-semibold">Operator</label>
                                             <input type="text" name="operator" placeholder="Operator Name"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                                readonly>
+                                                value="<%= user.name %>" readonly>
                                         </div>
                                         <br />
                                     </div>
                                     <hr class="mb-4 mt-min-2">
                                     <div class="grid grid-cols-3 space-x-4 px-10 items-center">
                                         <div>
-                                            <label for="" class="text-lg font-semibold">Goods Barcode</label>
+                                            <label for=barcode"" class="text-lg font-semibold">Goods Barcode</label>
                                             <select type="text" name="barcode"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                                 required>
                                                 <option value="" selected disabled>-- Select item --</option>
-                                                <option value="">-- Select item 2 --</option>
+                                                <% goods.forEach(item=> { %>
+                                                    <option value="<%= item.barcode %> ">
+                                                        <%= item.barcode + ' - ' + item.name %>
+                                                    </option>
+                                                    <% }) %>
                                             </select>
                                         </div>
                                         <div>
                                             <label for="name" class="text-lg font-semibold">Goods Name</label>
-                                            <input type="text" name="operator"
+                                            <input type="text" name="name" id="name"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                                 readonly>
                                         </div>
                                         <div>
-                                            <label for="name" class="text-lg font-semibold">Operator</label>
-                                            <input type="text" name="operator"
+                                            <label for="stock" class="text-lg font-semibold">Stock</label>
+                                            <input type="text" name="stock" id="stock"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                                 readonly>
                                         </div>
@@ -64,20 +69,21 @@
 
                                     <div class="grid grid-cols-3 space-x-4 px-10 items-center">
                                         <div>
-                                            <label for="" class="text-lg font-semibold">Purchase Price</label>
-                                            <input type="text" name="operator"
+                                            <label for="purchaseprice" class="text-lg font-semibold">Purchase
+                                                Price</label>
+                                            <input type="text" name="purchaseprice" id="purchaseprice"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                                 readonly>
                                         </div>
                                         <div>
-                                            <label for="name" class="text-lg font-semibold">Qty</label>
-                                            <input type="text" name="operator"
+                                            <label for="quantity" class="text-lg font-semibold">Qty</label>
+                                            <input type="text" name="quantity" id="quantity"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                                 required>
                                         </div>
                                         <div>
-                                            <label for="name" class="text-lg font-semibold">Total Price</label>
-                                            <input type="text" name="operator"
+                                            <label for="totalprice" class="text-lg font-semibold">Total Price</label>
+                                            <input type="text" name="totalprice" id="totalprice"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                                 required>
                                         </div>
@@ -93,53 +99,27 @@
                                         <p>Add</p>
                                     </button>
                                 </div>
-                            </form>
 
-                            <div class="space-y-6">
-                                <hr>
-                                <table id="tableOfItems" class="w-full table-users">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Barcode</th>
-                                            <th>Name</th>
-                                            <th>Qty</th>
-                                            <th>Price</th>
-                                            <th>Total Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% data.forEach((item, index)=> { %>
+                                <div class="space-y-6">
+                                    <hr>
+                                    <table id="tableOfItems" class="w-full table-users">
+                                        <thead>
                                             <tr>
-                                                <td>
-                                                    <%= index + 1 %>
-                                                </td>
-                                                <td>
-                                                    <%= item.itemcode %>
-                                                </td>
-                                                <td>
-                                                    <%= item.name %>
-                                                </td>
-                                                <td>
-                                                    <%= item.quantity %>
-                                                </td>
-                                                <td>
-                                                    <%= item.purchaseprice %>
-                                                </td>
-                                                <td>
-                                                    <%= item.totalprice %>
-                                                </td>
+                                                <th>No.</th>
+                                                <th>Barcode</th>
+                                                <th>Name</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Total Price</th>
                                             </tr>
-                                            <% }) %>
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                    </table>
+                                </div>
 
-                            <div class="bg-slate-400/10 px-10 py-4 border-t-2 border-black/10">
-                                <form action="" method="post">
+                                <div class="bg-slate-400/10 px-10 py-4 border-t-2 border-black/10">
                                     <div class="flex whitespace-nowrap items-center space-x-8">
                                         <label for="name" class="text-lg font-semibold">Total Price</label>
-                                        <input type="text" name="operator"
+                                        <input type="text" name="totalsum" value=""
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                             readonly>
                                     </div>
@@ -167,10 +147,10 @@
                                             <p>Back</p>
                                         </a>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                </div>
         </section>
-
         <%- include('../partials/footer.ejs') %>

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const currencyFormatter = require('currency-formatter')
+const moment = require('moment')
 
 const saltRounds = 10;
 const { isLoggedIn } = require('../helpers/util')
@@ -10,7 +11,7 @@ module.exports = (db) => {
     // GET & VIEW DATA
     router.get('/', isLoggedIn, async (req, res, next) => {
         try {
-            const sql = 'SELECT * FROM public."purchases"'
+            const sql = ''
 
             const result = await db.query(sql)
 
@@ -44,61 +45,100 @@ module.exports = (db) => {
         res.json(response)
     });
 
-    // ADD DATA
-    router.get('/add', isLoggedIn, async (req, res, next) => {
-        const { rows } = await db.query('SELECT * FROM public."purchases"')
-        const noInvoice = req.query.noInvoice
-        const data = await db.query('SELECT * FROM public."purchaseitems" WHERE invoice = $1')
+    router.get('/create', isLoggedIn, async (req, res, next) => {
+        try {
+            const { rows: data } = await db.query('INSERT INTO purchases(totalsum) VALUES(0) returning *')
+            res.redirect(`/purchases/show/${data[0].invoice}`)
+        } catch (err) {
+            console.log(err)
+        }
+    });
 
-        res.render('purchasesPages/add', { user: req.session.user, data: data.rows, item: data[0], currentPage: 'POS - Purchases', rows });
+    router.get('/show/:invoice', isLoggedIn, async (req, res, next) => {
+        try {
+            const { rows: purchases } = await db.query('SELECT * FROM purchases WHERE invoice = $1', [req.params.invoice])
+            const { rows: goods } = await db.query('SELECT barcode, name FROM goods ORDER BY barcode')
+            const { rows: supplier } = await db.query('SELECT name FROM suppliers ORDER BY supplierid')
+
+            res.render('purchasesPages/add', { currentPage: 'POS - Purchases', user: req.session.user, purchases: purchases[0], goods, supplier, moment })
+        } catch (err) {
+            console.log(err);
+            res.send(err)
+        }
+    });
+
+    router.post('/show:invoice', isLoggedIn, async (req, res) => {
+        try {
+            const { invoice } = req.params
+            const { time, totalsum, supplier, operator } = req.body
+            await db.query('UPDATE purchases SET time = $1, totalsum = $2, supplier = $3, operator = $4  WHERE invoice = $5', [time, totalsum, supplier, operator, invoice])
+            await db.query('INSERT INTO public.purchases(invoice, "time", totalsum, supplier, operator)VALUES ($1, $2, $3, $4, $5)', [time, totalsum, supplier, operator, invoice])
+            req.flash('success', 'Transaction success!')
+            res.redirect('/purchases')
+        } catch (error) {
+            console.log(error)
+            req.flash('error', 'Transaction Fail!')
+            return res.redirect('/purchases')
+        }
+    });
+
+    router.get('/goods/:barcode', isLoggedIn, async (req, res, next) => {
+        try {
+            const { barcode } = req.params
+            const { rows: good } = await db.query('SELECT * FROM goods WHERE barcode = $1', [barcode])
+
+            res.json(good[0])
+        } catch (err) {
+            res.send(err)
+        }
     });
 
     router.post('/add', isLoggedIn, async (req, res, next) => {
         try {
-            const { invoice, time, totalsum, supplier, operator } = req.body
+            const { invoice, itemcode, quantity } = req.body
 
-            await db.query('INSERT INTO public."purchases" (invoice, time, totalsum, supplier, operator) VALUES ($1, $2, $3, $4, $5)', [invoice, time, totalsum, supplier, operator])
+            const details = await db.query('INSERT INTO public."purchaseitems" (invoice, itemcode, quantity) VALUES ($1, $2, $3)', [invoice, itemcode, quantity])
+            const { rows: data } = await db.query('SELECT * FROM purchases WHERE invoice = $1', [invoice])
 
-            res.redirect('/purchase')
-        } catch (error) {
-            console.log(error)
-            res.send(error)
-        }
-    })
-
-    // EDIT DATA
-    router.get('/edit/:invoice', isLoggedIn, async (req, res, next) => {
-        const { invoice } = req.params
-
-        const { rows: data } = await db.query('SELECT * FROM public."purchases" WHERE invoice = $1', [invoice])
-
-        res.render('purchasesPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Purchases' });
-    });
-
-    router.post('/edit/:invoice', isLoggedIn, async (req, res, next) => {
-        try {
-            const inpoice = req.params.invoice
-            const { invoice, time, totalsum, supplier, operator } = req.body
-
-            await db.query('UPDATE public."purchases" SET invoice = $1, time = $2, totalsum = $3, supplier = $4, operator = $5 WHERE invoice = $6', [invoice, time, totalsum, supplier, operator, inpoice])
-
-            res.redirect('/purchase')
-        } catch (error) {
-            console.log(error)
-            res.send(error)
-        }
-    })
-
-    // DELETE DATA
-    router.get('/delete/:invoice', isLoggedIn, async (req, res, next) => {
-        try {
-            await db.query('DELETE FROM public."purchases" WHERE invoice = $1', [req.params.invoice])
-
-            res.redirect('/purchase');
+            res.json(data[0])
         } catch (err) {
             console.log(err)
             res.send(err)
         }
     });
+
+    router.get('/details/:invoice', isLoggedIn, async (req, res, next) => {
+        try {
+            const { rows: data } = await db.query('SELECT purchaseitems.*, goods.name FROM purchaseitems LEFT JOIN goods ON purchaseitems.itemcode = goods.barcode WHERE purchaseitems.invoice = $1 ORDER BY purchaseitems.id', [req.params.invoice])
+
+            res.json(data)
+        } catch (err) {
+            console.log(err)
+        }
+    });
+
+    router.get('/deleteitems/:id', isLoggedIn, async (req, res, next) => {
+        try {
+            const { invoice } = req.params
+            const items = await db.query('DELETE FROM public."purchaseitems" WHERE invoice $1', [invoice])
+
+            res.redirect('/purchases')
+        } catch (err) {
+            console.log(err)
+        }
+    });
+
+    router.delete('deleteitem/:id', isLoggedIn, async (req, res, next) => {
+        try {
+            const { id } = req.params
+            await db.query('DELETE FROM purchaseitems WHERE id = $1', [id])
+            const { rows: data } = await db.query('SELECT SUM(totalsum) AS total FROM purchaseitems WHERE invoice = $1', [req.params.invoice])
+
+            res.json(data)
+        } catch (err) {
+            console.log(err)
+        }
+    })
+
     return router;
 }

@@ -143,7 +143,7 @@ $(document).ready(function () {
     });
 
     $('#goods-table').DataTable({
-        "lengthMenu": [[3, 5, 10, -1], [3, 5, 10, 'All']],
+        "lengthMenu": [[3, 5, 10, 100], [3, 5, 10, 100]],
         "processing": true,
         "serverSide": true,
         "ajax": "/goods/datatable",
@@ -327,7 +327,7 @@ $(document).ready(function () {
                 render: function (data) {
                     return `
                     <div class="flex space-x-2">
-                        <a href="/suppliers/edit/${data}" class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500 text-white"><i class="fa-solid fa-circle-info"></i></a>
+                        <a href="/purchases/edit/${data}" class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500 text-white"><i class="fa-solid fa-circle-info"></i></a>
                     </div>
                     `
                 }

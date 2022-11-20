@@ -1,0 +1,56 @@
+    // ADD DATA
+    router.get('/add', isLoggedIn, async (req, res, next) => {
+        const { rows: item } = await db.query('SELECT *, goods.name FROM public."purchaseitems" JOIN public."goods" ON purchaseitems.itemcode = goods.barcode')
+
+        res.render('purchasesPages/add', { user: req.session.user, item: item, currentPage: 'POS - Purchases' });
+    });
+
+    
+
+    router.post('/add', isLoggedIn, async (req, res, next) => {
+        try {
+            const { invoice, time, totalsum, supplier, operator } = req.body
+
+            await db.query('INSERT INTO public."purchases" (invoice, time, totalsum, supplier, operator) VALUES ($1, $2, $3, $4, $5)', [invoice, time, totalsum, supplier, operator])
+
+            res.redirect('/purchase')
+        } catch (error) {
+            console.log(error)
+            res.send(error)
+        }
+    })
+
+    // EDIT DATA
+    router.get('/edit/:invoice', isLoggedIn, async (req, res, next) => {
+        const { invoice } = req.params
+
+        const { rows: data } = await db.query('SELECT * FROM public."purchases" WHERE invoice = $1', [invoice])
+
+        res.render('purchasesPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Purchases' });
+    });
+
+    router.post('/edit/:invoice', isLoggedIn, async (req, res, next) => {
+        try {
+            const inpoice = req.params.invoice
+            const { invoice, time, totalsum, supplier, operator } = req.body
+
+            await db.query('UPDATE public."purchases" SET invoice = $1, time = $2, totalsum = $3, supplier = $4, operator = $5 WHERE invoice = $6', [invoice, time, totalsum, supplier, operator, inpoice])
+
+            res.redirect('/purchase')
+        } catch (error) {
+            console.log(error)
+            res.send(error)
+        }
+    })
+
+    // DELETE DATA
+    router.get('/delete/:invoice', isLoggedIn, async (req, res, next) => {
+        try {
+            await db.query('DELETE FROM public."purchases" WHERE invoice = $1', [req.params.invoice])
+
+            res.redirect('/purchase');
+        } catch (err) {
+            console.log(err)
+            res.send(err)
+        }
+    });

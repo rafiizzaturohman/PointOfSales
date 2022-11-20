@@ -6,7 +6,6 @@ CREATE OR REPLACE FUNCTION increment(i integer) RETURNS integer AS $$
 $$ LANGUAGE plpgsql;
 
 
-
 -- INSERT QUERY
 INSERT INTO public.purchaseitems(
 	invoice, itemcode, quantity)
@@ -17,7 +16,6 @@ ALTER SEQUENCE sequence_name RESTART WITH 1
 
 -- DROP TRIGGER FUNC
 DROP TRIGGER [ IF EXISTS ] name ON table_name [ CASCADE | RESTRICT ]
-
 
 
 -- TRIGGER FUNCTION

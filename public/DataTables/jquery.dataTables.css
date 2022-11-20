@@ -577,7 +577,10 @@ table.dataTable td {
 .dataTables_wrapper .dataTables_paginate {
   float: right;
   text-align: right;
-  padding-top: 0.25em;
+  padding: 0.25em 0;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
