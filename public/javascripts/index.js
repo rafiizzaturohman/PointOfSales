@@ -303,7 +303,7 @@ $(document).ready(function () {
     });
 
     $('#purchases-table').DataTable({
-        "lengthMenu": [[3, 5, 10, 100], [3, 5, 10, 100]],
+        "lengthMenu": [[3, 5, 10, 20], [3, 5, 10, 20]],
         "processing": true,
         "serverSide": true,
         "ajax": "/purchases/datatable",
@@ -312,7 +312,7 @@ $(document).ready(function () {
             {
                 "data": "time",
                 render: function (data) {
-                    return `${moment(data).format('DD MMM YYYY h:mm:ss')}`
+                    return `${moment(data).format('DD MMM YYYY HH:mm:ss')}`
                 }
             },
             {
@@ -327,7 +327,7 @@ $(document).ready(function () {
                 render: function (data) {
                     return `
                     <div class="flex space-x-2">
-                        <a href="/purchases/edit/${data}" class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500 text-white"><i class="fa-solid fa-circle-info"></i></a>
+                        <a href="/purchases/show/${data}" class="transition bg-green-600 px-2 py-1 rounded-full hover:bg-green-500 text-white"><i class="fa-solid fa-circle-info"></i></a>
                     </div>
                     `
                 }

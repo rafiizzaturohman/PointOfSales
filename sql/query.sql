@@ -7,9 +7,7 @@ $$ LANGUAGE plpgsql;
 
 
 -- INSERT QUERY
-INSERT INTO public.purchaseitems(
-	invoice, itemcode, quantity)
-	VALUES ('INV-20221119-1', 8850389108314, 5);
+INSERT INTO public.purchaseitems (invoice, itemcode, quantity) VALUES ('INV-20221119-1', 8850389108314, 24);
 
 -- RESET SEQUENCE
 ALTER SEQUENCE sequence_name RESTART WITH 1
