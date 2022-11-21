@@ -3,7 +3,7 @@
 
     $(document).ready(function () {
         readDetails()
-        //munculin detail barang ketika dipiih barcode
+
         $('#barcode').change(function () {
             const barcode = $(this).val()
             $.get(`/purchases/goods/${barcode}`).done(function (data) {
