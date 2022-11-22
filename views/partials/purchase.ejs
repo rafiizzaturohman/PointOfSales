@@ -20,7 +20,7 @@
             const quantity = $('#quantity').val()
             const purchaseprice = $('#purchaseprice').val()
             console.log(quantity, purchaseprice)
-            $('#totalprice').val(currencyFormatter.format(purchaseprice * quantity))
+            $('#totalprice').val(purchaseprice * quantity)
         })
 
 
@@ -30,12 +30,12 @@
             const quantity = $('#quantity').val()
             $.post('/purchases/add', { invoice, itemcode, quantity }).done(function (data) {
                 readDetails()
-                $('#totalsum').val(currencyFormatter.format(data.totalsum))
+                $('#totalsum').val(data.totalsum)
             })
         })
     })
 
- 
+
     const readDetails = () => {
         $.get(`/purchases/details/${invoice}`).done(function (data) {
             let html = ''

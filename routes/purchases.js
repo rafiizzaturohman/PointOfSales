@@ -67,12 +67,12 @@ module.exports = (db) => {
         try {
             const { invoice } = req.params
             const { time, totalsum, supplier, operator } = req.body
-            await db.query('UPDATE purchases SET time = $1, totalsum = $2, supplier = $3, operator = $4  WHERE invoice = $5', [time, totalsum, supplier, operator, invoice])
+            console.log(time)
+            await db.query('UPDATE public."purchases" SET "time"=$1, totalsum=$2, supplier=$3, operator = $4 WHERE invoice = $5;', [time, totalsum, supplier, operator, invoice])
 
             res.redirect('/purchases')
         } catch (error) {
             console.log(error)
-            req.flash('error', 'Transaction Fail!')
             return res.redirect('/purchases')
         }
     });

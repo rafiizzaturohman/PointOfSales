@@ -321,7 +321,7 @@ $(document).ready(function () {
                     return `${currencyFormatter.format(data)}`
                 }
             },
-            { "data": "supplier" },
+            { "data": "name" },
             {
                 "data": "invoice",
                 render: function (data) {
