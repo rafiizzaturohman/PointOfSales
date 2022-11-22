@@ -68,7 +68,6 @@ module.exports = (db) => {
             const { invoice } = req.params
             const { time, totalsum, supplier, operator } = req.body
             await db.query('UPDATE purchases SET time = $1, totalsum = $2, supplier = $3, operator = $4  WHERE invoice = $5', [time, totalsum, supplier, operator, invoice])
-            await db.query('INSERT INTO public.purchases(invoice, "time", totalsum, supplier, operator)VALUES ($1, $2, $3, $4, $5)', [time, totalsum, supplier, operator, invoice])
 
             res.redirect('/purchases')
         } catch (error) {
@@ -93,7 +92,7 @@ module.exports = (db) => {
         try {
             const { invoice, itemcode, quantity } = req.body
 
-            await db.query('INSERT INTO public.purchaseitems(invoice, itemcode, quantity) VALUES ($1, $2, $3)', [invoice, itemcode, quantity])
+            await db.query('INSERT INTO purchaseitems(invoice, itemcode, quantity) VALUES ($1, $2, $3)', [invoice, itemcode, quantity])
             const { rows: data } = await db.query('SELECT * FROM purchases WHERE invoice = $1', [invoice])
 
             res.json(data[0])
@@ -114,7 +113,7 @@ module.exports = (db) => {
         }
     });
 
-    router.get('/deleteitems/:invoice', isLoggedIn, async (req, res, next) => {
+    router.get('/delete/:invoice', isLoggedIn, async (req, res, next) => {
         try {
             const { invoice } = req.params
             await db.query('DELETE FROM public."purchases" WHERE invoice = $1', [invoice])
@@ -125,11 +124,24 @@ module.exports = (db) => {
         }
     });
 
+    router.get('/deleteitems/:id', isLoggedIn, async (req, res, next) => {
+        try {
+            const { id } = req.params
+            const { rows: data } = await db.query('DELETE FROM purchaseitems WHERE id = $1 returning *', [id])
+
+            console.log(data)
+            res.redirect(`/purchases/show/${data[0].invoice}`)
+        } catch (err) {
+            console.log(err)
+        }
+    });
+
     router.delete('deleteitem/:id', isLoggedIn, async (req, res, next) => {
         try {
             const { id } = req.params
             await db.query('DELETE FROM purchaseitems WHERE id = $1', [id])
-            const { rows: data } = await db.query('SELECT SUM(totalsum) AS total FROM purchaseitems WHERE invoice = $1', [req.params.invoice])
+
+            const { rows: data } = await db.query('SELECT SUM(totalsum) FROM purchaseitems WHERE invoice = $1', [req.params.invoice])
 
             res.json(data)
         } catch (err) {

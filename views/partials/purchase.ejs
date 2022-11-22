@@ -17,8 +17,9 @@
 
 
         $('#quantity').keyup(() => {
-            const quantity = $(this).val()
+            const quantity = $('#quantity').val()
             const purchaseprice = $('#purchaseprice').val()
+            console.log(quantity, purchaseprice)
             $('#totalprice').val(currencyFormatter.format(purchaseprice * quantity))
         })
 
@@ -34,7 +35,7 @@
         })
     })
 
-
+ 
     const readDetails = () => {
         $.get(`/purchases/details/${invoice}`).done(function (data) {
             let html = ''
