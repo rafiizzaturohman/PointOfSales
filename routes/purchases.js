@@ -11,11 +11,7 @@ module.exports = (db) => {
     // GET & VIEW DATA
     router.get('/', isLoggedIn, async (req, res, next) => {
         try {
-            const sql = ''
-
-            const result = await db.query(sql)
-
-            res.render('purchasesPages/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Purchases' });
+            res.render('purchasesPages/list', { user: req.session.user, query: req.query, currentPage: 'POS - Purchases' });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -121,7 +117,7 @@ module.exports = (db) => {
     router.get('/deleteitems/:invoice', isLoggedIn, async (req, res, next) => {
         try {
             const { invoice } = req.params
-            await db.query('DELETE FROM public."purchaseitems" WHERE invoice $1', [invoice])
+            await db.query('DELETE FROM public."purchases" WHERE invoice = $1', [invoice])
 
             res.redirect('/purchases')
         } catch (err) {

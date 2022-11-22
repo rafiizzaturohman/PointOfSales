@@ -38,13 +38,13 @@
 
                                         <div class="space-y-2">
                                             <div class="flex items-center space-x-2">
-                                                <input type="radio" name="role" value=Operator<%=item.role=='Operator'
-                                                    ? 'checked' : '' %> id="Operator">
+                                                <input type="radio" name="role" value="Operator"
+                                                    <%=item.role=='Operator' ? 'checked' : '' %> id="Operator">
                                                 <label for="Operator">Operator</label>
                                             </div>
 
                                             <div class="flex items-center space-x-2">
-                                                <input type="radio" name="role" value=Admin<%=item.role=='Admin'
+                                                <input type="radio" name="role" value="Admin" <%=item.role=='Admin'
                                                     ? 'checked' : '' %> id="Admin">
                                                 <label for="Admin">Admin</label>
                                             </div>

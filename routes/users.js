@@ -74,11 +74,15 @@ module.exports = (db) => {
 
   // EDIT DATA
   router.get('/edit/:userid', isLoggedIn, async (req, res, next) => {
-    const { userid } = req.params
+    try {
+      const { userid } = req.params
 
-    const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
+      const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
 
-    res.render('userPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Users' });
+      res.render('userPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Users' });
+    } catch (error) {
+      console.log(err)
+    }
   });
 
   router.post('/edit/:userid', isLoggedIn, async (req, res, next) => {
