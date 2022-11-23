@@ -366,7 +366,7 @@ $(document).ready(function () {
                                             type="button" onclick="toggleModal('modal-delete${data}')">
                                             No
                                         </button>
-                                        <a href="/purchases/deleteitems/${data}"
+                                        <a href="/purchases/delete/${data}"
                                             class="bg-emerald-500 text-white active:bg-emerald-600 font-semibold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                             onclick="toggleModal('modal-delete')">
                                             Yes

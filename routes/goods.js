@@ -37,8 +37,8 @@ module.exports = (db) => {
         const sortBy = req.query.columns[req.query.order[0].column].data
         const sortMode = req.query.order[0].dir
 
-        const total = await db.query(`select count(*) as total from public."goods"${params.length > 0 ? ` where ${params.join(' or ')}` : ''}`)
-        const data = await db.query(`select * from public."goods"${params.length > 0 ? ` where ${params.join(' or ')}` : ''} order by ${sortBy} ${sortMode} limit ${limit} offset ${offset} `)
+        const total = await db.query(`select count(*) as total from goods${params.length > 0 ? ` where ${params.join(' or ')}` : ''}`)
+        const data = await db.query(`select * from goods${params.length > 0 ? ` where ${params.join(' or ')}` : ''} order by ${sortBy} ${sortMode} limit ${limit} offset ${offset} `)
         const response = {
             "draw": Number(req.query.draw),
             "recordsTotal": total.rows[0].total,
@@ -50,9 +50,10 @@ module.exports = (db) => {
 
     // ADD DATA
     router.get('/add', isLoggedIn, async (req, res, next) => {
-        const data = await db.query('SELECT * FROM public."goods"')
+        const data = await db.query('SELECT * FROM goods')
+        const { rows: unit } = await db.query('SELECT * FROM units')
 
-        res.render('utilitiesPages/good/add', { user: req.session.user, data: data.rows, currentPage: 'POS - Goods' });
+        res.render('utilitiesPages/good/add', { user: req.session.user, data: data.rows, units: unit, currentPage: 'POS - Goods' });
     });
 
     router.post('/add', isLoggedIn, async (req, res, next) => {

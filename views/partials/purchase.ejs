@@ -19,14 +19,13 @@
         $('#quantity').keyup(() => {
             const quantity = $('#quantity').val()
             const purchaseprice = $('#purchaseprice').val()
-            console.log(quantity, purchaseprice)
             $('#totalprice').val(purchaseprice * quantity)
         })
 
 
         $('#detail-form').submit(function (event) {
             event.preventDefault();
-            const itemcode = $(barcode).val()
+            const itemcode = $('#barcode').val()
             const quantity = $('#quantity').val()
             $.post('/purchases/add', { invoice, itemcode, quantity }).done(function (data) {
                 readDetails()

@@ -66,9 +66,9 @@ module.exports = (db) => {
     router.post('/show/:invoice', isLoggedIn, async (req, res) => {
         try {
             const { invoice } = req.params
-            const { time, totalsum, supplier, operator } = req.body
-            console.log(time)
-            await db.query('UPDATE public."purchases" SET "time"=$1, totalsum=$2, supplier=$3, operator = $4 WHERE invoice = $5;', [time, totalsum, supplier, operator, invoice])
+            const { totalsum, supplier, operator } = req.body
+
+            await db.query('UPDATE purchases SET totalsum = $1, supplier = $2, operator = $3 WHERE invoice = $4', [totalsum, supplier, operator, invoice])
 
             res.redirect('/purchases')
         } catch (error) {
@@ -116,7 +116,8 @@ module.exports = (db) => {
     router.get('/delete/:invoice', isLoggedIn, async (req, res, next) => {
         try {
             const { invoice } = req.params
-            await db.query('DELETE FROM public."purchases" WHERE invoice = $1', [invoice])
+
+            await db.query('DELETE FROM purchases WHERE invoice = $1', [invoice])
 
             res.redirect('/purchases')
         } catch (err) {
@@ -135,19 +136,6 @@ module.exports = (db) => {
             console.log(err)
         }
     });
-
-    router.delete('deleteitem/:id', isLoggedIn, async (req, res, next) => {
-        try {
-            const { id } = req.params
-            await db.query('DELETE FROM purchaseitems WHERE id = $1', [id])
-
-            const { rows: data } = await db.query('SELECT SUM(totalsum) FROM purchaseitems WHERE invoice = $1', [req.params.invoice])
-
-            res.json(data)
-        } catch (err) {
-            console.log(err)
-        }
-    })
 
     return router;
 }

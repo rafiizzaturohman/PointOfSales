@@ -62,8 +62,11 @@
                                         <select name="unit" id="unit"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2 bg-transparent">
                                             <option value="" selected disabled>Choose Unit</option>
-                                            <option value="pcs">Pieces</option>
-                                            <option value="ltr">Liter</option>
+                                            <% units.forEach(item=> { %>
+                                                <option value="<%= item.unit %>">
+                                                    <%= item.name %>
+                                                </option>
+                                                <% }) %>
                                         </select>
                                         <br />
                                     </div>
