@@ -17,7 +17,42 @@ DROP TRIGGER [ IF EXISTS ] name ON table_name [ CASCADE | RESTRICT ]
 
 
 -- TRIGGER FUNCTION
--- STOCK UPDATE 
+-- STOCK UPDATE ++
+CREATE OR REPLACE FUNCTION update_purchases() RETURNS TRIGGER AS $set_purchases$
+    DECLARE
+    old_stock INTEGER;
+    price_sum NUMERIC;
+    current_invoice TEXT;
+    BEGIN
+        IF (TG_OP = 'INSERT') THEN
+            SELECT stock INTO old_stock FROM goods WHERE barcode = NEW.itemcode;
+            UPDATE goods SET stock = old_stock - NEW.quantity WHERE barcode = NEW.itemcode;
+			current_invoice := NEW.invoice;
+
+        ELSIF (TG_OP = 'UPDATE') THEN
+            SELECT stock INTO old_stock FROM goods WHERE barcode = NEW.itemcode;
+            UPDATE goods SET stock = old_stock + OLD.quantity - NEW.quantity WHERE barcode = NEW.itemcode;
+			current_invoice := NEW.invoice;
+
+        ELSIF (TG_OP = 'DELETE') THEN
+            SELECT stock INTO old_stock FROM goods WHERE barcode = OLD.itemcode;
+            UPDATE goods SET stock = old_stock + OLD.quantity WHERE barcode = OLD.itemcode;
+			current_invoice := OLD.invoice;
+			
+        END IF;
+		
+        SELECT coalesce(sum(totalprice), 0) INTO price_sum FROM purchaseitems WHERE invoice = current_invoice;
+        UPDATE purchases SET totalsum = price_sum WHERE invoice = current_invoice;
+			
+        RETURN NULL;
+    END;
+$set_purchases$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_purchases
+AFTER INSERT OR UPDATE OR DELETE ON purchaseitems
+    FOR EACH ROW EXECUTE FUNCTION update_purchases();
+
+
 CREATE OR REPLACE FUNCTION update_purchases() RETURNS TRIGGER AS $set_purchases$
     DECLARE
     old_stock INTEGER;

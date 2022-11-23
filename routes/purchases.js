@@ -66,9 +66,9 @@ module.exports = (db) => {
     router.post('/show/:invoice', isLoggedIn, async (req, res) => {
         try {
             const { invoice } = req.params
-            const { totalsum, supplier, operator } = req.body
+            const { totalsum, supplier } = req.body
 
-            await db.query('UPDATE purchases SET totalsum = $1, supplier = $2, operator = $3 WHERE invoice = $4', [totalsum, supplier, operator, invoice])
+            await db.query('UPDATE purchases SET totalsum = $1, supplier = $2, operator = $3 WHERE invoice = $4', [totalsum, supplier, invoice])
 
             res.redirect('/purchases')
         } catch (error) {
