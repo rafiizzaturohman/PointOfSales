@@ -11,7 +11,7 @@
                 $('#stock').val(data.stock)
                 $('#purchaseprice').val(data.purchaseprice)
                 $('#quantity').val(0)
-                $('#totalprice').val(data.totalprice)
+                $('#totalprice').val(currencyFormatter.format(data.totalprice))
             })
         })
 
@@ -19,7 +19,7 @@
         $('#quantity').keyup(() => {
             const quantity = $('#quantity').val()
             const purchaseprice = $('#purchaseprice').val()
-            $('#totalprice').val(purchaseprice * quantity)
+            $('#totalprice').val(currencyFormatter.format(purchaseprice * quantity))
         })
 
 
@@ -29,7 +29,7 @@
             const quantity = $('#quantity').val()
             $.post('/purchases/add', { invoice, itemcode, quantity }).done(function (data) {
                 readDetails()
-                $('#totalsum').val(data.totalsum)
+                $('#totalsum').val(currencyFormatter.format(data.totalsum))
             })
         })
     })

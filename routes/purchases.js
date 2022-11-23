@@ -43,7 +43,9 @@ module.exports = (db) => {
 
     router.get('/create', isLoggedIn, async (req, res, next) => {
         try {
-            const { rows: data } = await db.query('INSERT INTO purchases(totalsum) VALUES(0) returning *')
+            const { userid } = req.session.user
+
+            const { rows: data } = await db.query('INSERT INTO purchases(totalsum, operator) VALUES(0, $1) returning *', [userid])
             res.redirect(`/purchases/show/${data[0].invoice}`)
         } catch (err) {
             console.log(err)
@@ -68,7 +70,7 @@ module.exports = (db) => {
             const { invoice } = req.params
             const { totalsum, supplier } = req.body
 
-            await db.query('UPDATE purchases SET totalsum = $1, supplier = $2, operator = $3 WHERE invoice = $4', [totalsum, supplier, invoice])
+            await db.query('UPDATE purchases SET totalsum = $1, supplier = $2 WHERE invoice = $3', [totalsum, supplier, invoice])
 
             res.redirect('/purchases')
         } catch (error) {

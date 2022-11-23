@@ -39,7 +39,7 @@
 
                                             <input type="text" name="operator" placeholder="Operator Name"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                                value="<%= user.userid %>" readonly required>
+                                                value="<%= user.name %>" readonly required>
                                         </div>
                                         <br />
                                     </div>
@@ -152,7 +152,7 @@
 
                                         <select type="text" name="supplier" id="supplier"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2">
-                                            <option value="" selected readonly>-- Supplier Name --</option>
+                                            <option value="" selected>-- Supplier Name --</option>
                                             <% supplier.forEach(item=> { %>
                                                 <option value="<%= item.supplierid %>">
                                                     <%= item.supplierid + ' - ' + item.name %>
