@@ -69,8 +69,9 @@ module.exports = (db) => {
         try {
             const { invoice } = req.params
             const { totalsum, supplier } = req.body
+            const { userid } = req.session.user
 
-            await db.query('UPDATE purchases SET totalsum = $1, supplier = $2 WHERE invoice = $3', [totalsum, supplier, invoice])
+            await db.query('UPDATE purchases SET totalsum = $1, supplier = $2, operator = $3 WHERE invoice = $4', [totalsum, supplier, userid, invoice])
 
             res.redirect('/purchases')
         } catch (error) {
@@ -132,7 +133,6 @@ module.exports = (db) => {
             const { id } = req.params
             const { rows: data } = await db.query('DELETE FROM purchaseitems WHERE id = $1 returning *', [id])
 
-            console.log(data)
             res.redirect(`/purchases/show/${data[0].invoice}`)
         } catch (err) {
             console.log(err)

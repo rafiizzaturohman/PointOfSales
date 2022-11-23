@@ -11,7 +11,7 @@
                 $('#stock').val(data.stock)
                 $('#purchaseprice').val(data.purchaseprice)
                 $('#quantity').val(0)
-                $('#totalprice').val(currencyFormatter.format(data.totalprice))
+                $('#totalprice').val(data.totalprice)
             })
         })
 
@@ -19,7 +19,7 @@
         $('#quantity').keyup(() => {
             const quantity = $('#quantity').val()
             const purchaseprice = $('#purchaseprice').val()
-            $('#totalprice').val(currencyFormatter.format(purchaseprice * quantity))
+            $('#totalprice').val(purchaseprice * quantity)
         })
 
 
