@@ -476,8 +476,18 @@ $(document).ready(function () {
                     return `${currencyFormatter.format(data)}`
                 }
             },
-            { "data": "pay" },
-            { "data": "change" },
+            {
+                "data": "pay",
+                render: function (data) {
+                    return `${currencyFormatter.format(data)}`
+                }
+            },
+            {
+                "data": "change",
+                render: function (data) {
+                    return `${currencyFormatter.format(data)}`
+                }
+            },
             { "data": "name" },
             {
                 "data": "invoice",

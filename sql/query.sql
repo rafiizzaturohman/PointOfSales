@@ -59,41 +59,6 @@ AFTER INSERT OR UPDATE OR DELETE ON purchaseitems
     FOR EACH ROW EXECUTE FUNCTION update_purchases();
 
 
-CREATE OR REPLACE FUNCTION update_purchases() RETURNS TRIGGER AS $set_purchases$
-    DECLARE
-    old_stock INTEGER;
-    price_sum NUMERIC;
-    current_invoice TEXT;
-    BEGIN
-        IF (TG_OP = 'INSERT') THEN
-            SELECT stock INTO old_stock FROM goods WHERE barcode = NEW.itemcode;
-            UPDATE goods SET stock = old_stock - NEW.quantity WHERE barcode = NEW.itemcode;
-			current_invoice := NEW.invoice;
-
-        ELSIF (TG_OP = 'UPDATE') THEN
-            SELECT stock INTO old_stock FROM goods WHERE barcode = NEW.itemcode;
-            UPDATE goods SET stock = old_stock + OLD.quantity - NEW.quantity WHERE barcode = NEW.itemcode;
-			current_invoice := NEW.invoice;
-
-        ELSIF (TG_OP = 'DELETE') THEN
-            SELECT stock INTO old_stock FROM goods WHERE barcode = OLD.itemcode;
-            UPDATE goods SET stock = old_stock + OLD.quantity WHERE barcode = OLD.itemcode;
-			current_invoice := OLD.invoice;
-			
-        END IF;
-		
-        SELECT coalesce(sum(totalprice), 0) INTO price_sum FROM purchaseitems WHERE invoice = current_invoice;
-        UPDATE purchases SET totalsum = price_sum WHERE invoice = current_invoice;
-			
-        RETURN NULL;
-    END;
-$set_purchases$ LANGUAGE plpgsql;
-
-CREATE TRIGGER set_purchases
-BEFORE INSERT OR UPDATE OR DELETE ON purchaseitems
-    FOR EACH ROW EXECUTE FUNCTION update_purchases();
-
-
 -- PRICE UPDATE
 CREATE OR REPLACE FUNCTION price_update() RETURNS TRIGGER AS $set_totalprice$
     DECLARE
@@ -115,13 +80,14 @@ BEFORE INSERT OR UPDATE ON purchaseitems
 
 
 -- SALES
+-- INVOICE SALES
 CREATE OR REPLACE FUNCTION invoice_sales() RETURNS text AS $$
     BEGIN
-	IF EXISTS(SELECT invoice FROM sales WHERE invoice = 'INV-PEN' || to_char(CURRENT_DATE, 'YYYYMMDD') || - 1) THEN
-		return 'INV-PEN' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('invoice_seq');
+	IF EXISTS(SELECT invoice FROM sales WHERE invoice = 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - 1) THEN
+		return 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('invoice_seq');
 	ELSE
 		ALTER SEQUENCE invoice_seq RESTART WITH 1;
-		return 'INV-PEN' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('invoice_seq');
+		return 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('invoice_seq');
 	END IF;
 END;
 $$ LANGUAGE plpgsql;
@@ -158,7 +124,7 @@ CREATE OR REPLACE FUNCTION update_sales() RETURNS TRIGGER AS $set_sales$
 $set_sales$ LANGUAGE plpgsql;
 
 CREATE TRIGGER set_sales
-BEFORE INSERT OR UPDATE OR DELETE ON saleitems
+AFTER INSERT OR UPDATE OR DELETE ON saleitems
     FOR EACH ROW EXECUTE FUNCTION update_sales();
 
 
