@@ -5,7 +5,7 @@
 
                 <div class="mx-10">
                     <div class="text">
-                        <h1 class="mx-6">Purchases</h1>
+                        <h1 class="mx-6">sales</h1>
                     </div>
 
                     <div class="overflow-x-auto relative mx-10 my-0.5 space-y-6 bg-white rounded-lg drop-shadow-md">
@@ -22,7 +22,7 @@
 
                                             <input type="text" name="invoice" placeholder="Invoice"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                                value="<%= purchases.invoice %>" readonly required>
+                                                value="<%= sales.invoice %>" readonly required>
                                         </div>
 
                                         <div>
@@ -30,8 +30,8 @@
 
                                             <input type="text" name="time" placeholder="Time" id="time"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                                value="<%= moment(purchases.time).format('DD MMM YYYY HH:mm:s') %>"
-                                                readonly required>
+                                                value="<%= moment(sales.time).format('DD MMM YYYY HH:mm:s') %>" readonly
+                                                required>
                                         </div>
 
                                         <div>
@@ -79,10 +79,10 @@
 
                                     <div class="grid grid-cols-3 space-x-4 px-10 items-center">
                                         <div>
-                                            <label for="purchaseprice" class="text-lg font-semibold">Purchase
+                                            <label for="sellingprice" class="text-lg font-semibold">Selling
                                                 Price</label>
 
-                                            <input type="text" name="purchaseprice" id="purchaseprice"
+                                            <input type="text" name="sellingprice" id="sellingprice"
                                                 class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                                 readonly required>
                                         </div>
@@ -139,23 +139,38 @@
 
                                 <div class="bg-slate-400/10 px-10 py-4 border-t-2 border-black/10">
                                     <div class="flex whitespace-nowrap items-center space-x-8">
-                                        <label for="name" class="text-lg font-semibold">Total Summary</label>
+                                        <label for="totalsum" class="text-lg font-semibold">Total Summary</label>
 
-                                        <input type="text" name="totalsum" id="totalsum"
-                                            value="<%= purchases.totalsum %>"
+                                        <input type="text" name="totalsum" id="totalsum" value="<%= sales.totalsum %>"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                             readonly>
                                     </div>
 
-                                    <div class="flex whitespace-nowrap items-center space-x-24">
-                                        <label for="name" class="text-lg font-semibold">Supplier</label>
+                                    <div class="flex whitespace-nowrap items-center space-x-34">
+                                        <label for="pay" class="text-lg font-semibold">Pay</label>
 
-                                        <select name="supplier" id="supplier"
+                                        <input type="text" name="pay" id="pay" value="0.00" value="<%= sales.pay %>"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2">
-                                            <option value="" selected>-- Supplier Name --</option>
-                                            <% supplier.forEach(item=> { %>
-                                                <option value="<%= item.supplierid %>">
-                                                    <%= item.supplierid + ' - ' + item.name %>
+                                    </div>
+
+                                    <div class="flex whitespace-nowrap items-center space-x-24">
+                                        <label for="change" class="text-lg font-semibold">Change</label>
+
+                                        <input type="text" name="change" id="change" value="0.00"
+                                            value="<%= sales.change %>"
+                                            class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
+                                            readonly>
+                                    </div>
+
+                                    <div class="flex whitespace-nowrap items-center space-x-20">
+                                        <label for="name" class="text-lg font-semibold">Customer</label>
+
+                                        <select name="customer" id="customer"
+                                            class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2">
+                                            <option value="" selected>-- Customer Name --</option>
+                                            <% customer.forEach(item=> { %>
+                                                <option value="<%= item.customerid %>">
+                                                    <%= item.customerid + ' - ' + item.name %>
                                                 </option>
                                                 <% }) %>
                                         </select>
@@ -169,7 +184,7 @@
                                             </div>
                                             <p>Finish</p>
                                         </button>
-                                        <a href="/purchases"
+                                        <a href="/sales"
                                             class="flex transition bg-yellow-400 hover:bg-yellow-500 hover:duration-300 w-25 text-white pr-3 rounded-md items-center font-semibold space-x-2">
                                             <div class="bg-yellow-500 py-2 px-3 rounded-l-md">
                                                 <i class="fa-solid fa-rotate-left"></i>
@@ -185,4 +200,4 @@
         </section>
 
         <%- include('../partials/footer.ejs') %>
-            <%- include('purchase.ejs') %>
+            <%- include('sale.ejs') %>
