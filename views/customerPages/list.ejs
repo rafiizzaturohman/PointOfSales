@@ -1,0 +1,57 @@
+<%- include('../partials/header.ejs') %>
+    <%- include('../partials/sidebar.ejs') %>
+        <section class="home-section">
+            <%- include('../partials/navbar.ejs') %>
+
+                <div class="mx-10">
+                    <div class="text">
+                        <h1>Customers</h1>
+
+                        <p class="text-sm opacity-50">This is data of customers</p>
+                    </div>
+
+                </div>
+
+                <div class="overflow-x-auto relative mx-10 my-4 space-y-6 bg-white rounded-lg drop-shadow-md">
+                    <div class="bg-slate-400/10 px-6 py-4 border-b-2 border-black/10">
+                        <a href="/customers/add"
+                            class="flex transition bg-blue-500 hover:bg-blue-600 w-24 text-white pr-3 rounded-md items-center font-semibold space-x-2">
+                            <div class="bg-blue-600 py-2 px-3 rounded-l-md">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                            <p>Add</p>
+                        </a>
+                    </div>
+
+                    <div class="overflow-x-auto relative px-4 pt-2 pb-6 rounded-md">
+                        <div class="px-4 -py-2">
+                            <table id="customers-table" class="w-full table-users">
+                                <thead class="bg-transparent shadow-md">
+                                    <tr class="text-left text-black">
+                                        <th>Customer ID</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Phone</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr class="text-left text-black">
+                                        <td>Customer ID</td>
+                                        <td>Name</td>
+                                        <td>Address</td>
+                                        <td>Phone</td>
+                                        <td>Action</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <div style="background-color: #e4e9f7;">
+            <div class="bg-white w-full text-center mt-10 items-center pb-6 text-gray-500/80">
+                <h1>Copyright &#169; RUBICAMP 2022</h1>
+            </div>
+        </div>
+        <%- include('../partials/footer.ejs') %>

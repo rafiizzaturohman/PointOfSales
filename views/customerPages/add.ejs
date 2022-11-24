@@ -5,46 +5,36 @@
 
                 <div class="mx-10">
                     <div class="text">
-                        <h1 class="mx-6">Suppliers</h1>
+                        <h1 class="mx-6">Customers</h1>
                     </div>
 
                     <div class="overflow-x-auto relative mx-10 my-0.5 space-y-6 bg-white rounded-lg drop-shadow-md">
                         <div class="bg-slate-400/10 px-10 py-4 border-b-2 border-black/10">
-                            <h1 class="text-blue-500 font-bold text-lg">Form Edit</h1>
+                            <h1 class="text-blue-500 font-bold text-lg">Form Add</h1>
                         </div>
 
                         <div>
                             <form action="" method="post">
                                 <div>
-                                    <div class="flex space-x-10 px-10 items-center">
-                                        <label for="suppliersid"
-                                            class="text-lg font-semibold whitespace-nowrap">Suppliers ID</label>
-                                        <input type="text" name="suppliersid" placeholder="suppliersid"
-                                            class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                            value="<%= item.supplierid %>" readonly>
-                                        <br />
-                                    </div>
-
                                     <div class="flex space-x-24 px-10 items-center">
                                         <label for="name" class="text-lg font-semibold">Name</label>
-                                        <input type="text" name="name" placeholder="Suppliers name"
+                                        <input type="text" name="name" placeholder="Customers Name"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                            value="<%= item.name %>" required>
+                                            required>
                                         <br />
                                     </div>
 
                                     <div class="flex space-x-16 px-10 items-center">
                                         <label for="address" class="text-lg font-semibold">Address</label>
-                                        <textarea type="text" name="address" placeholder="Suppliers Address"
+                                        <textarea type="text" name="address" placeholder="Customers Address"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
-                                            required><%= item.address %></textarea>
+                                            required></textarea>
                                         <br />
                                     </div>
 
                                     <div class="flex space-x-21 px-10 items-center">
                                         <label for="phone" class="text-lg font-semibold">Phone</label>
-                                        <input type="text" name="phone" placeholder="Suppliers Phone"
-                                            value="<%= item.phone %>"
+                                        <input type="text" name="phone" placeholder="Customers Phone"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                             required>
                                     </div>
@@ -61,7 +51,7 @@
                                         </button>
                                     </div>
                                     <div>
-                                        <a href="/suppliers"
+                                        <a href="/customers"
                                             class="flex transition text-center text-white bg-yellow-400 hover:bg-yellow-500 hover:delay-200 rounded-lg font-semibold items-center space-x-2">
                                             <div class="px-3 py-2 rounded-l-lg bg-yellow-500">
                                                 <i class="fa-solid fa-rotate-left"></i>
@@ -73,7 +63,6 @@
                             </form>
                         </div>
                     </div>
-                </div>
         </section>
 
         <%- include('../partials/footer.ejs') %>
