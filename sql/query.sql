@@ -1,8 +1,13 @@
 -- INVOICE FORMAT
 CREATE OR REPLACE FUNCTION invoice() RETURNS text AS $$
     BEGIN
-    	return 'INV-' || to_char(current_timestamp, 'YYYYMMDD') || - nextval('invoice_seq');
-    END;
+	IF EXISTS(SELECT invoice FROM purchases WHERE invoice = 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - 1) THEN
+		return 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('invoice_seq');
+	ELSE
+		ALTER SEQUENCE invoice_seq RESTART WITH 1;
+		return 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('invoice_seq');
+	END IF;
+END;
 $$ LANGUAGE plpgsql;
 
 
@@ -26,17 +31,17 @@ CREATE OR REPLACE FUNCTION update_purchases() RETURNS TRIGGER AS $set_purchases$
     BEGIN
         IF (TG_OP = 'INSERT') THEN
             SELECT stock INTO old_stock FROM goods WHERE barcode = NEW.itemcode;
-            UPDATE goods SET stock = old_stock - NEW.quantity WHERE barcode = NEW.itemcode;
+            UPDATE goods SET stock = old_stock + NEW.quantity WHERE barcode = NEW.itemcode;
 			current_invoice := NEW.invoice;
 
         ELSIF (TG_OP = 'UPDATE') THEN
             SELECT stock INTO old_stock FROM goods WHERE barcode = NEW.itemcode;
-            UPDATE goods SET stock = old_stock + OLD.quantity - NEW.quantity WHERE barcode = NEW.itemcode;
+            UPDATE goods SET stock = old_stock - OLD.quantity + NEW.quantity WHERE barcode = NEW.itemcode;
 			current_invoice := NEW.invoice;
 
         ELSIF (TG_OP = 'DELETE') THEN
             SELECT stock INTO old_stock FROM goods WHERE barcode = OLD.itemcode;
-            UPDATE goods SET stock = old_stock + OLD.quantity WHERE barcode = OLD.itemcode;
+            UPDATE goods SET stock = old_stock - OLD.quantity WHERE barcode = OLD.itemcode;
 			current_invoice := OLD.invoice;
 			
         END IF;

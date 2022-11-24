@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 
-const saltRounds = 10;
 const { isLoggedIn } = require('../helpers/util')
 
 module.exports = (db) => {

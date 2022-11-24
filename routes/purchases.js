@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 const currencyFormatter = require('currency-formatter')
 const moment = require('moment')
 
-const saltRounds = 10;
 const { isLoggedIn } = require('../helpers/util')
 
 module.exports = (db) => {
@@ -44,8 +42,9 @@ module.exports = (db) => {
     router.get('/create', isLoggedIn, async (req, res, next) => {
         try {
             const { userid } = req.session.user
+            const { supplier } = req.body
 
-            const { rows: data } = await db.query('INSERT INTO purchases(totalsum, operator) VALUES(0, $1) returning *', [userid])
+            const { rows: data } = await db.query('INSERT INTO purchases(totalsum, operator, supplier) VALUES(0, $1, $2) returning *', [userid, supplier])
             res.redirect(`/purchases/show/${data[0].invoice}`)
         } catch (err) {
             console.log(err)
@@ -54,7 +53,7 @@ module.exports = (db) => {
 
     router.get('/show/:invoice', isLoggedIn, async (req, res, next) => {
         try {
-            const { rows: purchases } = await db.query('SELECT * FROM public."purchases" WHERE invoice = $1', [req.params.invoice])
+            const { rows: purchases } = await db.query('SELECT purchases.*, suppliers.* FROM purchases LEFT JOIN suppliers ON purchases.supplier = suppliers.supplierid WHERE invoice = $1', [req.params.invoice])
             const { rows: goods } = await db.query('SELECT barcode, name FROM public."goods" ORDER BY barcode')
             const { rows: supplier } = await db.query('SELECT * FROM public."suppliers" ORDER BY supplierid')
 
