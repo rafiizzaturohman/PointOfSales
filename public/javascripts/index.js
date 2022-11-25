@@ -11,6 +11,7 @@ $(document).ready(function () {
             { "data": "role" },
             {
                 "data": "userid",
+                orderable: false,
                 render: function (data) {
                     return `
                     <div class="flex space-x-2">
@@ -82,6 +83,7 @@ $(document).ready(function () {
             { "data": "note" },
             {
                 "data": "unit",
+                orderable: false,
                 render: function (data) {
                     return `
                     <div class="flex space-x-2">
@@ -172,6 +174,7 @@ $(document).ready(function () {
             },
             {
                 "data": "barcode",
+                orderable: false,
                 render: function (data) {
                     return `
                 <div class="flex space-x-2">
@@ -242,6 +245,7 @@ $(document).ready(function () {
             { "data": "phone" },
             {
                 "data": "supplierid",
+                orderable: false,
                 render: function (data) {
                     return `
                     <div class="flex space-x-2">
@@ -324,6 +328,7 @@ $(document).ready(function () {
             { "data": "name" },
             {
                 "data": "invoice",
+                orderable: false,
                 render: function (data) {
                     return `
                     <div class="flex space-x-2">
@@ -397,6 +402,7 @@ $(document).ready(function () {
             { "data": "phone" },
             {
                 "data": "customerid",
+                orderable: false,
                 render: function (data) {
                     return `
                     <div class="flex space-x-2">
@@ -491,6 +497,7 @@ $(document).ready(function () {
             { "data": "name" },
             {
                 "data": "invoice",
+                orderable: false,
                 render: function (data) {
                     return `
                     <div class="flex space-x-2">

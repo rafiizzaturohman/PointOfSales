@@ -18,6 +18,7 @@ const pool = new Pool({
 })
 
 const indexRouter = require('./routes/index')(pool);
+const homesRouter = require('./routes/home')(pool);
 const usersRouter = require('./routes/users')(pool);
 const unitsRouter = require('./routes/units')(pool);
 const goodsRouter = require('./routes/goods')(pool);
@@ -46,13 +47,14 @@ app.use(flash());
 app.use(fileUpload());
 
 app.use('/', indexRouter);
+app.use('/home', homesRouter);
 app.use('/users', usersRouter);
 app.use('/units', unitsRouter);
 app.use('/goods', goodsRouter);
+app.use('/sales', salesRouter);
 app.use('/suppliers', suppliersRouter);
 app.use('/purchases', purchasesRouter);
 app.use('/customers', customersRouter);
-app.use('/sales', salesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

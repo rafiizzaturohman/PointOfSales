@@ -28,6 +28,9 @@ module.exports = {
       },
       rotate: {
         '25': '25deg',
+      },
+      borderWidth: {
+        '6': '6px'
       }
     },
     variants: {

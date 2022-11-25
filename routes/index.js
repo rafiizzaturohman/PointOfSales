@@ -68,11 +68,6 @@ module.exports = (db) => {
     }
   })
 
-  // HOME
-  router.get('/home', isLoggedIn, async (req, res, next) => {
-    res.render('dashboard/home', { user: req.session.user, currentPage: 'POS - Dashboard' });
-  });
-
   router.get('/logout', (req, res, next) => {
     req.session.destroy(function (err) {
       res.redirect('/')

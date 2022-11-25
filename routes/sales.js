@@ -9,7 +9,7 @@ module.exports = (db) => {
     // GET & VIEW DATA
     router.get('/', isLoggedIn, async (req, res, next) => {
         try {
-            res.render('salesPages/list', { user: req.session.user, query: req.query, currentPage: 'POS - sales' });
+            res.render('salesPages/list', { user: req.session.user, query: req.query, currentPage: 'POS - Sales' });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -57,7 +57,7 @@ module.exports = (db) => {
             const { rows: goods } = await db.query('SELECT barcode, name FROM public."goods" ORDER BY barcode')
             const { rows: customer } = await db.query('SELECT * FROM public."customers" ORDER BY customerid')
 
-            res.render('salesPages/form', { currentPage: 'POS - sales', user: req.session.user, sales: sales[0], goods, customer, moment })
+            res.render('salesPages/form', { currentPage: 'POS - Sales', user: req.session.user, sales: sales[0], goods, customer, moment })
         } catch (err) {
             console.log(err);
             res.send(err)
@@ -68,9 +68,8 @@ module.exports = (db) => {
         try {
             const { invoice } = req.params
             const { totalsum, pay, change, customer } = req.body
-            const { userid } = req.session.user
 
-            await db.query('UPDATE sales SET totalsum = $1, pay = $2, change = $3, customer = $4, operator = $5 WHERE invoice = $6', [totalsum, pay, change, customer, userid, invoice])
+            await db.query('UPDATE sales SET totalsum = $1, pay = $2, change = $3, customer = $4 WHERE invoice = $5', [totalsum, pay, change, customer, invoice])
 
             res.redirect('/sales')
         } catch (error) {

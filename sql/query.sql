@@ -82,7 +82,7 @@ BEFORE INSERT OR UPDATE ON purchaseitems
 -- SALES
 -- INVOICE SALES
 CREATE OR REPLACE FUNCTION invoice_sales() RETURNS text AS $$
-    BEGIN
+BEGIN
 	IF EXISTS(SELECT invoice FROM sales WHERE invoice = 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - 1) THEN
 		return 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('invoice_seq');
 	ELSE
