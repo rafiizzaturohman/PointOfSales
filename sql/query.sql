@@ -84,10 +84,10 @@ BEFORE INSERT OR UPDATE ON purchaseitems
 CREATE OR REPLACE FUNCTION invoice_sales() RETURNS text AS $$
 BEGIN
 	IF EXISTS(SELECT invoice FROM sales WHERE invoice = 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - 1) THEN
-		return 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('invoice_seq');
+		return 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('inv_seq');
 	ELSE
-		ALTER SEQUENCE invoice_seq RESTART WITH 1;
-		return 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('invoice_seq');
+		ALTER SEQUENCE inv_seq RESTART WITH 1;
+		return 'INV-' || to_char(CURRENT_DATE, 'YYYYMMDD') || - nextval('inv_seq');
 	END IF;
 END;
 $$ LANGUAGE plpgsql;

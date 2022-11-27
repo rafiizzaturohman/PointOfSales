@@ -36,9 +36,8 @@ module.exports = (db) => {
 
       req.session.user = user
 
-      res.redirect('/home')
+      res.redirect('/dashboard')
     } catch (error) {
-      req.flash(error, '>err<')
       res.redirect('/')
     }
   })
@@ -52,7 +51,7 @@ module.exports = (db) => {
     try {
       const { email, name, password, role } = req.body
       const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
-      console.log(emails)
+
       if (emails.length > 0) {
         req.flash('error', `Email already exist`)
         return res.redirect('/register')
@@ -60,11 +59,12 @@ module.exports = (db) => {
 
       const hash = bcrypt.hashSync(password, saltRounds)
       await db.query('INSERT INTO public."usersAccount" (email, name, password, role) VALUES ($1, $2, $3, $4)', [email, name, hash, role])
+      req.flash('success', 'Account was created successfully')
 
       res.redirect('/')
     } catch (error) {
-      console.log(error)
-      res.send(error)
+      req.flash('error', error)
+      return res.redirect('/')
     }
   })
 

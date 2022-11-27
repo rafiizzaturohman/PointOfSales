@@ -383,7 +383,6 @@ $(document).ready(function () {
                         <div class="hidden opacity-25 fixed inset-0 z-40 bg-black"
                             id="modal-delete-backdrop"></div>
                     </div>
-                    </div>
                     `
                 }
             }
@@ -552,19 +551,9 @@ $(document).ready(function () {
                         <div class="hidden opacity-25 fixed inset-0 z-40 bg-black"
                             id="modal-delete-backdrop"></div>
                     </div>
-                    </div>
                     `
                 }
             }
         ]
     });
 });
-
-var loadFile = function (event) {
-    var reader = new FileReader();
-    reader.onload = function () {
-        var output = document.getElementById('output');
-        output.src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-};

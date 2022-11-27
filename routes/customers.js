@@ -47,7 +47,11 @@ module.exports = (db) => {
 
     // ADD DATA
     router.get('/add', isLoggedIn, async (req, res, next) => {
-        res.render('customerPages/add', { user: req.session.user, currentPage: 'POS - Customers' });
+        try {
+            res.render('customerPages/add', { user: req.session.user, currentPage: 'POS - Customers' });
+        } catch (error) {
+            console.log(error)
+        }
     });
 
     router.post('/add', isLoggedIn, async (req, res, next) => {
@@ -65,11 +69,15 @@ module.exports = (db) => {
 
     // EDIT DATA
     router.get('/edit/:customerid', isLoggedIn, async (req, res, next) => {
-        const { customerid } = req.params
+        try {
+            const { customerid } = req.params
 
-        const { rows: data } = await db.query('SELECT * FROM customers WHERE customerid = $1', [customerid])
+            const { rows: data } = await db.query('SELECT * FROM customers WHERE customerid = $1', [customerid])
 
-        res.render('customerPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Customers' });
+            res.render('customerPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Customers' });
+        } catch (error) {
+            console.log(error)
+        }
     });
 
     router.post('/edit/:customerid', isLoggedIn, async (req, res, next) => {

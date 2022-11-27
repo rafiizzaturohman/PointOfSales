@@ -9,11 +9,9 @@ module.exports = (db) => {
   // GET & VIEW DATA
   router.get('/', isLoggedIn, async (req, res, next) => {
     try {
-      let sql = 'SELECT * FROM public."usersAccount"'
-
-      const result = await db.query(sql)
-
-      res.render('userPages/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Users' });
+      res.render('userPages/list', {
+        user: req.session.user, query: req.query, currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error')
+      });
     } catch (err) {
       console.log(err)
       res.send(err)
@@ -48,27 +46,27 @@ module.exports = (db) => {
 
   // ADD DATA
   router.get('/add', isLoggedIn, async (req, res, next) => {
-    const data = await db.query('SELECT * FROM public."usersAccount"')
-
-    res.render('userPages/add', { user: req.session.user, data: data.rows, currentPage: 'POS - Users' });
+    res.render('userPages/add', { user: req.session.user, currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') });
   });
 
   router.post('/add', isLoggedIn, async (req, res, next) => {
     try {
       const { email, name, password, role } = req.body
       const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
+
       if (emails.length > 0) {
-        req.flash('error', `Email already exist`)
-        return res.redirect('/add')
+        throw 'User already exist'
       }
 
       const hash = bcrypt.hashSync(password, saltRounds)
+
       await db.query('INSERT INTO public."usersAccount" (email, name, password, role) VALUES ($1, $2, $3, $4)', [email, name, hash, role])
+      req.flash('success', 'Account was created successfully')
 
       res.redirect('/users')
     } catch (error) {
-      console.log(error)
-      res.send(error)
+      req.flash('error', 'Email already exists')
+      res.redirect('/users/add')
     }
   })
 
@@ -79,7 +77,7 @@ module.exports = (db) => {
 
       const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
 
-      res.render('userPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Users' });
+      res.render('userPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') });
     } catch (error) {
       console.log(err)
     }
@@ -91,11 +89,12 @@ module.exports = (db) => {
       const { email, name, role } = req.body
 
       await db.query('UPDATE public."usersAccount" SET email = $1, name = $2, role = $3 WHERE userid = $4', [email, name, role, userid])
+      req.flash('success', 'User information updated')
 
       res.redirect('/users')
     } catch (error) {
+      req.flash('error', 'User information failed to update')
       console.log(error)
-      res.send(error)
     }
   })
 
@@ -103,12 +102,13 @@ module.exports = (db) => {
   router.get('/delete/:userid', isLoggedIn, async (req, res, next) => {
     try {
       await db.query('DELETE FROM public."usersAccount" WHERE userid = $1', [req.params.userid])
-
+      req.flash('success', 'Account was deleted successfully')
       res.redirect('/users');
     } catch (err) {
+      req.flash('error', 'User information failed to delete')
       console.log(err)
-      res.send(err)
     }
   });
+
   return router;
 }

@@ -780,6 +780,10 @@ video {
   width: 6.7rem;
 }
 
+.w-100 {
+  width: 60rem;
+}
+
 .w-64 {
   width: 16rem;
 }
@@ -1015,6 +1019,12 @@ video {
   --tw-space-x-reverse: 0;
   margin-right: calc(7.6rem * var(--tw-space-x-reverse));
   margin-left: calc(7.6rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .overflow-x-auto {
@@ -1330,6 +1340,10 @@ video {
   padding: 0.5rem;
 }
 
+.p-10 {
+  padding: 2.5rem;
+}
+
 .px-48 {
   padding-left: 12rem;
   padding-right: 12rem;
@@ -1405,6 +1419,16 @@ video {
   padding-right: 0.625rem;
 }
 
+.px-24 {
+  padding-left: 6rem;
+  padding-right: 6rem;
+}
+
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
 .pr-10 {
   padding-right: 2.5rem;
 }
@@ -1431,6 +1455,10 @@ video {
 
 .pt-4 {
   padding-top: 1rem;
+}
+
+.pt-10 {
+  padding-top: 2.5rem;
 }
 
 .text-left {
@@ -1460,14 +1488,14 @@ video {
   line-height: 1.25rem;
 }
 
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
-
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .font-bold {

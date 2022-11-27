@@ -69,11 +69,15 @@ module.exports = (db) => {
 
     // EDIT DATA
     router.get('/edit/:supplierid', isLoggedIn, async (req, res, next) => {
-        const { supplierid } = req.params
+        try {
+            const { supplierid } = req.params
 
-        const { rows: data } = await db.query('SELECT * FROM public."suppliers" WHERE supplierid = $1', [supplierid])
+            const { rows: data } = await db.query('SELECT * FROM public."suppliers" WHERE supplierid = $1', [supplierid])
 
-        res.render('suppliersPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Suppliers' });
+            res.render('suppliersPages/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Suppliers' });
+        } catch (error) {
+            console.log(error)
+        }
     });
 
     router.post('/edit/:supplierid', isLoggedIn, async (req, res, next) => {

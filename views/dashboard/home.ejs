@@ -1,12 +1,12 @@
-<%- include('../partials/header.ejs') %>
-    <%- include('../partials/sidebar.ejs') %>
+<%- include('../partials/header') %>
+    <%- include('../partials/sidebar') %>
         <section class="home-section">
-            <%- include('../partials/navbar.ejs') %>
+            <%- include('../partials/navbar') %>
 
                 <div class="mx-16">
                     <div class="flex justify-between items-center text-center">
                         <div>
-                            <h1 class="inline-block text-2xl font-semibold">Dashboard</h1>
+                            <h1 class="inline-block text-3xl font-semibold">Dashboard</h1>
                         </div>
 
                         <a href="#"
@@ -72,7 +72,12 @@
                                 <div>
                                     <h1 class="text-blue-600 uppercase">Purchases</h1>
 
-                                    <p>Rp 715.000,00</p>
+                                    <% purchases.forEach(item=> { %>
+                                        <p>
+                                            <%= currencyFormatter.format(item.total, { code: 'IDR' }) %>
+                                        </p>
+                                        <% }) %>
+
                                 </div>
 
                                 <div class="text-xl text-gray-300">
@@ -87,7 +92,11 @@
                                 <div>
                                     <h1 class="text-green-500 uppercase">Sales</h1>
 
-                                    <p>Rp 859.000,00</p>
+                                    <% sales.forEach(item=> { %>
+                                        <p>
+                                            <%= currencyFormatter.format(item.total, { code: 'IDR' }) %>
+                                        </p>
+                                        <% }) %>
                                 </div>
 
                                 <div class="text-xl text-gray-300">
@@ -102,7 +111,14 @@
                                 <div>
                                     <h1 class="text-teal-600 uppercase">Earnings</h1>
 
-                                    <p>Rp 144.000,00</p>
+                                    <% purchases.forEach(purch=> { %>
+                                        <% sales.forEach(sales=> { %>
+                                            <p>
+                                                <%= currencyFormatter.format(purch.total - sales.total, { code: 'IDR' })
+                                                    %>
+                                            </p>
+                                            <% }) %>
+                                                <% }) %>
                                 </div>
 
                                 <div class="text-xl text-gray-300">
@@ -117,7 +133,11 @@
                                 <div>
                                     <h1 class="text-yellow-500 uppercase">Total Sales</h1>
 
-                                    <p>4</p>
+                                    <% salestotal.forEach(item=> { %>
+                                        <p>
+                                            <%= item.total %>
+                                        </p>
+                                        <% }) %>
                                 </div>
 
                                 <div class="text-xl text-gray-300">
@@ -128,14 +148,14 @@
 
                     </div>
 
-                    <div class="flex justify-evenly">
+                    <div class="grid grid-cols-2">
                         <div class="overflow-x-auto relative my-4 bg-white rounded-lg drop-shadow-md w-full">
                             <div class="bg-slate-400/10 px-10 py-4 border-b-2 border-black/10">
                                 <h1 class="text-blue-500 font-bold text-lg">Earnings Overview</h1>
                             </div>
 
                             <div class="px-10 py-4">
-                                <h1>Test</h1>
+                                <canvas id="earnoverview"></canvas>
                             </div>
                         </div>
 
@@ -144,11 +164,45 @@
                                 <h1 class="text-blue-500 font-bold text-lg">Revenue Sources</h1>
                             </div>
 
-                            <div class="px-10 py-4">
-                                <h1>Test</h1>
+                            <div class="p-10">
+                                <canvas id="revsource"></canvas>
                             </div>
                         </div>
                     </div>
-        </section>
 
-        <%- include('../partials/footer.ejs') %>
+                    <div class="overflow-x-auto relative my-4 bg-white rounded-lg drop-shadow-md w-full">
+                        <div class="bg-slate-400/10 px-10 py-4 border-b-2 border-black/10">
+                            <h1 class="text-blue-500 font-bold text-lg">Earnings Monthly Report</h1>
+                        </div>
+
+                        <div class="px-10 py-4">
+                            <table id="report-table" class="table-users w-full text-left">
+                                <thead>
+                                    <tr>
+                                        <th>Monthly</th>
+                                        <th>Expense</th>
+                                        <th>Revenue</th>
+                                        <th>Earning</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Total</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+        </section>
+        <div style="background-color: #e4e9f7;">
+            <div class="bg-white w-full text-center mt-10 items-center pb-6 text-gray-500/80">
+                <h1>Copyright &#169; RUBICAMP 2022</h1>
+            </div>
+        </div>
+
+
+        <%- include('../partials/footer') %>
+            <%- include('chart') %>

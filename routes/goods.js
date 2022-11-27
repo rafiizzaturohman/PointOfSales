@@ -50,10 +50,14 @@ module.exports = (db) => {
 
     // ADD DATA
     router.get('/add', isLoggedIn, async (req, res, next) => {
-        const data = await db.query('SELECT * FROM goods')
-        const { rows: unit } = await db.query('SELECT * FROM units')
+        try {
+            const data = await db.query('SELECT goods.*, units.* FROM goods LEFT JOIN units ON goods.unit = units.unit')
+            const { rows: unit } = await db.query('SELECT * FROM units')
 
-        res.render('utilitiesPages/good/add', { user: req.session.user, data: data.rows, units: unit, currentPage: 'POS - Goods' });
+            res.render('utilitiesPages/good/add', { user: req.session.user, data: data.rows, units: unit, currentPage: 'POS - Goods' });
+        } catch (error) {
+            console.log(error)
+        }
     });
 
     router.post('/add', isLoggedIn, async (req, res, next) => {
@@ -90,11 +94,16 @@ module.exports = (db) => {
 
     // EDIT DATA
     router.get('/edit/:barcode', isLoggedIn, async (req, res, next) => {
-        const { barcode } = req.params
+        try {
+            const { barcode } = req.params
 
-        const { rows: data } = await db.query('SELECT * FROM public."goods" WHERE barcode = $1', [barcode])
+            const { rows: data } = await db.query('SELECT * FROM goods WHERE barcode = $1', [barcode])
+            const { rows: unit } = await db.query('SELECT * FROM units')
 
-        res.render('utilitiesPages/good/edit', { user: req.session.user, item: data[0], currentPage: 'POS - Goods' });
+            res.render('utilitiesPages/good/edit', { user: req.session.user, item: data[0], units: unit, currentPage: 'POS - Goods' });
+        } catch (error) {
+            console.log(error)
+        }
     });
 
     router.post('/edit/:barcode', isLoggedIn, async (req, res, next) => {

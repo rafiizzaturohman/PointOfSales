@@ -26,6 +26,9 @@ module.exports = {
         'min-2': '-1rem',
         'min-0.5': '-0.5rem',
       },
+      width: {
+        '100': '60rem'
+      },
       rotate: {
         '25': '25deg',
       },

@@ -14,56 +14,63 @@
                         </div>
 
                         <div>
-                            <form action="" method="post" encType="multipart/form-data">
+                            <form action="" id='uploadForm' method="post" encType="multipart/form-data">
                                 <div>
                                     <div class="flex space-x-20 px-10 items-center">
                                         <label for="barcode" class="text-lg font-semibold">Barcode</label>
-                                        <input type="text" placeholder="Barcode" value="<%= item.barcode
-                                        %>" class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
-                                            readonly>
+                                        <input type="text" name="barcode" placeholder="Barcode"
+                                            value="<%= item.barcode %>"
+                                            class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
+                                            required>
                                         <br />
                                     </div>
 
                                     <div class="flex space-x-25 px-10 items-center">
                                         <label for="name" class="text-lg font-semibold">Name</label>
-                                        <input type="text" name="name" placeholder="Name" value="<%= item.name
-                                        %>" class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
+                                        <input type="text" name="name" placeholder="Name" value="<%= item.name %>"
+                                            class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
                                             required>
                                         <br />
                                     </div>
 
                                     <div class="flex space-x-26 px-10 items-center" id="numver">
                                         <label for="stock" class="text-lg font-semibold">Stock</label>
-                                        <input id type="number" name="stock" placeholder="0" value="<%= item.stock
-                                        %>" class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
+                                        <input id type="number" name="stock" placeholder="0" value="<%= item.stock %>"
+                                            class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
                                             required>
                                         <br />
                                     </div>
 
-                                    <div class="flex space-x-9 px-10 items-center" id="numver">
-                                        <label for="purchaseprice" class="text-lg font-semibold ">Purchase
+                                    <div class="flex space-x-6 px-10 items-center" id="numver">
+                                        <label for="purchaseprice"
+                                            class="text-lg font-semibold whitespace-nowrap">Purchase
                                             Price</label>
-                                        <input type="number" name="purchaseprice" placeholder="0" value="<%= item.purchaseprice
-                                        %>" class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
+                                        <input type="number" name="purchaseprice" placeholder="0"
+                                            value="<%= item.purchaseprice %>"
+                                            class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
                                             required>
                                         <br />
                                     </div>
 
                                     <div class="flex space-x-14.5 px-10 items-center" id="numver">
                                         <label for="sellingprice" class="text-lg font-semibold">Selling Price</label>
-                                        <input type="number" name="sellingprice" placeholder="0" value="<%= item.sellingprice
-                                        %>" class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
+                                        <input type="number" name="sellingprice" placeholder="0"
+                                            value="<%= item.sellingprice %>"
+                                            class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2"
                                             required>
                                         <br />
                                     </div>
 
                                     <div class="flex space-x-30 px-10 items-center">
                                         <label for="unit" class="text-lg font-semibold">Unit</label>
-                                        <select name="unit" id="unit" class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2
-                                            bg-transparent">
+                                        <select name="unit" id="unit"
+                                            class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2 bg-transparent">
                                             <option value="" selected disabled>Choose Unit</option>
-                                            <option value="pcs" <%=item.unit=='pcs' ? 'selected' : '' %>>Pieces</option>
-                                            <option value="ltr" <%=item.unit=='ltr' ? 'selected' : '' %>>Liter</option>
+                                            <% units.forEach(item=> { %>
+                                                <option value="<%= item.unit %>">
+                                                    <%= item.name %>
+                                                </option>
+                                                <% }) %>
                                         </select>
                                         <br />
                                     </div>
@@ -71,16 +78,17 @@
                                     <div class="flex space-x-24 px-10 items-center">
                                         <label for="picture" class="text-lg font-semibold">Picture</label>
                                         <input type="file" name="picture" onchange="loadFile(event)" id="imgInp"
+                                            accept="image/png, image/gif, image/jpeg"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-gray-400 border-2">
                                         <br />
                                     </div>
 
                                     <div class="flex space-x-24 px-10 mt-6">
-                                        <label for="picture" class="text-lg font-semibold">Preview</label>
-                                        <img id="output" src="/images/upload/<%= item.picture %> "
-                                            class="w-auto border rounded-sm border-black/25" />
+                                        <label for="preview" class="text-lg font-semibold">Preview</label>
+                                        <img id="output" class="w-auto border rounded-sm border-black/25"
+                                            src="/images/upload/<%= item.picture %>" />
+
                                     </div>
-                                    <%#- include('../partials/alert.ejs') %>
                                 </div>
 
                                 <div class="flex px-10 space-x-4 my-4 border-t-2 pt-4">

@@ -149,7 +149,8 @@
                                     <div class="flex whitespace-nowrap items-center space-x-34">
                                         <label for="pay" class="text-lg font-semibold">Pay</label>
 
-                                        <input type="text" name="pay" id="pay" value="0.00" value="<%= sales.pay %>"
+                                        <input type="text" name="pay" id="pay"
+                                            value="<%= sales.pay ? sales.pay : 0.00 %>"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2">
                                     </div>
 
