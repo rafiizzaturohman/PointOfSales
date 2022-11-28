@@ -130,7 +130,7 @@ module.exports = (db) => {
     router.get('/deleteitems/:id', isLoggedIn, async (req, res, next) => {
         try {
             const { id } = req.params
-            const { rows: data } = await db.query('DELETE FROM sales WHERE id = $1 returning *', [id])
+            const { rows: data } = await db.query('DELETE FROM saleitems WHERE id = $1 returning *', [id])
 
             res.redirect(`/sales/show/${data[0].invoice}`)
         } catch (err) {

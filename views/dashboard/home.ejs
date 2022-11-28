@@ -114,7 +114,7 @@
                                     <% purchases.forEach(purch=> { %>
                                         <% sales.forEach(sales=> { %>
                                             <p>
-                                                <%= currencyFormatter.format(purch.total - sales.total, { code: 'IDR' })
+                                                <%= currencyFormatter.format(sales.total - purch.total, { code: 'IDR' })
                                                     %>
                                             </p>
                                             <% }) %>
@@ -188,9 +188,24 @@
                                 <tfoot>
                                     <tr>
                                         <th>Total</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <% purchases.forEach(item=> { %>
+                                            <th>
+                                                <%= currencyFormatter.format(item.total, { code: 'IDR' }) %>
+                                            </th>
+                                            <% }) %>
+                                                <% sales.forEach(item=> { %>
+                                                    <th>
+                                                        <%= currencyFormatter.format(item.total, { code: 'IDR' }) %>
+                                                    </th>
+                                                    <% }) %>
+                                                        <% purchases.forEach(purch=> { %>
+                                                            <% sales.forEach(sales=> { %>
+                                                                <th>
+                                                                    <%= currencyFormatter.format(sales.total -
+                                                                        purch.total, { code: 'IDR' }) %>
+                                                                </th>
+                                                                <% }) %>
+                                                                    <% }) %>
                                     </tr>
                                 </tfoot>
                             </table>
