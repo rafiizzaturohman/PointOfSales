@@ -556,4 +556,34 @@ $(document).ready(function () {
             }
         ]
     });
+
+    // $('#report-table').DataTable({
+    //     "lengthMenu": [[3, 5, 10, 20], [3, 5, 10, 20]],
+    //     "processing": true,
+    //     "serverSide": true,
+    //     "ajax": "/dashboard/datatable",
+    //     "columns": [
+    //         {
+    //             "data": "time",
+    //             render: function (data) {
+    //                 return `${moment(data).format('MMM DD')}`
+    //             }
+    //         },
+    //         {
+    //             "data": "expense",
+    //             render: function (data) {
+    //                 return `${currencyFormatter.format(data)}`
+    //             }
+    //         },
+    //         {
+    //             "data": "revenue",
+    //             render: function (data) {
+    //                 return `${currencyFormatter.format(data)}`
+    //             }
+    //         },
+    //         {
+    //             "data": "revenue"
+    //         }
+    //     ]
+    // });
 });
