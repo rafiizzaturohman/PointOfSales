@@ -72,11 +72,9 @@
                                 <div>
                                     <h1 class="text-blue-600 uppercase">Purchases</h1>
 
-                                    <% purchases.forEach(item=> { %>
-                                        <p>
-                                            <%= currencyFormatter.format(item.total, { code: 'IDR' }) %>
-                                        </p>
-                                        <% }) %>
+                                    <p>
+                                        <%= currencyFormatter.format(purchases[0].total, { code: 'IDR' }) %>
+                                    </p>
 
                                 </div>
 
@@ -92,11 +90,9 @@
                                 <div>
                                     <h1 class="text-green-500 uppercase">Sales</h1>
 
-                                    <% sales.forEach(item=> { %>
-                                        <p>
-                                            <%= currencyFormatter.format(item.total, { code: 'IDR' }) %>
-                                        </p>
-                                        <% }) %>
+                                    <p>
+                                        <%= currencyFormatter.format(sales[0].total, { code: 'IDR' }) %>
+                                    </p>
                                 </div>
 
                                 <div class="text-xl text-gray-300">
@@ -111,14 +107,10 @@
                                 <div>
                                     <h1 class="text-teal-600 uppercase">Earnings</h1>
 
-                                    <% purchases.forEach(purch=> { %>
-                                        <% sales.forEach(sales=> { %>
-                                            <p>
-                                                <%= currencyFormatter.format(sales.total - purch.total, { code: 'IDR' })
-                                                    %>
-                                            </p>
-                                            <% }) %>
-                                                <% }) %>
+                                    <p>
+                                        <%= currencyFormatter.format(sales[0].total - purchases[0].total, { code: 'IDR'
+                                            }) %>
+                                    </p>
                                 </div>
 
                                 <div class="text-xl text-gray-300">
@@ -133,11 +125,9 @@
                                 <div>
                                     <h1 class="text-yellow-500 uppercase">Total Sales</h1>
 
-                                    <% salestotal.forEach(item=> { %>
-                                        <p>
-                                            <%= item.total %>
-                                        </p>
-                                        <% }) %>
+                                    <p>
+                                        <%= salestotal[0].total %>
+                                    </p>
                                 </div>
 
                                 <div class="text-xl text-gray-300">
@@ -148,7 +138,7 @@
 
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2 mr-4">
+                    <div class="flex justify-between gap-2 mr-4">
                         <div class="overflow-x-auto relative my-4 bg-white rounded-lg drop-shadow-md w-full">
                             <div
                                 class="flex justify-between bg-slate-400/10 px-10 py-4 border-b-2 border-black/10 items-center">
@@ -164,7 +154,7 @@
                             </div>
                         </div>
 
-                        <div class="overflow-x-auto relative my-4 ml-4 bg-white rounded-lg drop-shadow-md w-full">
+                        <div class="overflow-x-auto relative my-4 ml-4 bg-white rounded-lg drop-shadow-md w-100">
                             <div class="flex justify-between bg-slate-400/10 px-10 py-4 border-b-2 border-black/10">
                                 <h1 class="text-blue-500 font-bold text-lg">Revenue Sources</h1>
 

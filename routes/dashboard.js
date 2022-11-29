@@ -11,6 +11,7 @@ module.exports = (db) => {
             const { rows: sales } = await db.query('SELECT sum(totalsum) AS total FROM sales')
             const { rows: salestotal } = await db.query('SELECT COUNT(*) AS total FROM customers')
 
+            console.log(sales)
             res.render('dashboard/home', { user: req.session.user, currentPage: 'POS - Dashboard', purchases, sales, salestotal, currencyFormatter });
         } catch (error) {
             console.log(error)
@@ -25,30 +26,42 @@ module.exports = (db) => {
             } catch (error) {
                 console.log(error)
             }
-        })
+        });
 
-        // router.get('/datatable', async (req, res) => {
-        //     let params = []
+        router.get('/earnoverview', isLoggedIn, async (req, res, next) => {
+            try {
+                const { rows: month } = await db.query('SELECT time FROM purchases')
+                const { rows: totalpurch } = await db.query('SELECT totalsum AS totalpurch FROM purchases')
+                const { rows: totalsales } = await db.query('SELECT totalsum AS totalsales FROM sales')
 
-        //     if (req.query.search.value) {
-        //         params.push(`date ilike '%${req.query.search.value}%'`)
-        //     }
+                res.json({ month, totalpurch, totalsales })
+            } catch (error) {
+                console.log(error)
+            }
+        });
 
-        //     const limit = req.query.length
-        //     const offset = req.query.start
-        //     const sortBy = req.query.columns[req.query.order[0].column].data
-        //     const sortMode = req.query.order[0].dir
+        router.get('/datatable', async (req, res) => {
+            let params = []
 
-        //     const total = await db.query(`SELECT count(*) AS total FROM purchases JOIN sales${params.length > 0 ? ` where ${params.join(' or ')}` : ''}`)
-        //     const data = await db.query(`SELECT * FROM purchases${params.length > 0 ? ` where ${params.join(' or ')}` : ''} order by ${sortBy} ${sortMode} limit ${limit} offset ${offset} `)
-        //     const response = {
-        //         "draw": Number(req.query.draw),
-        //         "recordsTotal": total.rows[0].total,
-        //         "recordsFiltered": total.rows[0].total,
-        //         "data": data.rows
-        //     }
-        //     res.json(response)
-        // })
+            if (req.query.search.value) {
+                params.push(`time ilike '%${req.query.search.value}%'`)
+            }
+
+            const limit = req.query.length
+            const offset = req.query.start
+            const sortBy = req.query.columns[req.query.order[0].column].data
+            const sortMode = req.query.order[0].dir
+
+            const total = await db.query(`SELECT COUNT(*) AS total FROM purchases${params.length > 0 ? ` where ${params.join(' or ')}` : ''}`)
+            const data = await db.query(`SELECT * FROM purchases${params.length > 0 ? ` where ${params.join(' or ')}` : ''} order by ${sortBy} ${sortMode} limit ${limit} offset ${offset} `)
+            const response = {
+                "draw": Number(req.query.draw),
+                "recordsTotal": total.rows[0].total,
+                "recordsFiltered": total.rows[0].total,
+                "data": data.rows
+            }
+            res.json(response)
+        });
     });
 
     return router;
