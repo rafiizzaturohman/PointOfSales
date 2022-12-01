@@ -3,54 +3,6 @@
         readData()
     });
 
-    const bacaData = () => {
-        const { month, totalpurch, totalsales } = res
-
-        let date = null
-        let totalpurc = null
-        let totalsale = null
-
-        $.get({
-            url: 'dashboard/earnoverview'
-        }).done((res) => {
-            date = month[0].time
-            totalpurc = totalpurch[0].totalpurch
-            totalsale = totalsales[0].totalsales
-
-            const line = $('#earnoverview');
-            new Chart(line, {
-                type: 'line',
-                data: {
-                    datasets: [{
-                        label: false,
-                        data: [totalpurc, totalsale],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-
-                    },
-                    tension: 0.4,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
-                }
-            });
-        })
-    }
-
     const readData = () => {
         let countUmum = null
         let countMember = null
@@ -59,6 +11,7 @@
             url: 'dashboard/revsource'
         }).done((res) => {
             const { member, direct } = res
+
             countUmum = direct[0].count
             countMember = member[0].count
 
@@ -68,7 +21,7 @@
                 data: {
                     labels: ["Direct", "Member"],
                     datasets: [{
-                        cutout: '85%',
+                        cutout: '80%',
                         data: [countUmum, countMember],
                         backgroundColor: ['#4e73df', '#1cc88a'],
                         hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
@@ -76,8 +29,9 @@
                     }],
                 },
                 options: {
+                    aspectRatio: 2,
                     responsive: true,
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: true,
                     tooltips: {
                         backgroundColor: "rgb(255,255,255)",
                         bodyFontColor: "#858796",

@@ -69,7 +69,11 @@ module.exports = (db) => {
             const { invoice } = req.params
             const { totalsum, pay, change, customer } = req.body
 
-            await db.query('UPDATE sales SET totalsum = $1, pay = $2, change = $3, customer = $4 WHERE invoice = $5', [totalsum, pay, change, customer, invoice])
+            if (customer) {
+                await db.query('UPDATE sales SET totalsum = $1, pay = $2, change = $3, customer = $4 WHERE invoice = $5', [totalsum, pay, change, customer, invoice])
+            } else {
+                await db.query('UPDATE sales SET totalsum = $1, pay = $2, change = $3 WHERE invoice = $4', [totalsum, pay, change, invoice])
+            }
 
             res.redirect('/sales')
         } catch (error) {

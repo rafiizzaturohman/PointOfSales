@@ -1,0 +1,69 @@
+<script>
+    $(document).ready((event) => {
+        earningsData()
+    });
+
+    const earningsData = () => {
+        $.get({
+            url: 'dashboard/earnoverview'
+        }).done((res) => {
+            const { totalpurchase, totalsales } = res
+
+            let getMonth = []
+
+            for (let i = 0; i < totalpurchase.length; i++) {
+                getMonth.push(totalpurchase[i].monthly)
+            }
+
+            let data = totalpurchase.concat(totalsales)
+            let newData = {}
+            let income = []
+
+            data.forEach(item => {
+                if (newData[item.forsort]) {
+                    newData[item.forsort] = { monthly: item.monthly, expense: item.totalpurchases ? item.totalpurchases : newData[item.forsort].expense, revenue: item.totalsales ? item.totalsales : newData[item.forsort].revenue }
+                } else {
+                    newData[item.forsort] = { monthly: item.monthly, expense: item.totalpurchases ? item.totalpurchases : 0, revenue: item.totalsales ? item.totalsales : 0 }
+                }
+            });
+
+            for (const key in newData) {
+                income.push(Number(newData[key].revenue - newData[key].expense))
+            }
+
+            const line = $('#earning');
+            new Chart(line, {
+                type: 'line',
+                data: {
+                    label: true,
+                    labels: getMonth,
+                    datasets: [{
+                        data: income
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+
+                    },
+                    tension: 0.5,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        })
+    }
+
+</script>

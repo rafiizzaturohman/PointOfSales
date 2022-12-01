@@ -70,7 +70,11 @@ module.exports = (db) => {
             const { totalsum, supplier } = req.body
             const { userid } = req.session.user
 
-            await db.query('UPDATE purchases SET totalsum = $1, supplier = $2, operator = $3 WHERE invoice = $4', [totalsum, supplier, userid, invoice])
+            if (supplier) {
+                await db.query('UPDATE purchases SET totalsum = $1, supplier = $2, operator = $3 WHERE invoice = $4', [totalsum, supplier, userid, invoice])
+            } else {
+                await db.query('UPDATE purchases SET totalsum = $1, operator = $2 WHERE invoice = $3', [totalsum, userid, invoice])
+            }
 
             res.redirect('/purchases')
         } catch (error) {

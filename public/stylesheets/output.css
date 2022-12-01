@@ -652,11 +652,6 @@ video {
   margin-bottom: 1.5rem;
 }
 
-.mx-4 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
 .mt-20 {
   margin-top: 5rem;
 }
@@ -817,14 +812,6 @@ video {
   width: 60rem;
 }
 
-.w-56 {
-  width: 14rem;
-}
-
-.w-80 {
-  width: 20rem;
-}
-
 .max-w-3xl {
   max-width: 48rem;
 }
@@ -894,10 +881,6 @@ video {
 
 .justify-evenly {
   justify-content: space-evenly;
-}
-
-.gap-2 {
-  gap: 0.5rem;
 }
 
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
