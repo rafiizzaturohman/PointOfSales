@@ -186,7 +186,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    <% data.forEach(item=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= item.monthly %>
+                                            </td>
+                                            <td>
+                                                <%= item.expense %>
+                                            </td>
+                                            <td>
+                                                <%= item.revenue %>
+                                            </td>
+                                            <td>
+                                                <%= item.revenue - item.expense %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
                                 </tbody>
                                 <tfoot>
                                     <tr>
