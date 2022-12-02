@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const currencyFormatter = require('currency-formatter');
+const moment = require('moment')
 const { isLoggedIn } = require('../helpers/util');
 
 module.exports = (db) => {
@@ -36,7 +37,7 @@ module.exports = (db) => {
                 income.push(newData[key])
             }
 
-            res.render('dashboard/home', { user: req.session.user, currentPage: 'POS - Dashboard', purchases, sales, salestotal, currencyFormatter, query: req.query, data: income });
+            res.render('dashboard/home', { user: req.session.user, currentPage: 'POS - Dashboard', purchases, sales, salestotal, currencyFormatter, query: req.query, data: income, moment });
         } catch (error) {
             console.log(error)
         }
