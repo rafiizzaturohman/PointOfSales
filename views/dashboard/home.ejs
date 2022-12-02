@@ -73,11 +73,9 @@
                                 <div>
                                     <h1 class="text-blue-600 uppercase">Purchases</h1>
 
-                                    <% for( let i=0; i < purchases.length; i++ ) { %>
-                                        <p>
-                                            <%= currencyFormatter.format(purchases[i].total, { code: 'IDR' }) %>
-                                        </p>
-                                        <% } %>
+                                    <p>
+                                        <%= currencyFormatter.format(purchases[0].total, { code: 'IDR' }) %>
+                                    </p>
 
                                 </div>
 
@@ -111,7 +109,8 @@
                                     <h1 class="text-teal-600 uppercase">Earnings</h1>
 
                                     <p>
-                                        <%= currencyFormatter.format(sales.total - purchases.total, { code: 'IDR' }) %>
+                                        <%= currencyFormatter.format(sales[0].total - purchases[0].total, { code: 'IDR'
+                                            }) %>
                                     </p>
                                 </div>
 

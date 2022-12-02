@@ -18,9 +18,9 @@ module.exports = (db) => {
 
                 res.render('dashboard/home', { user: req.session.user, currentPage: 'POS - Dashboard', purchases, sales, salestotal, currencyFormatter, query: req.query });
             } else {
-                const { rows: purchases } = await db.query('SELECT time AS timepurch, sum(totalsum) AS total FROM purchases GROUP BY timepurch')
+                const { rows: purchases } = await db.query('SELECT sum(totalsum) AS total FROM purchases')
 
-                const { rows: sales } = await db.query('SELECT time AS timesales, sum(totalsum) AS total FROM sales GROUP BY timesales')
+                const { rows: sales } = await db.query('SELECT sum(totalsum) AS total FROM sales')
 
                 const { rows: salestotal } = await db.query('SELECT COUNT(*) AS total FROM sales')
 
