@@ -50,7 +50,15 @@
                         },
 
                     },
-                    tension: 0.5,
+                    animations: {
+                        tension: {
+                            duration: 2000,
+                            easing: 'linear',
+                            from: 0.3,
+                            to: 0,
+                            loop: true
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true

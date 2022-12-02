@@ -577,7 +577,7 @@ $(document).ready(function () {
                 }
             },
             {
-                "data": "totalsum",
+                "data": "totalsales",
                 render: function (data) {
                     return `${currencyFormatter.format(data)}`
                 }

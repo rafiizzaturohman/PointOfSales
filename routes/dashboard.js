@@ -55,7 +55,7 @@ module.exports = (db) => {
 
         const total = await db.query(`SELECT COUNT(*) AS total FROM purchases${params.length > 0 ? ` where ${params.join(' or ')}` : ''}`)
         const data = await db.query(`SELECT * FROM purchases${params.length > 0 ? ` where ${params.join(' or ')}` : ''} order by ${sortBy} ${sortMode} limit ${limit} offset ${offset} `)
-
+        console.log(data.rows)
         const response = {
             "draw": Number(req.query.draw),
             "recordsTotal": total.rows[0].total,
