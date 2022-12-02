@@ -4,32 +4,11 @@
     });
 
     const earningsData = () => {
-        $.get({
+        $.ajax({
+            data: { startdate: $('#startdate').val(), enddate: $('#enddate').val() },
             url: 'dashboard/earnoverview'
         }).done((res) => {
-            const { totalpurchase, totalsales } = res
-
-            let getMonth = []
-
-            for (let i = 0; i < totalpurchase.length; i++) {
-                getMonth.push(totalpurchase[i].monthly)
-            }
-
-            let data = totalpurchase.concat(totalsales)
-            let newData = {}
-            let income = []
-
-            data.forEach(item => {
-                if (newData[item.forsort]) {
-                    newData[item.forsort] = { monthly: item.monthly, expense: item.totalpurchases ? item.totalpurchases : newData[item.forsort].expense, revenue: item.totalsales ? item.totalsales : newData[item.forsort].revenue }
-                } else {
-                    newData[item.forsort] = { monthly: item.monthly, expense: item.totalpurchases ? item.totalpurchases : 0, revenue: item.totalsales ? item.totalsales : 0 }
-                }
-            });
-
-            for (const key in newData) {
-                income.push(Number(newData[key].revenue - newData[key].expense))
-            }
+            const { getMonth, income } = res
 
             const line = $('#earning');
             new Chart(line, {
@@ -38,7 +17,7 @@
                     label: true,
                     labels: getMonth,
                     datasets: [{
-                        data: income
+                        data: income,
                     }]
                 },
                 options: {
@@ -47,8 +26,7 @@
                     plugins: {
                         legend: {
                             display: false
-                        },
-
+                        }
                     },
                     animations: {
                         tension: {

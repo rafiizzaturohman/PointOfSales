@@ -20,7 +20,7 @@
                             <h1 class="text-blue-500 font-bold text-lg">Data Settings</h1>
                         </div>
 
-                        <form action="" method="post">
+                        <form action="" method="get">
                             <div class="grid grid-cols-2 mx-10 mb-10 mt-6">
                                 <div class="space-y-4 mr-4">
                                     <div>
@@ -29,17 +29,18 @@
 
                                     <div class="">
                                         <input type="date" name="startdate" id="startdate"
+                                            value="<%= query.startdate %>"
                                             class="border border-black/25 px-4 py-1 w-full rounded-md">
                                     </div>
                                 </div>
 
                                 <div class="space-y-4 ml-4">
                                     <div>
-                                        <label for="startdate">Start Date</label>
+                                        <label for="enddate">End Date</label>
                                     </div>
 
                                     <div class="">
-                                        <input type="date" name="startdate" id="startdate"
+                                        <input type="date" name="enddate" id="enddate" value="<%= query.enddate %>"
                                             class="border border-black/25 px-4 py-1 w-full rounded-md">
                                     </div>
                                 </div>
@@ -72,9 +73,11 @@
                                 <div>
                                     <h1 class="text-blue-600 uppercase">Purchases</h1>
 
-                                    <p>
-                                        <%= currencyFormatter.format(purchases[0].total, { code: 'IDR' }) %>
-                                    </p>
+                                    <% for( let i=0; i < purchases.length; i++ ) { %>
+                                        <p>
+                                            <%= currencyFormatter.format(purchases[i].total, { code: 'IDR' }) %>
+                                        </p>
+                                        <% } %>
 
                                 </div>
 
@@ -108,8 +111,7 @@
                                     <h1 class="text-teal-600 uppercase">Earnings</h1>
 
                                     <p>
-                                        <%= currencyFormatter.format(sales[0].total - purchases[0].total, { code: 'IDR'
-                                            }) %>
+                                        <%= currencyFormatter.format(sales.total - purchases.total, { code: 'IDR' }) %>
                                     </p>
                                 </div>
 
@@ -184,6 +186,9 @@
                                         <th>Earning</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+
+                                </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>Total</th>

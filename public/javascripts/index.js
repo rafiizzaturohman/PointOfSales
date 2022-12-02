@@ -558,33 +558,7 @@ $(document).ready(function () {
         ]
     });
 
-    $('#report-table').DataTable({
-        "lengthMenu": [[3, 5, 10, 20], [3, 5, 10, 20]],
-        "processing": true,
-        "serverSide": true,
-        "ajax": "/dashboard/datatable",
-        "columns": [
-            {
-                "data": "purchases.time",
-                render: function (data) {
-                    return `${moment(data).format('MMM YY')}`
-                }
-            },
-            {
-                "data": "totalsum",
-                render: function (data) {
-                    return `${currencyFormatter.format(data)}`
-                }
-            },
-            {
-                "data": "totalsales",
-                render: function (data) {
-                    return `${currencyFormatter.format(data)}`
-                }
-            },
-            {
-                "data": "totalsum"
-            }
-        ]
-    });
+    // $('#report-table').DataTable({
+    //     "lengthMenu": [[3, 5, 10, 20], [3, 5, 10, 20]]
+    // });
 });

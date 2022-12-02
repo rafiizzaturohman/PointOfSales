@@ -7,7 +7,8 @@
         let countUmum = null
         let countMember = null
 
-        $.get({
+        $.ajax({
+            data: { startdate: $('#startdate').val(), enddate: $('#enddate').val() },
             url: 'dashboard/revsource'
         }).done((res) => {
             const { member, direct } = res
