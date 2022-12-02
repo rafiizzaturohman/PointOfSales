@@ -192,13 +192,14 @@
                                                 <%= item.monthly %>
                                             </td>
                                             <td>
-                                                <%= item.expense %>
+                                                <%= currencyFormatter.format(item.expense, { code: 'IDR' }) %>
                                             </td>
                                             <td>
-                                                <%= item.revenue %>
+                                                <%= currencyFormatter.format(item.revenue, { code: 'IDR' }) %>
                                             </td>
                                             <td>
-                                                <%= item.revenue - item.expense %>
+                                                <%= currencyFormatter.format((item.revenue - item.expense), {
+                                                    code: 'IDR' }) %>
                                             </td>
                                         </tr>
                                         <% }) %>
