@@ -558,7 +558,7 @@ $(document).ready(function () {
         ]
     });
 
-    // $('#report-table').DataTable({
-    //     "lengthMenu": [[3, 5, 10, 20], [3, 5, 10, 20]]
-    // });
+    $('#report-table').DataTable({
+        "lengthMenu": [[3, 5, 10, 20], [3, 5, 10, 20]]
+    });
 });
