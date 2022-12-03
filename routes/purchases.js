@@ -9,7 +9,7 @@ module.exports = (db) => {
     // GET & VIEW DATA
     router.get('/', isLoggedIn, async (req, res, next) => {
         try {
-            res.render('purchasesPages/list', { user: req.session.user, query: req.query, currentPage: 'POS - Purchases' });
+            res.render('purchasesPages/list', { user: req.session.user, query: req.query, currentPage: 'POS - Purchases', success: req.flash('success'), error: req.flash('error') });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -76,8 +76,10 @@ module.exports = (db) => {
                 await db.query('UPDATE purchases SET totalsum = $1, operator = $2 WHERE invoice = $3', [totalsum, userid, invoice])
             }
 
+            req.flash('success', 'Success to create/edit invoice information')
             res.redirect('/purchases')
         } catch (error) {
+            req.flash('success', 'Failed to create invoice')
             console.log(error)
             return res.redirect('/purchases')
         }
@@ -99,6 +101,7 @@ module.exports = (db) => {
             const { invoice, itemcode, quantity } = req.body
 
             await db.query('INSERT INTO purchaseitems(invoice, itemcode, quantity) VALUES ($1, $2, $3)', [invoice, itemcode, quantity])
+
             const { rows: data } = await db.query('SELECT * FROM purchases WHERE invoice = $1', [invoice])
 
             res.json(data[0])
@@ -124,9 +127,11 @@ module.exports = (db) => {
             const { invoice } = req.params
 
             await db.query('DELETE FROM purchases WHERE invoice = $1', [invoice])
+            req.flash('success', 'Invoice was deleted successfully')
 
             res.redirect('/purchases')
         } catch (err) {
+            req.flash('error', "Invoice can't be deleted")
             console.log(err)
         }
     });
@@ -135,9 +140,11 @@ module.exports = (db) => {
         try {
             const { id } = req.params
             const { rows: data } = await db.query('DELETE FROM purchaseitems WHERE id = $1 returning *', [id])
+            req.flash('success', 'Item was deleted successfully')
 
             res.redirect(`/purchases/show/${data[0].invoice}`)
         } catch (err) {
+            req.flash('error', 'Item failed to deleted')
             console.log(err)
         }
     });

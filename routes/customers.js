@@ -7,7 +7,7 @@ module.exports = (db) => {
     // GET & VIEW DATA
     router.get('/', isLoggedIn, async (req, res, next) => {
         try {
-            res.render('customerPages/list', { user: req.session.user, query: req.query, currentPage: 'POS - Customers' });
+            res.render('customerPages/list', { user: req.session.user, query: req.query, currentPage: 'POS - Customers', success: req.flash('success'), error: req.flash('error') });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -59,11 +59,12 @@ module.exports = (db) => {
             const { name, address, phone } = req.body
 
             await db.query('INSERT INTO customers (name, address, phone) VALUES ($1, $2, $3)', [name, address, phone])
+            req.flash('success', 'Successfully added')
 
             res.redirect('/customers')
         } catch (error) {
+            req.flash('error', 'Failed to added')
             console.log(error)
-            res.send(error)
         }
     })
 
@@ -86,11 +87,12 @@ module.exports = (db) => {
             const { name, address, phone } = req.body
 
             await db.query('UPDATE customers SET name = $1, address = $2, phone = $3 WHERE customerid = $4', [name, address, phone, customerid])
+            req.flash('success', 'Edited successfully')
 
             res.redirect('/customers')
         } catch (error) {
+            req.flash('error', 'Failed to edit')
             console.log(error)
-            res.send(error)
         }
     })
 
@@ -98,11 +100,12 @@ module.exports = (db) => {
     router.get('/delete/:customerid', isLoggedIn, async (req, res, next) => {
         try {
             await db.query('DELETE FROM customers WHERE customerid = $1', [req.params.customerid])
+            req.flash('success', 'Deleted successfully')
 
             res.redirect('/customers');
         } catch (err) {
+            req.flash('error', 'Failed to delete')
             console.log(err)
-            res.send(err)
         }
     });
     return router;

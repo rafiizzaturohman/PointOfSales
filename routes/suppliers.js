@@ -11,7 +11,7 @@ module.exports = (db) => {
 
             const result = await db.query(sql)
 
-            res.render('suppliersPages/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Suppliers' });
+            res.render('suppliersPages/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Suppliers', success: req.flash('success'), error: req.flash('error') });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -59,11 +59,12 @@ module.exports = (db) => {
             const { name, address, phone } = req.body
 
             await db.query('INSERT INTO public."suppliers" (name, address, phone) VALUES ($1, $2, $3)', [name, address, phone])
+            req.flash('success', 'Successfully added')
 
             res.redirect('/suppliers')
         } catch (error) {
+            req.flash('error', 'Failed to added')
             console.log(error)
-            res.send(error)
         }
     })
 
@@ -86,11 +87,12 @@ module.exports = (db) => {
             const { name, address, phone } = req.body
 
             await db.query('UPDATE public."suppliers" SET name = $1, address = $2, phone = $3 WHERE supplierid = $4', [name, address, phone, supplierid])
+            req.flash('success', 'Edited successfully')
 
             res.redirect('/suppliers')
         } catch (error) {
+            req.flash('error', 'Failed to edit')
             console.log(error)
-            res.send(error)
         }
     })
 
@@ -98,11 +100,12 @@ module.exports = (db) => {
     router.get('/delete/:supplierid', isLoggedIn, async (req, res, next) => {
         try {
             await db.query('DELETE FROM public."suppliers" WHERE supplierid = $1', [req.params.supplierid])
+            req.flash('success', 'Deleted successfully')
 
             res.redirect('/suppliers');
         } catch (err) {
+            req.flash('error', 'Failed to delete')
             console.log(err)
-            res.send(err)
         }
     });
     return router;

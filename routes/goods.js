@@ -12,7 +12,7 @@ module.exports = (db) => {
 
             const result = await db.query(sql)
 
-            res.render('utilitiesPages/good/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Goods' });
+            res.render('utilitiesPages/good/list', { user: req.session.user, data: result.rows, query: req.query, currentPage: 'POS - Goods', success: req.flash('success'), error: req.flash('error') });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -81,13 +81,15 @@ module.exports = (db) => {
             const { rows: goods } = await db.query('SELECT * FROM public."goods" WHERE barcode = $1', [barcode])
             if (goods.length > 0) {
                 req.flash('error', 'Product already exist!')
-                return res.redirect('/add')
+                return res.redirect('/goods/add')
             }
 
             await db.query('INSERT INTO public."goods" (barcode, name, stock, purchaseprice, sellingprice, unit, picture) VALUES ($1, $2, $3, $4, $5, $6, $7)', [barcode, name, stock, purchaseprice, sellingprice, unit, imagefiles])
+            req.flash('success', 'Goods was added')
 
             res.redirect('/goods')
         } catch (error) {
+            req.flash('error', 'Failed to add')
             res.send(error)
         }
     })
@@ -126,9 +128,12 @@ module.exports = (db) => {
                 picture.mv(uploadPath)
 
                 await db.query('UPDATE goods SET name = $1, stock = $2, purchaseprice = $3, sellingprice = $4, unit = $5, picture = $6 WHERE barcode = $7', [name, stock, purchaseprice, sellingprice, unit, imagesfiles, barcode])
+
             }
+            req.flash('success', 'Updated successfully')
             res.redirect('/goods')
         } catch (err) {
+            req.flash('error', 'Failed to edit')
             console.log(err)
         }
     })
@@ -137,11 +142,12 @@ module.exports = (db) => {
     router.get('/delete/:barcode', isLoggedIn, async (req, res, next) => {
         try {
             await db.query('DELETE FROM public."goods" WHERE barcode = $1', [req.params.barcode])
+            req.flash('success', 'Deleted successfully')
 
             res.redirect('/goods');
         } catch (err) {
+            req.flash('error', 'Failed to delete')
             console.log(err)
-            res.send(err)
         }
     });
     return router;

@@ -60,7 +60,7 @@ module.exports = (db) => {
             const { rows: units } = await db.query('SELECT * FROM public."units" WHERE unit = $1', [unit])
             if (units.length > 0) {
                 req.flash('error', `Unit already exist`)
-                return res.redirect('/add')
+                return res.redirect('/units/add')
             }
 
             await db.query('INSERT INTO public."units" (unit, name, note) VALUES ($1, $2, $3)', [unit, name, note])
@@ -68,6 +68,7 @@ module.exports = (db) => {
 
             res.redirect('/units')
         } catch (error) {
+            req.flash('error', `Failed to add`)
             console.log(error)
         }
     })
@@ -91,9 +92,11 @@ module.exports = (db) => {
             const { unit, name, note } = req.body
 
             await db.query('UPDATE public."units" SET unit = $1, name = $2, note = $3 WHERE unit = $4', [unit, name, note, units])
+            req.flash('success', 'Unit has been updated')
 
             res.redirect('/units')
         } catch (error) {
+            req.flash('error', 'Failed to update')
             console.log(error)
             res.send(error)
         }
@@ -103,9 +106,11 @@ module.exports = (db) => {
     router.get('/delete/:unit', isLoggedIn, async (req, res, next) => {
         try {
             await db.query('DELETE FROM public."units" WHERE unit = $1', [req.params.unit])
+            req.flash('success', 'Successfully deleted')
 
-            res.redirect('/units', { success: req.flash('success'), error: req.flash('error') });
+            res.redirect('/units');
         } catch (err) {
+            req.flash('error', 'Failed to delete')
             console.log(err)
             res.send(err)
         }

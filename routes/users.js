@@ -110,5 +110,49 @@ module.exports = (db) => {
     }
   });
 
+  router.get('/profile/:userid', isLoggedIn, async (req, res, next) => {
+    try {
+      const { userid } = req.params
+
+      const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
+
+      res.render('profilePages/profile', { user: req.session.user, item: data[0], currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') })
+    } catch (error) {
+      req.flash('error', 'Failed to get user information')
+      res.redirect('/users')
+      console.log(error)
+    }
+  });
+
+  router.post('/profile/:userid', isLoggedIn, async (req, res, next) => {
+    try {
+      const { userid } = req.params
+      const { email, name } = req.body
+      const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
+
+      await db.query('UPDATE public."usersAccount" SET email = $1, name = $2 WHERE userid = $3', [email, name, userid])
+      req.flash('success', 'User information updated')
+
+      res.redirect(`/users/profile/${data[0].userid}`)
+    } catch (error) {
+      req.flash('error', 'User information failed to update')
+      console.log(error)
+    }
+  });
+
+  router.get('/changepw/:userid', isLoggedIn, async (req, res, next) => {
+    try {
+      const { userid } = req.params
+
+      const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
+
+      res.render('profilePages/pwchange', { user: req.session.user, item: data[0], currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') })
+    } catch (error) {
+      req.flash('error', 'Failed to get user information')
+      res.redirect('/users')
+      console.log(error)
+    }
+  });
+
   return router;
 }

@@ -9,7 +9,7 @@ module.exports = (db) => {
     // GET & VIEW DATA
     router.get('/', isLoggedIn, async (req, res, next) => {
         try {
-            res.render('salesPages/list', { user: req.session.user, query: req.query, currentPage: 'POS - Sales' });
+            res.render('salesPages/list', { user: req.session.user, query: req.query, currentPage: 'POS - Sales', success: req.flash('success'), error: req.flash('error') });
         } catch (err) {
             console.log(err)
             res.send(err)
@@ -74,9 +74,10 @@ module.exports = (db) => {
             } else {
                 await db.query('UPDATE sales SET totalsum = $1, pay = $2, change = $3 WHERE invoice = $4', [totalsum, pay, change, invoice])
             }
-
+            req.flash('success', 'Invoice was successfully added/edit')
             res.redirect('/sales')
         } catch (error) {
+            req.flash('error', 'Failed to add/edit')
             console.log(error)
             return res.redirect('/sales')
         }
@@ -124,9 +125,11 @@ module.exports = (db) => {
             const { invoice } = req.params
 
             await db.query('DELETE FROM sales WHERE invoice = $1', [invoice])
+            req.flash('success', 'Invoice was deleted successfully')
 
             res.redirect('/sales')
         } catch (err) {
+            req.flash('error', "Invoice can't be deleted")
             console.log(err)
         }
     });
@@ -135,9 +138,11 @@ module.exports = (db) => {
         try {
             const { id } = req.params
             const { rows: data } = await db.query('DELETE FROM saleitems WHERE id = $1 returning *', [id])
+            req.flash('success', 'Item was deleted successfully')
 
             res.redirect(`/sales/show/${data[0].invoice}`)
         } catch (err) {
+            req.flash('error', 'Item failed to deleted')
             console.log(err)
         }
     });
