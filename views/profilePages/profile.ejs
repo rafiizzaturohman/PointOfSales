@@ -5,12 +5,12 @@
 
                 <div class="mx-10">
                     <div class="text">
-                        <h1>Users</h1>
+                        <h1 class="mx-6">Profile</h1>
                     </div>
 
                     <div class="overflow-x-auto relative mx-10 my-0.5 space-y-6 bg-white rounded-lg drop-shadow-md">
                         <div class="bg-slate-400/10 px-10 py-4 border-b-2 border-black/10">
-                            <h1 class="text-blue-500 font-bold text-lg">Form Edit</h1>
+                            <h1 class="text-blue-500 font-bold text-lg">Your Profile</h1>
                         </div>
 
                         <div>
@@ -19,7 +19,7 @@
                                     <div class="flex space-x-29 px-10 items-center">
                                         <label for="email" class="text-lg font-semibold">Email</label>
                                         <input type="email" name="email" placeholder="Your email"
-                                            value="<%= item.email %>"
+                                            value="<%= user.email %>"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                             required>
                                         <br />
@@ -27,7 +27,7 @@
 
                                     <div class="flex space-x-28 px-10 items-center">
                                         <label for="name" class="text-lg font-semibold">Name</label>
-                                        <input type="text" name="name" placeholder="Your name" value="<%= item.name %>"
+                                        <input type="text" name="name" placeholder="Your name" value="<%= user.name %>"
                                             class="my-4 text-black px-6 py-2 w-full rounded-xl border-black/25 border-2"
                                             required>
                                         <br />

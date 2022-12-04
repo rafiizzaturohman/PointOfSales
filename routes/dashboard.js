@@ -55,18 +55,21 @@ module.exports = (db) => {
                 const { rows: member } = await db.query("SELECT COUNT(*) FROM sales WHERE customer != 1 AND time BETWEEN $1 AND $2", [startdate, enddate])
 
                 res.json({ member, direct })
+
             } else if (startdate) {
                 const { rows: direct } = await db.query("SELECT COUNT(*) FROM sales WHERE customer = 1 AND time >= $1", [startdate])
 
                 const { rows: member } = await db.query("SELECT COUNT(*) FROM sales WHERE customer != 1 AND time >= $1", [startdate])
 
                 res.json({ member, direct })
+
             } else if (enddate) {
                 const { rows: direct } = await db.query("SELECT COUNT(*) FROM sales WHERE customer = 1 AND time <= $1", [enddate])
 
                 const { rows: member } = await db.query("SELECT COUNT(*) FROM sales WHERE customer != 1 AND time <= $1", [enddate])
 
                 res.json({ member, direct })
+
             } else {
                 const { rows: direct } = await db.query("SELECT COUNT(*) FROM sales WHERE customer = 1")
 
@@ -111,6 +114,7 @@ module.exports = (db) => {
                 }
 
                 res.json({ getMonth, income })
+
             } else if (startdate) {
                 const { rows: totalpurchase } = await db.query("SELECT to_char(time, 'Mon YY') AS monthly, to_char(time, 'YYMM') AS forsort, sum(totalsum) AS totalpurchases FROM purchases WHERE time >= $1 GROUP BY monthly, forsort ORDER BY forsort", [startdate])
 
@@ -139,6 +143,7 @@ module.exports = (db) => {
                 }
 
                 res.json({ getMonth, income })
+
             } else if (enddate) {
                 const { rows: totalpurchase } = await db.query("SELECT to_char(time, 'Mon YY') AS monthly, to_char(time, 'YYMM') AS forsort, sum(totalsum) AS totalpurchases FROM purchases WHERE time <= $1 GROUP BY monthly, forsort ORDER BY forsort", [enddate])
 
@@ -167,6 +172,7 @@ module.exports = (db) => {
                 }
 
                 res.json({ getMonth, income })
+
             } else {
                 const { rows: totalpurchase } = await db.query("SELECT to_char(time, 'Mon YY') AS monthly, to_char(time, 'YYMM') AS forsort, sum(totalsum) AS totalpurchases FROM purchases GROUP BY monthly, forsort ORDER BY forsort")
 

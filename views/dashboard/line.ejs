@@ -18,6 +18,9 @@
                     labels: getMonth,
                     datasets: [{
                         data: income,
+                        borderColor: '#60a5fa',
+                        pointBackgroundColor: '#60a5fa',
+                        backgroundColor: 'rgba(0, 140, 255, 0.1)'
                     }]
                 },
                 options: {
@@ -25,7 +28,7 @@
                     maintainAspectRatio: true,
                     plugins: {
                         legend: {
-                            display: false
+                            display: false,
                         }
                     },
                     animations: {
@@ -35,8 +38,9 @@
                             from: 0.2,
                             to: 0,
                             loop: true
-                        }
+                        },
                     },
+                    fill: true,
                     scales: {
                         y: {
                             beginAtZero: true

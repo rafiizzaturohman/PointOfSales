@@ -110,13 +110,13 @@ module.exports = (db) => {
     }
   });
 
-  router.get('/profile/:userid', isLoggedIn, async (req, res, next) => {
+  router.get('/profile', isLoggedIn, async (req, res, next) => {
     try {
-      const { userid } = req.params
 
-      const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
 
-      res.render('profilePages/profile', { user: req.session.user, item: data[0], currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') })
+      req.session.save((err) => {
+        res.render('profilePages/profile', { user: req.session.user, currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') })
+      })
     } catch (error) {
       req.flash('error', 'Failed to get user information')
       res.redirect('/users')
@@ -124,35 +124,60 @@ module.exports = (db) => {
     }
   });
 
-  router.post('/profile/:userid', isLoggedIn, async (req, res, next) => {
+  router.post('/profile', isLoggedIn, async (req, res, next) => {
     try {
-      const { userid } = req.params
-      const { email, name } = req.body
-      const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
+      const user = req.session.user
+      const { userid } = user
 
-      await db.query('UPDATE public."usersAccount" SET email = $1, name = $2 WHERE userid = $3', [email, name, userid])
+      const { email, name } = req.body
+
+      await db.query('UPDATE public."usersAccount" SET email = $1, name = $2 WHERE userid = $3 returning *', [email, name, userid])
+
+      const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
+      const data = emails[0]
+      req.session.user = data
+      req.session.save()
+
       req.flash('success', 'User information updated')
 
-      res.redirect(`/users/profile/${data[0].userid}`)
+      res.redirect(`/users/profile`)
     } catch (error) {
       req.flash('error', 'User information failed to update')
       console.log(error)
     }
   });
 
-  router.get('/changepw/:userid', isLoggedIn, async (req, res, next) => {
+  router.get('/changepassword', isLoggedIn, async (req, res, next) => {
     try {
-      const { userid } = req.params
-
-      const { rows: data } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
-
-      res.render('profilePages/pwchange', { user: req.session.user, item: data[0], currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') })
-    } catch (error) {
-      req.flash('error', 'Failed to get user information')
-      res.redirect('/users')
-      console.log(error)
+      res.render('profilePages/pwchange', {
+        success: req.flash('success'), error: req.flash('error'), currentPage: 'POS - Data Users', user: req.session.user
+      })
+    } catch (e) {
+      res.send(e);
     }
   });
+  router.post('/changepassword', isLoggedIn, async (req, res) => {
+    try {
+      let user = req.session.user
+      let userid = user.userid
+      const { oldPassword, newPassword, retypePassword } = req.body
+      const { rows } = await db.query('SELECT * FROM public."usersAccount" WHERE userid = $1', [userid])
+
+      if (newPassword != retypePassword) throw "The password you entered doesn't match"
+
+      if (!bcrypt.compareSync(oldPassword, rows[0].password)) throw `Your Old password is wrong`
+
+      const hash = bcrypt.hashSync(newPassword, saltRounds)
+      await db.query('UPDATE public."usersAccount" set password = $1 WHERE userid = $2', [hash, userid])
+
+      req.flash('success', 'Your password has been updated')
+      res.redirect('/users/changepassword')
+    } catch (err) {
+      req.flash('error', err)
+      console.log('inierror', err)
+      return res.redirect('/users/changepassword')
+    }
+  })
 
   return router;
 }

@@ -536,6 +536,10 @@ video {
   left: 0px;
 }
 
+.right-1 {
+  right: 0.25rem;
+}
+
 .top-5 {
   top: 1.25rem;
 }
@@ -578,18 +582,6 @@ video {
 
 .left-5 {
   left: 1.25rem;
-}
-
-.right-3 {
-  right: 0.75rem;
-}
-
-.right-2 {
-  right: 0.5rem;
-}
-
-.right-1 {
-  right: 0.25rem;
 }
 
 .z-50 {
@@ -955,6 +947,36 @@ video {
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 
+.space-x-29 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(7.2rem * var(--tw-space-x-reverse));
+  margin-left: calc(7.2rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-28 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(7rem * var(--tw-space-x-reverse));
+  margin-left: calc(7rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-25 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(6.4rem * var(--tw-space-x-reverse));
+  margin-left: calc(6.4rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-15\.5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(4.4rem * var(--tw-space-x-reverse));
+  margin-left: calc(4.4rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.space-x-15 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(3.9rem * var(--tw-space-x-reverse));
+  margin-left: calc(3.9rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .space-x-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(2rem * var(--tw-space-x-reverse));
@@ -979,28 +1001,10 @@ video {
   margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.space-x-29 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(7.2rem * var(--tw-space-x-reverse));
-  margin-left: calc(7.2rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-x-28 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(7rem * var(--tw-space-x-reverse));
-  margin-left: calc(7rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
 .space-x-32 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(8rem * var(--tw-space-x-reverse));
   margin-left: calc(8rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-x-25 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(6.4rem * var(--tw-space-x-reverse));
-  margin-left: calc(6.4rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
 .space-x-26 > :not([hidden]) ~ :not([hidden]) {
