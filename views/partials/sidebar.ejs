@@ -9,87 +9,80 @@
         </div>
         <ul class="nav-list">
             <hr>
-            <li>
-                <a href="/dashboard">
-                    <i class='bx bxs-tachometer'></i>
-                    <span class="links_name">Dashboard</span>
-                </a>
-                <span class="tooltip">Dashboard</span>
-            </li>
-            <hr>
-            <li class="iocn-link">
-                <div class="flex">
-                    <a href="#">
-                        <i class="fa-solid fa-wrench"></i>
-                        <span class="links_name">Goods Utilities</span>
+            <% if (user.role=='Admin' ) { %>
+                <li>
+                    <a href="/dashboard">
+                        <i class='bx bxs-tachometer'></i>
+                        <span class="links_name">Dashboard</span>
                     </a>
-                    <span class="tooltip">
-                        <ul class="sub-menu">
-                            <div>
-                                <li
-                                    class="links_name whitespace-nowrap text-white bg-blue-500 font-semibold px-2 py-1 rounded-lg">
-                                    GOOD UTILITIES
-                                </li>
-                                <li><a href="/goods">Goods</a></li>
-                                <li><a href="/units">Units</a></li>
+                    <span class="tooltip">Dashboard</span>
+                </li>
+                <hr>
+                <% } %>
+                    <% if (user.role=='Admin' ) { %>
+                        <li class="iocn-link">
+                            <div class="flex">
+                                <a href="#">
+                                    <i class="fa-solid fa-wrench"></i>
+                                    <span class="links_name">Goods Utilities</span>
+                                </a>
+                                <span class="tooltip">
+                                    <ul class="sub-menu">
+                                        <div>
+                                            <li
+                                                class="links_name whitespace-nowrap text-white bg-blue-500 font-semibold px-2 py-1 rounded-lg">
+                                                GOOD UTILITIES
+                                            </li>
+                                            <li><a href="/goods">Goods</a></li>
+                                            <li><a href="/units">Units</a></li>
+                                        </div>
+                                    </ul>
+                                </span>
                             </div>
-                        </ul>
-                    </span>
-                </div>
-            </li>
+                        </li>
+                        <% } %>
 
-            <li>
-                <a href="/suppliers">
-                    <i class="fa-solid fa-link"></i>
-                    <span class="links_name">Suppliers</span>
-                </a>
-                <span class="tooltip">Suppliers</span>
-            </li>
+                            <li>
+                                <a href="/suppliers">
+                                    <i class="fa-solid fa-link"></i>
+                                    <span class="links_name">Suppliers</span>
+                                </a>
+                                <span class="tooltip">Suppliers</span>
+                            </li>
 
-            <li>
-                <a href="/customers">
-                    <i class="fa-solid fa-users"></i>
-                    <span class="links_name">Customers</span>
-                </a>
-                <span class="tooltip">Customers</span>
-            </li>
+                            <li>
+                                <a href="/customers">
+                                    <i class="fa-solid fa-users"></i>
+                                    <span class="links_name">Customers</span>
+                                </a>
+                                <span class="tooltip">Customers</span>
+                            </li>
 
-            <li>
-                <a href="/users">
-                    <i class="fa-solid fa-user"></i>
-                    <span class="links_name">Users</span>
-                </a>
-                <span class="tooltip">Users</span>
-            </li>
-            <hr>
-            <li>
-                <a href="/purchases">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="links_name">Purchases</span>
-                </a>
-                <span class="tooltip">Purchases</span>
-            </li>
+                            <% if (user.role=='Admin' ) { %>
+                                <li>
+                                    <a href="/users">
+                                        <i class="fa-solid fa-user"></i>
+                                        <span class="links_name">Users</span>
+                                    </a>
+                                    <span class="tooltip">Users</span>
+                                </li>
+                                <% } %>
+                                    <hr>
+                                    <li>
+                                        <a href="/purchases">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            <span class="links_name">Purchases</span>
+                                        </a>
+                                        <span class="tooltip">Purchases</span>
+                                    </li>
 
-            <li>
-                <a href="/sales">
-                    <i class="fa-solid fa-chart-area"></i>
-                    <span class="links_name">Sales</span>
-                </a>
-                <span class="tooltip">Sales</span>
-            </li>
+                                    <li>
+                                        <a href="/sales">
+                                            <i class="fa-solid fa-chart-area"></i>
+                                            <span class="links_name">Sales</span>
+                                        </a>
+                                        <span class="tooltip">Sales</span>
+                                    </li>
 
-            <!-- <li class="profile">
-                <div class="profile-details">
-                    <div class="name_job">
-                        <div class="name">
-                            AiceKerime
-                        </div>
-                        <div class="job">&#169; 2022</div>
-                    </div>
-                </div>
-                <div>
-                    <i class="" id="log_out"></i>
-                </div>
-            </li> -->
         </ul>
     </div>

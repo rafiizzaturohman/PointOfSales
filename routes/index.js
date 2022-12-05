@@ -35,7 +35,11 @@ module.exports = (db) => {
 
       req.session.user = user
 
-      res.redirect('/dashboard')
+      if (user.role != 'Admin') {
+        res.redirect('/sales')
+      } else {
+        res.redirect('/dashboard')
+      }
     } catch (error) {
       res.redirect('/')
     }

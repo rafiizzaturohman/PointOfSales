@@ -112,11 +112,7 @@ module.exports = (db) => {
 
   router.get('/profile', isLoggedIn, async (req, res, next) => {
     try {
-
-
-      req.session.save((err) => {
-        res.render('profilePages/profile', { user: req.session.user, currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') })
-      })
+      res.render('profilePages/profile', { user: req.session.user, currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') })
     } catch (error) {
       req.flash('error', 'Failed to get user information')
       res.redirect('/users')
@@ -134,13 +130,16 @@ module.exports = (db) => {
       await db.query('UPDATE public."usersAccount" SET email = $1, name = $2 WHERE userid = $3 returning *', [email, name, userid])
 
       const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
+
       const data = emails[0]
+
+      // Session save/update
       req.session.user = data
       req.session.save()
 
       req.flash('success', 'User information updated')
 
-      res.redirect(`/users/profile`)
+      res.redirect('/users/profile')
     } catch (error) {
       req.flash('error', 'User information failed to update')
       console.log(error)
