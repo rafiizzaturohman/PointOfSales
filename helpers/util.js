@@ -11,7 +11,7 @@ module.exports = {
         if (req.session.user && req.session.user.role == 'Admin') {
             next()
         } else {
-            res.redirect('/')
+            res.redirect('/sales')
         }
     }
 }
