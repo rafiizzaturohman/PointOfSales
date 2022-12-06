@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { isLoggedIn } = require('../helpers/util')
+const { isAdmin } = require('../helpers/util')
 
 module.exports = (db) => {
     // GET & VIEW DATA
-    router.get('/', isLoggedIn, async (req, res, next) => {
+    router.get('/', isAdmin, async (req, res, next) => {
         try {
             const sql = 'SELECT * FROM public."units"'
 
@@ -48,13 +48,13 @@ module.exports = (db) => {
     })
 
     // ADD DATA
-    router.get('/add', isLoggedIn, async (req, res, next) => {
+    router.get('/add', isAdmin, async (req, res, next) => {
         const data = await db.query('SELECT * FROM public."units"')
 
         res.render('utilitiesPages/unit/add', { user: req.session.user, data: data.rows, currentPage: 'POS - Units', success: req.flash('success'), error: req.flash('error') });
     });
 
-    router.post('/add', isLoggedIn, async (req, res, next) => {
+    router.post('/add', isAdmin, async (req, res, next) => {
         try {
             const { unit, name, note } = req.body
             const { rows: units } = await db.query('SELECT * FROM public."units" WHERE unit = $1', [unit])
@@ -74,7 +74,7 @@ module.exports = (db) => {
     })
 
     // EDIT DATA
-    router.get('/edit/:unit', isLoggedIn, async (req, res, next) => {
+    router.get('/edit/:unit', isAdmin, async (req, res, next) => {
         try {
             const { unit } = req.params
 
@@ -86,7 +86,7 @@ module.exports = (db) => {
         }
     });
 
-    router.post('/edit/:unit', isLoggedIn, async (req, res, next) => {
+    router.post('/edit/:unit', isAdmin, async (req, res, next) => {
         try {
             const units = req.params.unit
             const { unit, name, note } = req.body
@@ -103,7 +103,7 @@ module.exports = (db) => {
     })
 
     // DELETE DATA
-    router.get('/delete/:unit', isLoggedIn, async (req, res, next) => {
+    router.get('/delete/:unit', isAdmin, async (req, res, next) => {
         try {
             await db.query('DELETE FROM public."units" WHERE unit = $1', [req.params.unit])
             req.flash('success', 'Successfully deleted')
