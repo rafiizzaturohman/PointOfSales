@@ -3,11 +3,11 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
-const { isLoggedIn } = require('../helpers/util')
+const { isAdmin } = require('../helpers/util')
 
 module.exports = (db) => {
   // GET & VIEW DATA
-  router.get('/', isLoggedIn, async (req, res, next) => {
+  router.get('/', isAdmin, async (req, res, next) => {
     try {
       res.render('userPages/list', {
         user: req.session.user, query: req.query, currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error')
@@ -45,11 +45,11 @@ module.exports = (db) => {
   })
 
   // ADD DATA
-  router.get('/add', isLoggedIn, async (req, res, next) => {
+  router.get('/add', isAdmin, async (req, res, next) => {
     res.render('userPages/add', { user: req.session.user, currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') });
   });
 
-  router.post('/add', isLoggedIn, async (req, res, next) => {
+  router.post('/add', isAdmin, async (req, res, next) => {
     try {
       const { email, name, password, role } = req.body
       const { rows: emails } = await db.query('SELECT * FROM public."usersAccount" WHERE email = $1', [email])
@@ -71,7 +71,7 @@ module.exports = (db) => {
   })
 
   // EDIT DATA
-  router.get('/edit/:userid', isLoggedIn, async (req, res, next) => {
+  router.get('/edit/:userid', isAdmin, async (req, res, next) => {
     try {
       const { userid } = req.params
 
@@ -83,7 +83,7 @@ module.exports = (db) => {
     }
   });
 
-  router.post('/edit/:userid', isLoggedIn, async (req, res, next) => {
+  router.post('/edit/:userid', isAdmin, async (req, res, next) => {
     try {
       const { userid } = req.params
       const { email, name, role } = req.body
@@ -99,7 +99,7 @@ module.exports = (db) => {
   })
 
   // DELETE DATA
-  router.get('/delete/:userid', isLoggedIn, async (req, res, next) => {
+  router.get('/delete/:userid', isAdmin, async (req, res, next) => {
     try {
       await db.query('DELETE FROM public."usersAccount" WHERE userid = $1', [req.params.userid])
       req.flash('success', 'Account was deleted successfully')
@@ -110,7 +110,7 @@ module.exports = (db) => {
     }
   });
 
-  router.get('/profile', isLoggedIn, async (req, res, next) => {
+  router.get('/profile', isAdmin, async (req, res, next) => {
     try {
       res.render('profilePages/profile', { user: req.session.user, currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') })
     } catch (error) {
@@ -120,7 +120,7 @@ module.exports = (db) => {
     }
   });
 
-  router.post('/profile', isLoggedIn, async (req, res, next) => {
+  router.post('/profile', isAdmin, async (req, res, next) => {
     try {
       const user = req.session.user
       const { userid } = user
@@ -146,7 +146,7 @@ module.exports = (db) => {
     }
   });
 
-  router.get('/changepassword', isLoggedIn, async (req, res, next) => {
+  router.get('/changepassword', isAdmin, async (req, res, next) => {
     try {
       res.render('profilePages/pwchange', {
         success: req.flash('success'), error: req.flash('error'), currentPage: 'POS - Data Users', user: req.session.user
@@ -155,7 +155,7 @@ module.exports = (db) => {
       res.send(e);
     }
   });
-  router.post('/changepassword', isLoggedIn, async (req, res) => {
+  router.post('/changepassword', isAdmin, async (req, res) => {
     try {
       let user = req.session.user
       let userid = user.userid

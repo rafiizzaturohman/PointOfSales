@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const path = require('path')
 
-const { isLoggedIn } = require('../helpers/util')
+const { isAdmin } = require('../helpers/util')
 
 module.exports = (db) => {
     // GET & VIEW DATA
-    router.get('/', isLoggedIn, async (req, res, next) => {
+    router.get('/', isAdmin, async (req, res, next) => {
         try {
             let sql = 'SELECT goods.barcode, goods.name, goods.stock, goods.purchaseprice, goods.sellingprice, units.unit, goods.picture FROM public."goods" JOIN public."units" ON goods.unit = units.unit'
 
@@ -49,7 +49,7 @@ module.exports = (db) => {
     })
 
     // ADD DATA
-    router.get('/add', isLoggedIn, async (req, res, next) => {
+    router.get('/add', isAdmin, async (req, res, next) => {
         try {
             const data = await db.query('SELECT goods.*, units.* FROM goods LEFT JOIN units ON goods.unit = units.unit')
             const { rows: unit } = await db.query('SELECT * FROM units')
@@ -60,7 +60,7 @@ module.exports = (db) => {
         }
     });
 
-    router.post('/add', isLoggedIn, async (req, res, next) => {
+    router.post('/add', isAdmin, async (req, res, next) => {
         try {
             let picture;
             let uploadPath;
@@ -95,7 +95,7 @@ module.exports = (db) => {
     })
 
     // EDIT DATA
-    router.get('/edit/:barcode', isLoggedIn, async (req, res, next) => {
+    router.get('/edit/:barcode', isAdmin, async (req, res, next) => {
         try {
             const { barcode } = req.params
 
@@ -108,7 +108,7 @@ module.exports = (db) => {
         }
     });
 
-    router.post('/edit/:barcode', isLoggedIn, async (req, res, next) => {
+    router.post('/edit/:barcode', isAdmin, async (req, res, next) => {
         try {
             const { barcode } = req.params
             const { name, stock, purchaseprice, sellingprice, unit } = req.body
@@ -139,7 +139,7 @@ module.exports = (db) => {
     })
 
     // DELETE DATA
-    router.get('/delete/:barcode', isLoggedIn, async (req, res, next) => {
+    router.get('/delete/:barcode', isAdmin, async (req, res, next) => {
         try {
             await db.query('DELETE FROM public."goods" WHERE barcode = $1', [req.params.barcode])
             req.flash('success', 'Deleted successfully')

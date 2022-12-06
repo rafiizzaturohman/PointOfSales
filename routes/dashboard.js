@@ -3,10 +3,10 @@ const router = express.Router();
 
 const currencyFormatter = require('currency-formatter');
 const moment = require('moment')
-const { isLoggedIn } = require('../helpers/util');
+const { isAdmin } = require('../helpers/util');
 
 module.exports = (db) => {
-    router.get('/', isLoggedIn, async (req, res, next) => {
+    router.get('/', isAdmin, async (req, res, next) => {
         try {
             const { rows: purchases } = await db.query('SELECT sum(totalsum) AS total FROM purchases')
             const { rows: sales } = await db.query('SELECT sum(totalsum) AS total FROM sales')
@@ -44,11 +44,10 @@ module.exports = (db) => {
     });
 
 
-    router.get('/revsource', isLoggedIn, async (req, res, next) => {
+    router.get('/revsource', isAdmin, async (req, res, next) => {
         try {
             const { startdate, enddate } = req.query
 
-            console.log(startdate, 'START', enddate, 'END')
             if (startdate != '' && enddate != '') {
                 const { rows: direct } = await db.query("SELECT COUNT(*) FROM sales WHERE customer = 1 AND time BETWEEN $1 AND $2", [startdate, enddate])
 
@@ -82,7 +81,7 @@ module.exports = (db) => {
         }
     });
 
-    router.get('/earnoverview', isLoggedIn, async (req, res, next) => {
+    router.get('/earnoverview', isAdmin, async (req, res, next) => {
         try {
             const { startdate, enddate } = req.query
 

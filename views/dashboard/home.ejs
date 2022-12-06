@@ -192,7 +192,7 @@
                                                 <%= item.monthly %>
                                             </td>
                                             <td>
-                                                <%= currencyFormatter.format(item.expense, { code: 'IDR' }) %>
+                                                <%= currencyFormatter.format(item.expense, { code: 'IDR' , }) %>
                                             </td>
                                             <td>
                                                 <%= currencyFormatter.format(item.revenue, { code: 'IDR' }) %>
@@ -207,24 +207,16 @@
                                 <tfoot>
                                     <tr>
                                         <th>Total</th>
-                                        <% purchases.forEach(item=> { %>
-                                            <th>
-                                                <%= currencyFormatter.format(item.total, { code: 'IDR' }) %>
-                                            </th>
-                                            <% }) %>
-                                                <% sales.forEach(item=> { %>
-                                                    <th>
-                                                        <%= currencyFormatter.format(item.total, { code: 'IDR' }) %>
-                                                    </th>
-                                                    <% }) %>
-                                                        <% purchases.forEach(purch=> { %>
-                                                            <% sales.forEach(sales=> { %>
-                                                                <th>
-                                                                    <%= currencyFormatter.format(sales.total -
-                                                                        purch.total, { code: 'IDR' }) %>
-                                                                </th>
-                                                                <% }) %>
-                                                                    <% }) %>
+                                        <th>
+                                            <%= currencyFormatter.format(purchases[0].total, { code: 'IDR' }) %>
+                                        </th>
+                                        <th>
+                                            <%= currencyFormatter.format(sales[0].total, { code: 'IDR' }) %>
+                                        </th>
+                                        <th>
+                                            <%= currencyFormatter.format(sales[0].total - purchases[0].total, {
+                                                code: 'IDR' }) %>
+                                        </th>
                                     </tr>
                                 </tfoot>
                             </table>
