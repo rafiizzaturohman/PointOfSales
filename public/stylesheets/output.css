@@ -1385,6 +1385,11 @@ video {
   --tw-gradient-to: #1d4ed8;
 }
 
+.object-right {
+  -o-object-position: right;
+     object-position: right;
+}
+
 .p-10 {
   padding: 2.5rem;
 }
