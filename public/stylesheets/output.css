@@ -588,6 +588,10 @@ video {
   left: 1.25rem;
 }
 
+.bottom-0 {
+  bottom: 0px;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -602,6 +606,10 @@ video {
 
 .z-40 {
   z-index: 40;
+}
+
+.-z-10 {
+  z-index: -10;
 }
 
 .float-right {

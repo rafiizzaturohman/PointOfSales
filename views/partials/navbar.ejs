@@ -36,8 +36,6 @@
                         <div id="notif">
 
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -131,18 +129,19 @@
         let html = ''
         data.forEach(item => {
             html += `
-            <div class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
-                <div class="bg-amber-400 text-white rounded-full px-2 py-1">
-                                    <i class="fa-solid fa-triangle-exclamation"></i>
-                                </div>
-                                <div class="text-sm mx-2">
-                                    <p class="text-slate-400">Barcode: ${item.barcode}</p>
-                                    <p class="text-gray-600">
-                                        <span class="font-bold" href="#">Stock Alert: </span> ${item.name} <span
-                                            class="font-bold text-gray-600" href="#">only have stock </span> ${item.stock}
-                                    </p>
-                                </div>
-</div>
+            <a href="/purchases" class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                    <div class="bg-amber-400 text-white rounded-full px-2 py-1">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div class="text-sm mx-2">
+                        <p class="text-slate-400">Barcode: ${item.barcode}</p>
+                        <p class="text-gray-600">
+                            <p>Stock Alert:  <span class="font-semibold">${item.name}</span></p>
+                            <p>only have stock <span class="font-semibold">${item.stock}</span></p>
+                        </p>
+                    </div>
+                </a>
+            </a>
             `
         });
         $('#notif').html(html)
@@ -152,7 +151,7 @@
         url: '/notif/count'
     }).done((data) => {
         console.log(data)
-        let html = `<span class="badge badge-danger badge-counter">${data[0].count}</span>`
+        let html = `<span class="badge badge-danger badge-counter absolute bottom-0 -z-1">${data[0].count}</span>`
         $('#badge').html(html)
     });
 </script>
