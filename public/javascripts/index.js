@@ -382,6 +382,9 @@ $(document).ready(function () {
 
     $('#report-table').DataTable({
         "lengthMenu": [[3, 5, 10, 20], [3, 5, 10, 20]],
-        "ordering": false
+        "ordering": false,
+        fixedColumns: {
+            right: 1
+        }
     });
 });
