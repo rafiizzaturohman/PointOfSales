@@ -2,6 +2,9 @@
 module.exports = {
   content: ['./views/**/*.{ejs, html}'],
   theme: {
+    fontSize: {
+      xs: '11.5px'
+    },
     extend: {
       spacing: {
         '1.3': '0.3rem',

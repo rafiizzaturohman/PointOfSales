@@ -7,12 +7,6 @@ closeBtn.addEventListener("click", () => {
     menuBtnChange();//calling the function(optional)
 });
 
-// searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
-//     sidebar.classList.toggle("open");
-//     menuBtnChange(); //calling the function(optional)
-// });
-
-// following are the code to change sidebar button(optional)
 function menuBtnChange() {
     if (sidebar.classList.contains("open")) {
         closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
@@ -21,16 +15,18 @@ function menuBtnChange() {
     }
 }
 
-// let arrow = document.querySelectorAll(".arrow");
-// for (var i = 0; i < arrow.length; i++) {
-//     arrow[i].addEventListener("click", (e) => {
-//         let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
-//         arrowParent.classList.toggle("showMenu");
-//     });
-// }
-// let sidebar = document.querySelector(".sidebar");
-// let sidebarBtn = document.querySelector(".bx-menu");
-// console.log(sidebarBtn);
-// sidebarBtn.addEventListener("click", () => {
-//     sidebar.classList.toggle("close");
-// });
+
+var box = document.getElementById('box');
+var down = false;
+
+function toggleNotifi() {
+    if (down) {
+        box.style.height = '0px';
+        box.style.opacity = 0;
+        down = false;
+    } else {
+        box.style.height = '510px';
+        box.style.opacity = 1;
+        down = true;
+    }
+}

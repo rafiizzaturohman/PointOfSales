@@ -37,3 +37,178 @@
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.35rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .badge {
+        transition: none;
+    }
+}
+
+button.badge:hover,
+button.badge:focus {
+    text-decoration: none;
+}
+
+.badge:empty {
+    display: none;
+}
+
+.btn .badge {
+    position: relative;
+    top: -1px;
+}
+
+.badge-pill {
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+    border-radius: 10rem;
+}
+
+.badge-primary {
+    color: #fff;
+    background-color: #4e73df;
+}
+
+button.badge-primary:hover,
+button.badge-primary:focus {
+    color: #fff;
+    background-color: #2653d4;
+}
+
+button.badge-primary:focus,
+button.badge-primary.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.5);
+}
+
+.badge-secondary {
+    color: #fff;
+    background-color: #858796;
+}
+
+button.badge-secondary:hover,
+button.badge-secondary:focus {
+    color: #fff;
+    background-color: #6b6d7d;
+}
+
+button.badge-secondary:focus,
+button.badge-secondary.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(133, 135, 150, 0.5);
+}
+
+.badge-success {
+    color: #fff;
+    background-color: #1cc88a;
+}
+
+button.badge-success:hover,
+button.badge-success:focus {
+    color: #fff;
+    background-color: #169b6b;
+}
+
+button.badge-success:focus,
+button.badge-success.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(28, 200, 138, 0.5);
+}
+
+.badge-info {
+    color: #fff;
+    background-color: #36b9cc;
+}
+
+button.badge-info:hover,
+button.badge-info:focus {
+    color: #fff;
+    background-color: #2a96a5;
+}
+
+button.badge-info:focus,
+button.badge-info.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(54, 185, 204, 0.5);
+}
+
+.badge-warning {
+    color: #fff;
+    background-color: #f6c23e;
+}
+
+button.badge-warning:hover,
+button.badge-warning:focus {
+    color: #fff;
+    background-color: #f4b30d;
+}
+
+button.badge-warning:focus,
+button.badge-warning.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(246, 194, 62, 0.5);
+}
+
+.badge-danger {
+    color: #fff;
+    background-color: #e74a3b;
+}
+
+button.badge-danger:hover,
+button.badge-danger:focus {
+    color: #fff;
+    background-color: #d52a1a;
+}
+
+button.badge-danger:focus,
+button.badge-danger.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(231, 74, 59, 0.5);
+}
+
+.badge-light {
+    color: #3a3b45;
+    background-color: #f8f9fc;
+}
+
+button.badge-light:hover,
+button.badge-light:focus {
+    color: #3a3b45;
+    background-color: #d4daed;
+}
+
+button.badge-light:focus,
+button.badge-light.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(248, 249, 252, 0.5);
+}
+
+.badge-dark {
+    color: #fff;
+    background-color: #5a5c69;
+}
+
+button.badge-dark:hover,
+button.badge-dark:focus {
+    color: #fff;
+    background-color: #42444e;
+}
+
+button.badge-dark:focus,
+button.badge-dark.focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(90, 92, 105, 0.5);
+}

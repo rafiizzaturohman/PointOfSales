@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
 <div class="flex bg-white py-3 px-5 justify-between items-center static">
     <div class="flex -space-x-3">
         <input type="text" placeholder="Search for..."
@@ -7,8 +9,38 @@
     </div>
 
     <div class="flex items-center">
-        <div class="mt-min-0.5 border-r-2 px-4">
-            <a href="#"><i class="fa-solid fa-bell"></i></a>
+        <div class="flex justify-center border-r-2 px-4">
+            <div x-data="{ dropdownOpen: false }" class="relative">
+                <button @click="dropdownOpen = !dropdownOpen"
+                    class="relative z-10 block rounded-md bg-white p-2 focus:outline-none">
+                    <svg class="h-5 w-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path
+                            d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                    </svg>
+                    <div id="badge">
+
+                    </div>
+                </button>
+
+                <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 h-full w-full z-10"></div>
+
+                <div x-show="dropdownOpen"
+                    class="absolute right-0 mt-2 bg-white rounded-md shadow-lg overflow-hidden z-20"
+                    style="width:25rem;">
+                    <div>
+                        <p href="#"
+                            class="block bg-sky-600 rounded-t-md text-white text-left px-10 font-bold py-2 uppercase">
+                            Alerts Center
+                        </p>
+                        <div id="notif">
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="dropdown mr-4 px-4">
@@ -30,8 +62,10 @@
             <div class="dropdown-content rounded-lg right-1">
                 <a href="/users/profile" class="hover:rounded-t-lg"><i class="fa-solid fa-user"></i>
                     Profile</a>
+
                 <a href="/users/changepassword" class="whitespace-nowrap"><i class="fa-solid fa-gears"></i>
                     Change Password</a>
+
                 <hr>
 
                 <a id="logout" class="hover:rounded-b-lg p-4" type="button" onclick="toggleModal('modal-id')"><i
@@ -88,3 +122,37 @@
 </div>
 
 <br>
+
+<script>
+    $.get({
+        url: '/notif/notif'
+    }).done((data) => {
+        console.log(data)
+        let html = ''
+        data.forEach(item => {
+            html += `
+            <div class="flex items-center px-4 py-3 border-b hover:bg-gray-100 -mx-2">
+                <div class="bg-amber-400 text-white rounded-full px-2 py-1">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+                                <div class="text-sm mx-2">
+                                    <p class="text-slate-400">Barcode: ${item.barcode}</p>
+                                    <p class="text-gray-600">
+                                        <span class="font-bold" href="#">Stock Alert: </span> ${item.name} <span
+                                            class="font-bold text-gray-600" href="#">only have stock </span> ${item.stock}
+                                    </p>
+                                </div>
+</div>
+            `
+        });
+        $('#notif').html(html)
+    })
+
+    $.get({
+        url: '/notif/count'
+    }).done((data) => {
+        console.log(data)
+        let html = `<span class="badge badge-danger badge-counter">${data[0].count}</span>`
+        $('#badge').html(html)
+    });
+</script>
