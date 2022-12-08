@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
-const { isAdmin } = require('../helpers/util')
+const { isAdmin, isLoggedIn } = require('../helpers/util')
 
 module.exports = (db) => {
   // GET & VIEW DATA
@@ -110,7 +110,7 @@ module.exports = (db) => {
     }
   });
 
-  router.get('/profile', isAdmin, async (req, res, next) => {
+  router.get('/profile', isLoggedIn, async (req, res, next) => {
     try {
       res.render('profilePages/profile', { user: req.session.user, currentPage: 'POS - Users', success: req.flash('success'), error: req.flash('error') })
     } catch (error) {
@@ -120,7 +120,7 @@ module.exports = (db) => {
     }
   });
 
-  router.post('/profile', isAdmin, async (req, res, next) => {
+  router.post('/profile', isLoggedIn, async (req, res, next) => {
     try {
       const user = req.session.user
       const { userid } = user
@@ -146,7 +146,7 @@ module.exports = (db) => {
     }
   });
 
-  router.get('/changepassword', isAdmin, async (req, res, next) => {
+  router.get('/changepassword', isLoggedIn, async (req, res, next) => {
     try {
       res.render('profilePages/pwchange', {
         success: req.flash('success'), error: req.flash('error'), currentPage: 'POS - Data Users', user: req.session.user
@@ -155,7 +155,7 @@ module.exports = (db) => {
       res.send(e);
     }
   });
-  router.post('/changepassword', isAdmin, async (req, res) => {
+  router.post('/changepassword', isLoggedIn, async (req, res) => {
     try {
       let user = req.session.user
       let userid = user.userid
