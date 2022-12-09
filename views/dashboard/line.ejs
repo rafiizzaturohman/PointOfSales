@@ -43,7 +43,12 @@
                     fill: true,
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value, index, values) {
+                                    return value.toLocaleString("ID", { style: "currency", currency: "IDR" })
+                                }
+                            }
                         },
                         x: {
                             grid: {

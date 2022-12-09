@@ -1,10 +1,23 @@
-<body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="/public/stylesheets/style2.css">
+
+    <title>Sidebar sub menus</title>
+</head>
+
+<body id="body-pd">
     <div class="l-navbar" id="navbar">
         <nav class="nav">
             <div>
                 <div class="nav__brand">
                     <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                    <p class="nav__logo">POS</p>
+                    <p class="nav__logo">Bedimcode</p>
                 </div>
                 <div class="nav__list">
                     <a href="#" class="nav__link active">
@@ -58,3 +71,54 @@
             </a>
         </nav>
     </div>
+
+    <h1>Componentes</h1>
+    <!-- ===== IONICONS ===== -->
+    <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+
+    <!-- ===== MAIN JS ===== -->
+    <!-- <script src="assets/js/main.js"></script> -->
+</body>
+
+<script>/*===== EXPANDER MENU  =====*/
+    const showMenu = (toggleId, navbarId, bodyId) => {
+        const toggle = document.getElementById(toggleId),
+            navbar = document.getElementById(navbarId),
+            bodypadding = document.getElementById(bodyId)
+
+        if (toggle && navbar) {
+            toggle.addEventListener('click', () => {
+                navbar.classList.toggle('expander')
+
+                bodypadding.classList.toggle('body-pd')
+            })
+        }
+    }
+    showMenu('nav-toggle', 'navbar', 'body-pd')
+
+    /*===== LINK ACTIVE  =====*/
+    const linkColor = document.querySelectorAll('.nav__link')
+    function colorLink() {
+        linkColor.forEach(l => l.classList.remove('active'))
+        this.classList.add('active')
+    }
+    linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+
+    /*===== COLLAPSE MENU  =====*/
+    const linkCollapse = document.getElementsByClassName('collapse__link')
+    var i
+
+    for (i = 0; i < linkCollapse.length; i++) {
+        linkCollapse[i].addEventListener('click', function () {
+            const collapseMenu = this.nextElementSibling
+            collapseMenu.classList.toggle('showCollapse')
+
+            const rotate = collapseMenu.previousElementSibling
+            rotate.classList.toggle('rotate')
+        })
+    }
+
+</script>
+
+</html>
