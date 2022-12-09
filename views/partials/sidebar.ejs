@@ -12,17 +12,20 @@
                     </div>
                 </div>
 
+                <hr>
+
                 <% if (user.role=='Admin' ) { %>
-                    <div class="nav__list">
+                    <div class="nav__list mt-3">
                         <a href="/dashboard" class="nav__link <%= currentPage=='POS - Dashboard' ? 'active' : '' %>">
                             <ion-icon name="speedometer-outline" class="nav__icon"></ion-icon>
                             <span class="nav__name">Dashboard</span>
                         </a>
 
-                        <hr>
                         <% } %>
 
-                            <%# if (user.role=='Admin' ) { %>
+                            <hr>
+
+                            <% if (user.role=='Admin' ) { %>
                                 <div class="nav__link grid-cols-cust mt-3">
                                     <ion-icon name="build-outline" class="nav__icon"></ion-icon>
                                     <span class="nav__name whitespace-nowrap">Goods Utilities</span>
@@ -34,7 +37,7 @@
                                         <a href="/units" class="collapse__sublink">Units</a>
                                     </ul>
                                 </div>
-                                <%# } %>
+                                <% } %>
 
                                     <a href="/suppliers"
                                         class="nav__link <%= currentPage=='POS - Suppliers' ? 'active' : '' %>">
