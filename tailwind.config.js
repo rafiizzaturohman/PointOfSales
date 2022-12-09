@@ -3,7 +3,8 @@ module.exports = {
   content: ['./views/**/*.{ejs, html}'],
   theme: {
     gridTemplateColumns: {
-      'cust': '20px max-content 1fr'
+      'cust': '20px max-content 1fr',
+      '2': 'grid-template-columns: repeat(2, minmax(0, 1fr))'
     },
     fontSize: {
       xs: '11.5px',

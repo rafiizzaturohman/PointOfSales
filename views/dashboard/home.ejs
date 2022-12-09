@@ -20,29 +20,29 @@
                         </div>
 
                         <form action="" method="get" id="formdate">
-                            <div class="grid grid-cols-2 space-y-5 mx-10 mb-10 mt-6">
-                                <div class="space-y-1">
+                            <div id="dateSearch" class="grid grid-cols-2 space-y-8 mx-10 mt-6 mb-8">
+                                <div class="space-y-3">
                                     <div>
                                         <label for="startdate" class="font-semibold tracking-wide"
                                             style="font-size: 1.1rem;">Start
                                             Date</label>
                                     </div>
 
-                                    <div class="">
+                                    <div>
                                         <input type="date" name="startdate" id="startdate"
                                             value="<%= query.startdate %>"
                                             class="border border-black/25 px-4 py-1 w-full rounded-md">
                                     </div>
                                 </div>
 
-                                <div class="space-y-1">
+                                <div class="space-y-3">
                                     <div>
                                         <label for="enddate" class="font-semibold tracking-wide"
                                             style="font-size: 1.1rem;">End
                                             Date</label>
                                     </div>
 
-                                    <div class="">
+                                    <div>
                                         <input type="date" name="enddate" id="enddate" value="<%= query.enddate %>"
                                             class="border border-black/25 px-4 py-1 w-full rounded-md">
                                     </div>
