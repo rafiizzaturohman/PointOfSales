@@ -99,7 +99,7 @@ Note: Notifications only show if you are logged in as Admin
 * Earning Monthly Data Download (.csv file)
 * And more.
 
-You can check all features on my youtube channel for demo
+You can check all features on my youtube channel for demo.
 Link: https://youtu.be/cWl0g3xPRes
 
 ## Default Account
