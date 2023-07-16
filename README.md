@@ -118,7 +118,5 @@ Password: 1234
 ```
 
 ## Screenshot
-<div    >
-    <img widt="49%" src="./assets/images/Screenshot from 2023-07-17 05-09-18.png" />
-    <img widt="49%" src="./assets/images/Screenshot from 2023-07-17 05-09-28.png" />
-</div>
+
+<img widt="49%" src="./assets/images/Screenshot from 2023-07-17 05-09-18.png" /> <img widt="49%" src="./assets/images/Screenshot from 2023-07-17 05-09-28.png" />
