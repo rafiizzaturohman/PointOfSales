@@ -119,4 +119,6 @@ Password: 1234
 
 ## Screenshot
 
-<img widt="20%" src="./assets/images/Screenshot from 2023-07-17 05-09-18.png" /> <img widt="49%" src="./assets/images/Screenshot from 2023-07-17 05-09-28.png" /> <img src="./assets/images/Screenshot from 2023-07-17 05-12-11.png" /> <img src="./assets/images/Screenshot from 2023-07-17 05-09-45.png" /> <img src="./assets/images/Screenshot from 2023-07-17 05-09-51.png" /> <img src="./assets/images/Screenshot from 2023-07-17 05-10-02.png" />
+<img widt="40%" src="./assets/images/Screenshot from 2023-07-17 05-09-18.png" /> <img widt="40%" src="./assets/images/Screenshot from 2023-07-17 05-09-28.png" /> 
+<img width="14%" src="./assets/images/Screenshot from 2023-07-17 05-12-11.png" /> <img width="14%" src="./assets/images/Screenshot from 2023-07-17 05-09-45.png" /> <img width="14%" src="./assets/images/Screenshot from 2023-07-17 05-09-51.png" /> <img width="14%" src="./assets/images/Screenshot from 2023-07-17 05-10-02.png" />
+<img width="40%" src="./assets/images/Screenshot from 2023-07-17 05-10-22.png" /> <img width="40%" src="./assets/images/Screenshot from 2023-07-17 05-10-35.png" />
