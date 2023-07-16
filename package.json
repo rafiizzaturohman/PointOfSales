@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build:css": "npx tailwindcss build ./public/src/input.css -o ./public/stylesheets/output.css --watch",
     "start": "npm build:css && node ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "build:css": "npx tailwindcss build ./public/src/input.css -o ./public/stylesheets/output.css --watch"
+    "dev": "nodemon ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",

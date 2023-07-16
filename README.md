@@ -1,10 +1,20 @@
 # PointOfSales
 
-POS atau Point of Sales adalah suatu sistem yang digunakan dalam kebutuhan berbagai macam usaha bisnis ritel untuk dapat mempermudah proses transaksi jual beli secara cepat, aman, dan sistematis.
+## Introduction
 
-Apa sih manfaat dari aplikasi Point Of Sales ini?
+This is a simple full stack application that can help record sales and purchases in stores. An application based on [ExpressJS](https://expressjs.com/), [PostgresQL](https://www.postgresql.org/), [EmbeddedJS or EJS](https://ejs.co/), [JQuery](https://jquery.com/) and [Node.JS](https://nodejs.org/en).
+
+### What is a Point Of Sales?
+
+Point of Sales (POS) is a system that is used in the needs of various types of retail business to be able to facilitate the process of buying and selling transactions quickly, safely and systematically.
+
+Client side code is written in EJS and the server API is written in ExpressJS.
+
+
+
+<!-- Apa sih manfaat dari aplikasi Point Of Sales ini?
 
 Aplikasi ini memiliki banyak manfaat, diantaranya yaitu:
 1. Mempermudah Proses Pemesanan
 2. Terciptanya fleksibilitas yangbaik
-3. Proses transaksi menjadi lebih terstruktur
+3. Proses transaksi menjadi lebih terstruktur -->
