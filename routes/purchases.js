@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const currencyFormatter = require('currency-formatter')
 const moment = require('moment')
 
 const { isLoggedIn } = require('../helpers/util')
