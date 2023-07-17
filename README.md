@@ -58,9 +58,14 @@ DataBase Management System (DBMS):
 * Role (Administrator or Operator) 
 
 ### Customer
-* Name
+* Customer Name
 * Address
-* Phone
+* Phone Number
+
+### Supplier
+* Supplier Name
+* Address
+* Phone Number
 
 ## Quick Start
 
